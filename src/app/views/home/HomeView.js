@@ -27,7 +27,6 @@ var HomeView = Marionette.ItemView.extend({
         var viewId = this.$(e.target).attr('href').replace('#', '');
         Radio.channel('views').trigger('navigate:to', viewId);
     }
-
 });
 
 module.exports = HomeView;
