@@ -25,9 +25,8 @@ var HomeView = Marionette.ItemView.extend({
 
     buttonClicked: function (e) {
         e.preventDefault();
-        console.log('BUTTON CLICK!')
-        // var viewId = this.$(e.target).attr('href').replace('#', '');
-        // Radio.channel('views').trigger('navigate:to', viewId);
+        var viewId = this.$(e.target).attr('href').replace('#', '');
+        Radio.channel('views').trigger('navigate:to', viewId);
     }
 
 });

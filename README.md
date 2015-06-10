@@ -1,1 +1,3 @@
-# A node-based image experiment
+# Face the Internet
+
+## A node.js image experiment
