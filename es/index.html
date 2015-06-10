@@ -1,0 +1,111 @@
+
+<!doctype html>
+<html class="no-js" lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="description" content="es project description">
+
+  <meta property="fb:app_id" content="fb app_id" />
+
+  <meta property="og:site_name" content="og site name" />
+  <meta property="og:title" content="og title" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://localhost:3000" />
+  <meta property="og:description" content="og description" />
+
+  <meta property="og:image" content="http://localhost:3000/img/social_img_share.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="650" />
+
+  <meta name="tw:tweet" content="tw tweet">
+  <meta name="tw:hashtags" content="tw hashtags">
+  <meta name="tw:tweet_url" content="tw tweet_url">
+    <link rel="apple-touch-icon" sizes="29x29" href="icons/AppIcon29x29.png">
+  <link rel="apple-touch-icon" sizes="58x58" href="icons/AppIcon29x29@2x.png">
+  <link rel="apple-touch-icon" sizes="40x40" href="icons/AppIcon40x40.png">
+  <link rel="apple-touch-icon" sizes="80x80" href="icons/AppIcon40x40@2x.png">
+  <link rel="apple-touch-icon" sizes="50x50" href="icons/AppIcon50x50.png">
+  <link rel="apple-touch-icon" sizes="100x100" href="icons/AppIcon50x50@2x.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="icons/AppIcon57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="icons/AppIcon57x57@2x.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="icons/AppIcon60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/AppIcon60x60@2x.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="icons/AppIcon72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="icons/AppIcon72x72@2x.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="icons/AppIcon76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/AppIcon76x76@2x.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon-precomposed.png">
+
+  <title>ES Page Index Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href='http://fonts.googleapis.com/css?family=Roboto:100,500,300,700,400' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/stylesheet.css">
+
+  <script src="../javascript/vendor/modernizr-2.8.3.min.js"></script>
+
+</head>
+
+<body>
+<div id="fb-root"></div>
+<div id="main" class="container"></div>
+
+<script id="Layout" type="text/html">
+  <header class="col-md-12">
+    <nav class="row">
+      <ul class="col-md-6 languages">
+        <li><a href="/en">english</a></li>
+        <li><a href="/es">spanish</a></li>
+      </ul>
+      <ul class="col-md-6 sections">
+        <li><a href="#home">ES Home View</a></li>
+        <li><a href="#about">ES About View</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- .views -->
+  <div class="views">loading...</div>
+  <!-- end .views -->
+</script>
+<script id="AboutView" type="text/html">
+  <h1>{{= i18n('about') }}</h1>
+  <p>{{= i18n('about.text') }}</p>
+</script>
+<script id="HomeView" type="text/html">
+  <h1>{{= i18n('home') }}</h1>
+  <p>{{= i18n('home.text') }}</p>
+</script>
+
+<!--<script src="//connect.facebook.net/en_US/all.js"></script>-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  
+  ga('create', "UA-00000000-0", "auto");
+  
+  ga('send', 'pageView');
+
+</script>
+
+<script src="../javascript/vendor.js"></script>
+<script src="../javascript/app.js"></script>
+<script>
+  app.copy = {"project:url":"http://localhost:3000","project:description":"es project description","fb:app_id":"fb app_id","fb:app_description":"fb app_description","fb:app_publisher":"fb app_publisher","fb:app_tagline":"fb app_tagline","fb:app_privacy_url":"fb app_privacy_url","fb:app_user_support_url":"fb app_user_support_url","fb:app_user_support_email":"fb app_user_support_email","fb:app_marketing_url":"fb app_marketing_url","fb:app_icon":"fb app_icon","fb:app_video":"fb app_video","og:site_name":"og site name","og:title":"og title","og:url":"http://localhost:3000","og:description":"og description","og:image":"/img/social_img_share.png","og:locale":"en_US","og:image.width":"1200","og:image.height":"650","tw:tweet":"tw tweet","tw:hashtags":"tw hashtags","tw:tweet_url":"tw tweet_url","page.index.title":"ES Page Index Title","home":"ES Home View","home.text":"B-Reel framework","about":"ES About View","about.text":"2014"};
+  app.start({ lang: "es", env: "production", view: "home" });
+</script>
+
+<!-- Wed Mar 04 2015 16:31:02 GMT+0100 (CET) -->
+<!-- hola -->
+
+</body>
+</html>

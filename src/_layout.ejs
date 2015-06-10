@@ -1,0 +1,57 @@
+<% if (current.path.length == 2) {
+    lang = current.path[0];
+    i18n = public[current.path[0]]._data.index;
+} else {
+    i18n = public._data;
+} %>
+<!doctype html>
+<html class="no-js" lang="<%= lang %>">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <% include ./_metas.ejs %>
+    <% include ./_icons.ejs %>
+
+    <title><%= i18n['page.index.title'] %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,500,300,700,400' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/stylesheet.css">
+
+    <script src="../javascript/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+<div id="fb-root"></div>
+<div id="main" class="container"><%- yield %></div>
+
+<% include ./app/views/Layout.ejs %>
+<% include ./app/views/about/AboutView.ejs %>
+<% include ./app/views/home/HomeView.ejs %>
+
+<!--<script src="//connect.facebook.net/en_US/all.js"></script>-->
+
+<% include ./_google_analytics.ejs %>
+
+<script src="../javascript/vendor.js"></script>
+<script type="text/javascript">
+    var browser = require('bowser').browser,
+            mobile = (typeof(browser.mobile) != 'undefined'),
+            tablet = (typeof(browser.tablet) != 'undefined');
+    Modernizr.addTest('mobile', mobile);
+    Modernizr.addTest('tablet', tablet);
+    Modernizr.addTest('desktop', !mobile && !tablet);
+</script>
+<script src="../javascript/app.js"></script>
+<script>
+    app.copy = <%- JSON.stringify(i18n) %>;
+    app.start({lang: "<%= lang %>", env: "<%= environment %>", view: "home"});
+</script>
+
+<!-- PROJECT_PUBLISH_DATE  PROJECT_COMMIT -->
+
+</body>
+</html>
