@@ -2,8 +2,7 @@
 
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
-
-var AssetManager = require('framework').AssetManager;
+var Radio = require('backbone.radio');
 
 /**
  * @exports views.HomeView
@@ -16,14 +15,14 @@ var HomeView = Marionette.ItemView.extend({
     className: 'home-view',
 
     ui: {
-        'button': 'button'
+        'link': 'a'
     },
 
     events: {
-        'click @ui.button': 'buttonClicked'
+        'click @ui.link': 'linkClicked'
     },
 
-    buttonClicked: function (e) {
+    linkClicked: function (e) {
         e.preventDefault();
         var viewId = this.$(e.target).attr('href').replace('#', '');
         Radio.channel('views').trigger('navigate:to', viewId);

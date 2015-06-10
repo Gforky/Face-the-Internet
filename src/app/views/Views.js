@@ -6,7 +6,8 @@
 
 var Views = {
     Home: require('./home/HomeView'),
-    About: require('./about/AboutView')
+    About: require('./about/AboutView'),
+    Camera: require('./camera/CameraView')
 };
 
 module.exports = Views;

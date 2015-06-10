@@ -28,12 +28,13 @@
     "tw:hashtags": "tw hashtags",
     "tw:tweet_url": "tw tweet_url",
 
-
     "page.index.title": "Face the Internet",
     "home": "Home View",
     "home.text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vestibulum lectus purus, non eleifend diam dignissim ac. Fusce facilisis lacus tellus, vitae lacinia purus finibus sit amet.",
-    "home.button": "Click to start",
+    "home.link": "Click to start",
     "about": "About View",
-    "about.text": "2014"
+    "about.text": "2014",
+    "camera": "Camera View",
+    "camera.button": "Take picture"
   }
 }

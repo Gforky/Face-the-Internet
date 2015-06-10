@@ -15,7 +15,8 @@ var Router = Marionette.AppRouter.extend({
 
     routes: {
         "home": "home",
-        "about": "about"
+        "about": "about",
+        "camera": "camera"
     },
 
     initialize: function (options) {
@@ -40,6 +41,10 @@ var Router = Marionette.AppRouter.extend({
 
     about: function () {
         this.layout.views.show(new Views.About());
+    },
+
+    camera: function () {
+        this.layout.views.show(new Views.Camera());
     }
 });
 
