@@ -1,4 +1,5 @@
 var express = require('express'),
+    fs = require('fs-extra'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
@@ -45,6 +46,10 @@ if (app.get('env') === 'development') {
     app.use(favicon(path.join(paths.PUBLIC, 'favicon.ico')));
     app.use(express.static(paths.PUBLIC));
 }
+
+app.use('/save', function(req, res) {
+    console.log(req.body);
+});
 
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);

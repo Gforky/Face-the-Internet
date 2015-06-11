@@ -35,6 +35,8 @@
     "about": "About View",
     "about.text": "2014",
     "camera": "Camera View",
-    "camera.button": "Take picture"
+    "camera.capture": "Capture image",
+    "camera.save": "Save image",
+    "camera.retake": "Retake image"
   }
 }
