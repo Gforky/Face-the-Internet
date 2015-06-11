@@ -42,14 +42,13 @@ var CameraView = Marionette.ItemView.extend({
     saveImage: function(e) {
         var canvas = document.querySelector('#canvasElement');
         var base64 = canvas.toDataURL();
-        console.log(base64);
 
         $.ajax({
             url: '/save',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({image: base64})
-            // data: JSON.stringify({image: 'string'})
+            // data: JSON.stringify({image: base64})
+            data: JSON.stringify({image: 'string'})
         });
     },
 
