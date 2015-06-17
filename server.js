@@ -1,71 +1,65 @@
-var express = require('express'),
-    fs = require('fs-extra'),
-    path = require('path'),
-    favicon = require('serve-favicon'),
-    logger = require('morgan'),
-    cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    paths = require('./paths'),
-    sass = require('node-sass-middleware'),
-    browserify = require('browserify-middleware'),
-    app = express();
+/*
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+  SETUP
 
-if (app.get('env') === 'development') {
+*/
 
-    // sass - sourceMap: cssPath, sourceMapEmbed: true
-    app.use('/css', sass({src: './src/scss', debug: true, outputStyle: 'expanded', response: true}));
-    // harp
-    app.use(require('harp').mount(paths.SRC));
-    // browserify
-    app.get('/javascript/app.js', browserify('./src/app/app.js', {
-        debug: true,
-        external: [
-            'jquery',
-            'lodash',
-            'underscore',
-            'backbone',
-            'backbone.marionette',
-            'backbone.radio',
-            'bowser'
-        ]
-    }));
+app = require('express.io')();
+app.http().io();
 
-    app.use(function (err, req, res, next) {
-        res.status(err.status || 500);
+/*
+
+  FILES REQUESTS
+
+*/
+
+// send index.html
+app.get('/', function(req, res) {
+    res.sendfile(__dirname + '/public/index.html');
+});
+
+// send style.css
+app.get('/css/style.css', function(req, res) {
+    res.sendfile(__dirname + '/public/css/style.css');
+});
+
+// send jquery
+app.get('/bower_components/jquery/dist/jquery.min.js', function(req, res) {
+    res.sendfile(__dirname + '/bower_components/jquery/dist/jquery.min.js');
+});
+
+// send app.js
+app.get('/js/app.js', function(req, res) {
+    res.sendfile(__dirname + '/public/js/app.js');
+});
+
+// send camera.html
+app.get('/camera', function(req, res) {
+    res.sendfile(__dirname + '/public/views/camera.html');
+});
+
+/*
+
+  WEBSOCKET EVENTS
+
+*/
+
+// setup complete...
+app.io.route('loaded', function(req) {
+    req.io.emit('ready', {
+        message: 'ready'
     });
-
-    app.use('/docs', express.static(paths.DOCS));
-
-} else {
-
-    app.use(favicon(path.join(paths.PUBLIC, 'favicon.ico')));
-    app.use(express.static(paths.PUBLIC));
-}
-
-app.use('/save', function(req, res) {
-    console.log(req.body);
 });
 
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
+// image saving...
+app.io.route('image', function(req) {
+    console.log(req.data);
 });
 
-app.use(function (req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next();
-});
+/*
 
-var debug = require('debug')('base');
+  SERVER PORT LISTEN
 
-app.set('port', 3000);
+*/
 
-app.listen(app.get('port'), function () {
-    debug('Express server listening on port 3000');
-    debug('Ready!');
-});
+app.listen(3000);

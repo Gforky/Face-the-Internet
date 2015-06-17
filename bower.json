@@ -1,0 +1,17 @@
+{
+  "name": "Face-the-Internet",
+  "main": "server.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/JohnPett/Face-the-Internet",
+  "authors": [
+    "John Pett <email@johnpett.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
