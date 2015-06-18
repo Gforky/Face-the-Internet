@@ -85,10 +85,39 @@ app.io.route('image', function(req) {
     var time = date.getTime();
 
     fs.writeFile('captures/capture' + time + '.png', imageBuffer.data, function (err) {
-      console.log('Error: ', err);
+
+      if (err == null) {
+
+        app.io.broadcast('saved');
+
+      } else {
+
+        console.log('Error: ', err);
+
+      }
+
+
     });
 
 });
+
+/*
+
+  SLICE IMAGES
+
+*/
+
+var images = fs.readdirSync('captures');
+
+var imageCount = images.length;
+
+for (var i = imageCount - 1; i >= 0; i--) {
+
+   var image = images[i];
+
+   console.log(image);
+
+};
 
 /*
 

@@ -100,6 +100,19 @@ $(document).on('ready', function() {
     // emit 'image' event
     io.emit('image', base64);
 
+  });
+
+  /*
+
+    VIEW 4)
+
+  */
+
+  // listen for 'saved' event
+  io.on('saved', function() {
+
+    console.log('saved');
+
     $('video, canvas, .retake, .save, .capture').remove();
     $('.view').html('<h1>Image saved</h1>');
 
