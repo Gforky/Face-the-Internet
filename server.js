@@ -110,19 +110,56 @@ var images = fs.readdirSync('captures');
 
 var imageCount = images.length;
 
-for (var i = imageCount - 1; i >= 0; i--) {
+var imageCounter = 0;
 
-    var image = 'captures/' + images[i];
+function randomStringGenerator(length, chars) {
+  var result = '';
+  for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+  return result;
+}
 
-    var date = new Date();
-    var time = date.getTime();
+(function getImage() {
+    setTimeout(function () {
+        if (imageCount > imageCounter) {
 
-    gm(image).crop(1280, 1).write('slices/slice' + time + '.png', function (err) {
-      console.log('Error: ', err);
-    });
+          var image = 'captures/' + images[imageCounter];
 
-};
+          gm(image).size(function(err, value){
 
+            console.log('Error: ', err);
+
+            var imageWidth = value.width;
+
+            var imageHeight = value.height;
+
+            var sliceCounter = 1;
+
+            (function getSlices() {
+              setTimeout(function() {
+                if (imageHeight > sliceCounter) {
+
+                  var randomString = randomStringGenerator(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+                  gm(image).crop(imageWidth, 1, sliceCounter, 0).write('slices/slice' + randomString + '.png', function (err) {
+                    console.log('Error: ', err);
+                    sliceCounter++;
+                    getSlices();
+                  });
+
+                } else {
+
+                  imageCounter++;
+                  getImage();
+
+                }
+              }, 500);
+            })();
+
+          });
+
+        }
+    }, 500);
+})();
 
 /*
 
