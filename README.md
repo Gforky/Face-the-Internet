@@ -6,8 +6,14 @@ A node.js image experiment.
 
 Clone this repository and follow these steps:
 
-* From the command line run: '$ npm install'
-* From the command line run: '$ bower install'
+* From the command line run: `$ npm install`
+* From the command line run: `$ bower install`
+
+## Technologies
+
+[Express IO](http://express-io.org/)
+[Image Magick](http://www.imagemagick.org/)
+[Bower](http://bower.io/)
 
 <!-- ```sh
 curl -LO http://git.io/Xy0Chg
