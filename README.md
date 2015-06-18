@@ -13,7 +13,9 @@ Clone this repository and follow these steps:
 
 [Express IO](http://express-io.org/)
 [Image Magick](http://www.imagemagick.org/)
+[Graphics Magick](http://aheckmann.github.io/gm/)
 [Bower](http://bower.io/)
+[Node JS](https://nodejs.org/)
 
 <!-- ```sh
 curl -LO http://git.io/Xy0Chg
