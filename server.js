@@ -13,8 +13,8 @@ app.http().io();
 
 */
 
-var gm = require('gm');
 var fs = require('fs');
+var gm = require('gm').subClass({imageMagick: true});
 
 /*
 
@@ -96,7 +96,6 @@ app.io.route('image', function(req) {
 
       }
 
-
     });
 
 });
@@ -113,11 +112,17 @@ var imageCount = images.length;
 
 for (var i = imageCount - 1; i >= 0; i--) {
 
-   var image = images[i];
+    var image = 'captures/' + images[i];
 
-   console.log(image);
+    var date = new Date();
+    var time = date.getTime();
+
+    gm(image).crop(1280, 1).write('slices/slice' + time + '.png', function (err) {
+      console.log('Error: ', err);
+    });
 
 };
+
 
 /*
 
