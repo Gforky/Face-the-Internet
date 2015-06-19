@@ -14,8 +14,6 @@ function stopWebcam() {
 
 }
 
-
-
 $(document).on('ready', function() {
 
   /*
@@ -147,9 +145,9 @@ $(document).on('ready', function() {
 
   // listen for 'sliced' event
 
-  io.on('sliced', function() {
+  io.on('sliced', function(data) {
 
-    console.log('sliced');
+    console.log('sliced', data);
 
     $('.view').html('<h1>Image sliced</h1>');
 
