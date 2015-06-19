@@ -81,6 +81,12 @@ function saveImage() {
 
 }
 
+/*
+
+  VIEWS
+
+*/
+
 $(document).on('ready', function() {
 
   /*
