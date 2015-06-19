@@ -167,6 +167,10 @@ $(document).on('ready', function() {
 
     $('.view').html('<h1>Image saved</h1>');
 
+    setTimeout(function() {
+      $('h1').remove();
+    }, 500);
+
   });
 
   /*
@@ -180,9 +184,7 @@ $(document).on('ready', function() {
 
     console.log(data);
 
-    $('h1').remove();
-
-    $('.view').append('<img style="float: left;" src="' + data + '"/>')
+    $('.view').append('<img style="float: left;" src="' + data + '"/>');
 
   });
 
