@@ -11,11 +11,12 @@ Clone this repository and follow these steps:
 
 ## Technologies
 
-[Express IO](http://express-io.org/)
-[Image Magick](http://www.imagemagick.org/)
-[Graphics Magick](http://aheckmann.github.io/gm/)
-[Bower](http://bower.io/)
-[Node JS](https://nodejs.org/)
+* [Express IO](http://express-io.org/) - Web Socket Express server
+* [Image Magick](http://www.imagemagick.org/) - Server-side image manipulation
+* [Graphics Magick](http://aheckmann.github.io/gm/) - Server-side image manipulation Node.js port
+* [Bower](http://bower.io/) - JavaScript package management
+* [Node JS](https://nodejs.org/) - Server-side JavaScript environment
+
 
 <!-- ```sh
 curl -LO http://git.io/Xy0Chg

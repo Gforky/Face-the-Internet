@@ -44,7 +44,8 @@ $(document).on('ready', function() {
     // replace current html with video
     $('.view').html('<video autoplay="true" id="videoElement"></video>' +
       '<br>' +
-    '<button class="capture">Capture</button>');
+    '<button class="capture">Capture</button>' +
+    '<br>');
 
     var video = document.querySelector("#videoElement");
 
@@ -86,7 +87,8 @@ $(document).on('ready', function() {
     $('.view').prepend('<canvas id="canvasElement"></canvas>' +
       '<br>' +
     '<button class="retake">Retake</button>' +
-    '<button class="save">Save</button>');
+    '<button class="save">Save</button>' +
+    '<br>');
 
     var video = document.querySelector("#videoElement");
 
@@ -143,8 +145,18 @@ $(document).on('ready', function() {
 
   */
 
-  // listen for 'sliced' event
+  // listen for 'slice' creation
+  io.on('slice', function(data) {
 
+    console.log(data);
+
+    $('h1').remove();
+
+    $('.view').append('<img style="float: left;" src="' + data + '"/>')
+
+  });
+
+  // listen for 'sliced' event
   io.on('sliced', function(data) {
 
     console.log('sliced', data);
