@@ -4,23 +4,7 @@
 
 */
 
-// define 'localStream' to allow access to the camera after access has been granted
-var localStream;
-
-function stopWebcam() {
-
-  localStream.stop();
-  localStream = null;
-
-}
-
-$(document).on('ready', function() {
-
-  /*
-
-    VIEW 1)
-
-  */
+function connectServer() {
 
   // connect to websocket
   io = io.connect();
@@ -32,6 +16,80 @@ $(document).on('ready', function() {
   io.on('ready', function(data) {
       console.log(data.message);
   });
+
+}
+
+// define 'localStream' to allow access to the camera after access has been granted
+var localStream;
+
+function startWebcam() {
+
+  var video = document.querySelector("#videoElement");
+
+  // create cross-browser var to check for webcam support
+  navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+  if (navigator.getUserMedia) {
+      var hdConstraints = {
+        video: {
+          mandatory: {
+            minWidth: 1280,
+            minHeight: 720
+          }
+        }
+      };
+      navigator.getUserMedia(hdConstraints, successCallback, errorCallback);
+  }
+
+  function successCallback(stream) {
+      video.src = window.URL.createObjectURL(stream);
+      localStream = stream;
+  }
+
+  function errorCallback(e) {
+      console.log('Error in video streaming: ', e);
+  }
+
+}
+
+function stopWebcam() {
+
+  localStream.stop();
+  localStream = null;
+
+}
+
+function captureImage() {
+
+  var video = document.querySelector("#videoElement");
+
+  var canvas = document.querySelector('#canvasElement');
+  canvas.width = $(video).width();
+  canvas.height = $(video).height();
+  var context = canvas.getContext('2d');
+  context.drawImage(video, 0, 0);
+
+}
+
+function saveImage() {
+
+  var canvas = document.querySelector('#canvasElement');
+  var base64 = canvas.toDataURL();
+
+  // emit 'image' event
+  io.emit('image', base64);
+
+}
+
+$(document).on('ready', function() {
+
+  /*
+
+    VIEW 1)
+
+  */
+
+  connectServer();
 
   /*
 
@@ -47,31 +105,7 @@ $(document).on('ready', function() {
     '<button class="capture">Capture</button>' +
     '<br>');
 
-    var video = document.querySelector("#videoElement");
-
-    // create cross-browser var to check for webcam support
-    navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-
-    if (navigator.getUserMedia) {
-        var hdConstraints = {
-          video: {
-            mandatory: {
-              minWidth: 1280,
-              minHeight: 720
-            }
-          }
-        };
-        navigator.getUserMedia(hdConstraints, successCallback, errorCallback);
-    }
-
-    function successCallback(stream) {
-        video.src = window.URL.createObjectURL(stream);
-        localStream = stream;
-    }
-
-    function errorCallback(e) {
-        console.log('Error in video streaming: ', e);
-    }
+    startWebcam();
 
   });
 
@@ -90,13 +124,7 @@ $(document).on('ready', function() {
     '<button class="save">Save</button>' +
     '<br>');
 
-    var video = document.querySelector("#videoElement");
-
-    var canvas = document.querySelector('#canvasElement');
-    canvas.width = $(video).width();
-    canvas.height = $(video).height();
-    var context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0);
+    captureImage();
 
   });
 
@@ -114,11 +142,7 @@ $(document).on('ready', function() {
 
   $(document).on('click', '.save', function() {
 
-    var canvas = document.querySelector('#canvasElement');
-    var base64 = canvas.toDataURL();
-
-    // emit 'image' event
-    io.emit('image', base64);
+    saveImage();
 
   });
 
