@@ -106,7 +106,7 @@ app.io.route('image', function(req) {
       gm(lastImage).size(function(err, value){
 
         // check for errors, TO DO: put this in 'if' statement
-        if (err != 'undefined') {
+        if (err != undefined) {
 
           console.log('Error: ', err);
 
@@ -140,7 +140,7 @@ app.io.route('image', function(req) {
                 app.io.broadcast('slice', slice);
 
                 // check for errors, TO DO: put this in 'if' statement
-                if (err != 'undefined') {
+                if (err != undefined) {
 
                   console.log('Error: ', err);
 
@@ -171,7 +171,7 @@ app.io.route('image', function(req) {
 
     } else {
 
-      if (err != 'undefined') {
+      if (err != undefined) {
 
         console.log('Error: ', err);
 
