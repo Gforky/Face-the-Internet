@@ -163,7 +163,7 @@ app.io.route('image', function(req) {
               var slices = fs.readdirSync('slices');
 
               // tell the client the image is now sliced
-              app.io.broadcast('sliced', {data: slices});
+              app.io.broadcast('sliced', slices);
 
             }
 
