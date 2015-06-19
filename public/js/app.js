@@ -1,3 +1,21 @@
+/*
+
+  FUNCTIONS
+
+*/
+
+// define 'localStream' to allow access to the camera after access has been granted
+var localStream;
+
+function stopWebcam() {
+
+  localStream.stop();
+  localStream = null;
+
+}
+
+
+
 $(document).on('ready', function() {
 
   /*
@@ -6,9 +24,10 @@ $(document).on('ready', function() {
 
   */
 
+  // connect to websocket
   io = io.connect();
 
-  // emit 'ready' event
+  // emit 'loaded' event
   io.emit('loaded');
 
   // listen for 'ready' event
@@ -48,6 +67,7 @@ $(document).on('ready', function() {
 
     function successCallback(stream) {
         video.src = window.URL.createObjectURL(stream);
+        localStream = stream;
     }
 
     function errorCallback(e) {
@@ -113,9 +133,27 @@ $(document).on('ready', function() {
 
     console.log('saved');
 
-    $('video, canvas, .retake, .save, .capture').remove();
+    stopWebcam();
+
     $('.view').html('<h1>Image saved</h1>');
 
   });
+
+  /*
+
+    VIEW 5)
+
+  */
+
+  // listen for 'sliced' event
+
+  io.on('sliced', function() {
+
+    console.log('sliced');
+
+    $('.view').html('<h1>Image sliced</h1>');
+
+  });
+
 
 });
