@@ -18,6 +18,7 @@ app.http().io();
 // project dependencies
 var fs = require('fs');
 var gm = require('gm').subClass({imageMagick: true});
+var mkdirp = require('mkdirp');
 
 /*
 
@@ -46,10 +47,10 @@ app.io.route('loaded', function(req) {
     });
 });
 
-// image saving...
+// image saving and slicing...
 app.io.route('image', function(req) {
 
-  // data send as base64 from client <canvas> element
+  // data sent as base64 from client <canvas> element
   var image = req.data;
 
   // remove unnecessary junk from base64 string
@@ -105,12 +106,12 @@ app.io.route('image', function(req) {
       // use the size method to get the image width and height, useful for images submitted on mobile etc.
       gm(lastImage).size(function(err, value){
 
-        // check for errors, TO DO: put this in 'if' statement
-        if (err != undefined) {
+        if (err != undefined) console.log('Error: ', err);
 
-          console.log('Error: ', err);
-
-        }
+        // make directory to put image in
+        mkdirp('public/slices/' + imageCount + '/', function (err) {
+            if (err) console.error(err);
+        });
 
         // get current image width
         var imageWidth = value.width;
@@ -132,19 +133,14 @@ app.io.route('image', function(req) {
               // apply the random string to the slice name, time not needed here as it is in the parent image file name
               var randomString = randomStringGenerator(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
-              var slice = 'slices/slice' + randomString + '-' + sliceCounter + '.png';
+              var slice = 'slices/' + imageCount + '/slice' + randomString + '-' + sliceCounter + '.png';
 
               // crop image to the full width of current image and increments of 1 pixel
               gm(lastImage).crop(imageWidth, 1, 0, sliceCounter).write('public/' + slice, function (err) {
 
                 app.io.broadcast('slice', slice);
 
-                // check for errors, TO DO: put this in 'if' statement
-                if (err != undefined) {
-
-                  console.log('Error: ', err);
-
-                }
+                if (err != undefined) console.log('Error: ', err);
 
                 // increase the slice counter, to affect the next slice
                 sliceCounter++;
@@ -171,11 +167,7 @@ app.io.route('image', function(req) {
 
     } else {
 
-      if (err != undefined) {
-
-        console.log('Error: ', err);
-
-      }
+      if (err != undefined) console.log('Error: ', err);
 
     }
 
