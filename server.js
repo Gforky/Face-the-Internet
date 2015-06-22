@@ -43,14 +43,10 @@ app.use(express.static(__dirname + '/public'));
 // setup complete...
 app.io.route('loaded', function(req) {
 
-  // send initial data to client...
-  var sliceGroups = fs.readdirSync('public/slices/');
+  var sliceGroupCount = fs.readdirSync('public/slices').length;
 
-  console.log(sliceGroups);
+  req.io.emit('ready', sliceGroupCount);
 
-  req.io.emit('ready', {
-    message: 'ready'
-  });
 });
 
 // image saving and slicing...
@@ -98,17 +94,6 @@ app.io.route('image', function(req) {
       // get last image in the array
       var lastImage = 'captures/' + images[imageCount - 1];
 
-      // create a random string to ID the slices
-      function randomStringGenerator(length, chars) {
-
-        var result = '';
-
-        for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
-
-        return result;
-
-      }
-
       // use the size method to get the image width and height, useful for images submitted on mobile etc.
       gm(lastImage).size(function(err, value){
 
@@ -136,10 +121,7 @@ app.io.route('image', function(req) {
             // if the image height is bigger than the current slice
             if (imageHeight > sliceCounter) {
 
-              // apply the random string to the slice name, time not needed here as it is in the parent image file name
-              var randomString = randomStringGenerator(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-
-              var slice = 'slices/' + imageCount + '/slice' + randomString + '.png';
+              var slice = 'slices/' + imageCount + '/' + sliceCounter + '.png';
 
               // crop image to the full width of current image and increments of 1 pixel
               gm(lastImage).crop(imageWidth, 1, 0, sliceCounter).write('public/' + slice, function (err) {

@@ -12,11 +12,6 @@ function connectServer() {
   // emit 'loaded' event
   io.emit('loaded');
 
-  // listen for 'ready' event
-  io.on('ready', function(data) {
-      console.log(data.message);
-  });
-
 }
 
 // define 'localStream' to allow access to the camera after access has been granted
@@ -89,13 +84,54 @@ function saveImage() {
 
 $(document).on('ready', function() {
 
+  connectServer();
+
   /*
 
     VIEW 1)
 
   */
 
-  connectServer();
+  // listen for 'slice' creation
+  io.on('ready', function(sliceGroupCount) {
+
+    var sliceCounter = 1;
+
+    var sliceGroupCounter = 1;
+
+    var maxSliceCount = 720;
+
+    (function getSlices() {
+
+      setTimeout(function () {
+
+        var slice = 'slices/' + sliceGroupCounter + '/' + sliceCounter + '.png';
+
+        $('.view').append('<img style="float: left;" src="' + slice + '"/>');
+
+        if (maxSliceCount > sliceCounter) {
+
+          if (sliceGroupCounter == sliceGroupCount) {
+
+            sliceCounter++;
+            sliceGroupCounter = 1;
+            getSlices();
+
+          } else {
+
+            sliceCounter++;
+            sliceGroupCounter++;
+            getSlices();
+
+          }
+
+        }
+
+      }, 125);
+
+    })();
+
+  });
 
   /*
 
