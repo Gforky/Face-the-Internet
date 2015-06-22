@@ -140,10 +140,10 @@ app.io.route('image', function(req) {
 
             } else if (imageHeight ==  sliceCounter) {
 
-              var slices = fs.readdirSync('public/slices/' + imageCount + '/');
+              var sliceGroupCount = fs.readdirSync('public/slices').length;
 
               // tell the client the image is now sliced
-              app.io.broadcast('sliced', slices);
+              app.io.broadcast('sliced', sliceGroupCount);
 
             }
 

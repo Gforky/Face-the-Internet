@@ -99,9 +99,9 @@ $(document).on('ready', function() {
 
     var sliceGroupCounter = 1;
 
-    var maxSliceCount = 720;
+    var maxSliceCount = 719;
 
-    (function getSlices() {
+    (function getSlice() {
 
       setTimeout(function () {
 
@@ -115,13 +115,13 @@ $(document).on('ready', function() {
 
             sliceCounter++;
             sliceGroupCounter = 1;
-            getSlices();
+            getSlice();
 
           } else {
 
             sliceCounter++;
             sliceGroupCounter++;
-            getSlices();
+            getSlice();
 
           }
 
@@ -197,8 +197,6 @@ $(document).on('ready', function() {
   // listen for 'saved' event
   io.on('saved', function() {
 
-    console.log('saved');
-
     stopWebcam();
 
     $('.view').html('<h1>Image saved</h1>');
@@ -218,18 +216,70 @@ $(document).on('ready', function() {
   // listen for 'slice' creation
   io.on('slice', function(data) {
 
-    console.log(data);
-
     $('.view').append('<img style="float: left;" src="' + data + '"/>');
 
   });
 
-  // listen for 'sliced' event
-  io.on('sliced', function(data) {
+  /*
 
-    console.log('sliced', data);
+    VIEW 6)
+
+  */
+
+  // listen for 'sliced' event
+  io.on('sliced', function(sliceGroupCount) {
 
     $('.view').html('<h1>Image sliced</h1>');
+
+    setTimeout(function() {
+
+      $('h1').remove();
+      $('.view').append('<canvas id="canvasElement" width="1280" height="720"></canvas>');
+
+      var canvas = document.getElementById('canvasElement');
+      var context = canvas.getContext('2d');
+
+      var sliceCounter = 1;
+
+      var sliceGroupCounter = 1;
+
+      var maxSliceCount = 719;
+
+      (function getSlice() {
+
+        setTimeout(function () {
+
+          var slice = new Image();
+
+          slice.src = 'slices/' + sliceGroupCounter + '/' + sliceCounter + '.png';
+
+          slice.onload = function () {
+            context.drawImage(slice, 0, sliceCounter);
+          }
+
+          if (maxSliceCount > sliceCounter) {
+
+            if (sliceGroupCounter == sliceGroupCount) {
+
+              sliceCounter++;
+              sliceGroupCounter = 1;
+              getSlice();
+
+            } else {
+
+              sliceCounter++;
+              sliceGroupCounter++;
+              getSlice();
+
+            }
+
+          }
+
+        }, 125);
+
+      })();
+
+    }, 500);
 
   });
 
