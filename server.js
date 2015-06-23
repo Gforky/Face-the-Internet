@@ -43,9 +43,11 @@ app.use(express.static(__dirname + '/public'));
 // setup complete...
 app.io.route('loaded', function(req) {
 
-  var sliceGroupCount = fs.readdirSync('public/slices').length;
+  var outputCount = fs.readdirSync('public/outputs/').length;
 
-  req.io.emit('ready', sliceGroupCount);
+  var output = fs.readdirSync('public/outputs/')[outputCount - 1];
+
+  req.io.emit('ready', output);
 
 });
 
@@ -158,6 +160,43 @@ app.io.route('image', function(req) {
       if (err != undefined) console.log('Error: ', err);
 
     }
+
+  });
+
+});
+
+// image saving and slicing...
+app.io.route('output', function(req) {
+
+  // data sent as base64 from client <canvas> element
+  var image = req.data;
+
+  // remove unnecessary junk from base64 string
+  function decodeBase64Image(dataString) {
+    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+      response = {};
+
+    if (matches.length !== 3) {
+      return new Error('Invalid input string');
+    }
+
+    response.type = matches[1];
+    response.data = new Buffer(matches[2], 'base64');
+
+    return response;
+  }
+
+  // create image buffer to write file to disk
+  var imageBuffer = decodeBase64Image(image);
+
+  // use time to give each string a unique ID
+  var date = new Date();
+  var time = date.getTime();
+
+  // write file to disk
+  fs.writeFile('public/outputs/output' + time + '.png', imageBuffer.data, function (err) {
+
+    if (err != undefined) console.log('Error: ', err);
 
   });
 

@@ -14,6 +14,23 @@ function connectServer() {
 
 }
 
+function getFace(output) {
+
+  $('.view').append('<canvas id="canvasElement" width="1280" height="720"></canvas>');
+
+  var canvas = document.getElementById('canvasElement');
+  var context = canvas.getContext('2d');
+
+  var face = new Image();
+
+  face.src = 'outputs/' + output;
+
+  face.onload = function () {
+    context.drawImage(face, 0, 0);
+  }
+
+}
+
 // define 'localStream' to allow access to the camera after access has been granted
 var localStream;
 
@@ -76,6 +93,16 @@ function saveImage() {
 
 }
 
+function saveOutput() {
+
+  var canvas = document.querySelector('#canvasElement');
+  var base64 = canvas.toDataURL();
+
+  // emit 'image' event
+  io.emit('output', base64);
+
+}
+
 /*
 
   VIEWS
@@ -93,43 +120,9 @@ $(document).on('ready', function() {
   */
 
   // listen for 'slice' creation
-  io.on('ready', function(sliceGroupCount) {
+  io.on('ready', function(output) {
 
-    var sliceCounter = 1;
-
-    var sliceGroupCounter = 1;
-
-    var maxSliceCount = 719;
-
-    (function getSlice() {
-
-      setTimeout(function () {
-
-        var slice = 'slices/' + sliceGroupCounter + '/' + sliceCounter + '.png';
-
-        $('.view').append('<img style="float: left;" src="' + slice + '"/>');
-
-        if (maxSliceCount > sliceCounter) {
-
-          if (sliceGroupCounter == sliceGroupCount) {
-
-            sliceCounter++;
-            sliceGroupCounter = 1;
-            getSlice();
-
-          } else {
-
-            sliceCounter++;
-            sliceGroupCounter++;
-            getSlice();
-
-          }
-
-        }
-
-      }, 125);
-
-    })();
+    getFace(output);
 
   });
 
@@ -201,10 +194,6 @@ $(document).on('ready', function() {
 
     $('.view').html('<h1>Image saved</h1>');
 
-    setTimeout(function() {
-      $('h1').remove();
-    }, 500);
-
   });
 
   /*
@@ -216,7 +205,11 @@ $(document).on('ready', function() {
   // listen for 'slice' creation
   io.on('slice', function(data) {
 
-    $('.view').append('<img style="float: left;" src="' + data + '"/>');
+    setTimeout(function() {
+
+      $('.view').html('<h1>Image slicing</h1>');
+
+    }, 500);
 
   });
 
@@ -233,7 +226,6 @@ $(document).on('ready', function() {
 
     setTimeout(function() {
 
-      $('h1').remove();
       $('.view').append('<canvas id="canvasElement" width="1280" height="720"></canvas>');
 
       var canvas = document.getElementById('canvasElement');
@@ -272,6 +264,16 @@ $(document).on('ready', function() {
               getSlice();
 
             }
+
+          } else {
+
+            saveOutput();
+
+            setTimeout(function() {
+
+              window.location.href = '/'
+
+            }, 500);
 
           }
 
