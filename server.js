@@ -115,6 +115,8 @@ app.io.route('image', function(req) {
         // start slicing on first pixel
         var sliceCounter = 1;
 
+        var isInitialSlice = true;
+
         (function makeSlice() {
 
           // use 'setTimeout' to get around memory issues
@@ -128,7 +130,10 @@ app.io.route('image', function(req) {
               // crop image to the full width of current image and increments of 1 pixel
               gm(lastImage).crop(imageWidth, 1, 0, sliceCounter).write('public/' + slice, function (err) {
 
-                app.io.broadcast('slice', slice);
+                if (isInitialSlice) {
+                  app.io.broadcast('initial slice', slice);
+                  isInitialSlice = false;
+                }
 
                 if (err != undefined) console.log('Error: ', err);
 
@@ -140,7 +145,7 @@ app.io.route('image', function(req) {
 
               });
 
-            } else if (imageHeight ==  sliceCounter) {
+            } else if (imageHeight == sliceCounter) {
 
               var sliceGroupCount = fs.readdirSync('public/slices').length;
 

@@ -203,11 +203,13 @@ $(document).on('ready', function() {
   */
 
   // listen for 'slice' creation
-  io.on('slice', function(data) {
+  io.on('initial slice', function(slice) {
+
+    console.log(slice);
 
     setTimeout(function() {
 
-      $('.view').html('<h1>Image slicing</h1>');
+      $('.view').html('<h1>Image slicing...</h1>');
 
     }, 500);
 
@@ -271,7 +273,7 @@ $(document).on('ready', function() {
 
             setTimeout(function() {
 
-              window.location.href = '/'
+              window.location.href = '/';
 
             }, 500);
 

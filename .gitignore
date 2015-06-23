@@ -4,4 +4,5 @@ dist
 .sass-cache
 captures
 public/slices
+public/outputs
 
