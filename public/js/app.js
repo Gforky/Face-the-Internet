@@ -1,5 +1,14 @@
 /*
 
+  VARIABLES
+
+*/
+
+// define 'localStream' to allow access to the camera after access has been granted
+var localStream;
+
+/*
+
   FUNCTIONS
 
 */
@@ -14,25 +23,20 @@ function connectServer() {
 
 }
 
-function getFace(output) {
+function drawOutput(output) {
 
-  $('.view').append('<canvas id="canvasElement" width="1280" height="720"></canvas>');
-
-  var canvas = document.getElementById('canvasElement');
+  var canvas = document.querySelector('#canvasElement');
   var context = canvas.getContext('2d');
 
-  var face = new Image();
+  var image = new Image();
 
-  face.src = 'outputs/' + output;
+  image.src = output;
 
-  face.onload = function () {
-    context.drawImage(face, 0, 0);
+  image.onload = function () {
+    context.drawImage(image, 0, 0);
   }
 
 }
-
-// define 'localStream' to allow access to the camera after access has been granted
-var localStream;
 
 function startWebcam() {
 
@@ -83,13 +87,43 @@ function captureImage() {
 
 }
 
-function saveImage() {
+function saveCapture() {
 
   var canvas = document.querySelector('#canvasElement');
   var base64 = canvas.toDataURL();
 
-  // emit 'image' event
-  io.emit('image', base64);
+  // emit 'capture' event
+  io.emit('capture', base64);
+
+}
+
+function drawCapture(capture) {
+
+  var canvas = document.querySelector('#canvasElement');
+  var context = canvas.getContext('2d');
+
+  var image = new Image();
+
+  image.src = capture;
+
+  image.onload = function () {
+    context.drawImage(image, 0, 0);
+  }
+
+}
+
+function drawSlice(slice, yPosition) {
+
+  var canvas = document.querySelector('#canvasElement');
+  var context = canvas.getContext('2d');
+
+  var image = new Image();
+
+  image.src = slice;
+
+  image.onload = function () {
+    context.drawImage(image, 0, yPosition);
+  }
 
 }
 
@@ -98,7 +132,7 @@ function saveOutput() {
   var canvas = document.querySelector('#canvasElement');
   var base64 = canvas.toDataURL();
 
-  // emit 'image' event
+  // emit 'output' event
   io.emit('output', base64);
 
 }
@@ -119,10 +153,33 @@ $(document).on('ready', function() {
 
   */
 
-  // listen for 'slice' creation
-  io.on('ready', function(output) {
+  // listen for 'first user' event
+  io.on('first user', function() {
 
-    getFace(output);
+    console.log('first user');
+
+    $('.view').append('<h1>Face the Internet</h1>' +
+    '<br>' +
+    '<button class="start">Start</button>' +
+    '<br>' +
+    '<h2>You are the first user, nothing to display.</h2>');
+
+  });
+
+  // listen for 'first user' event
+  io.on('user', function(data) {
+
+    console.log('user');
+
+    $('.view').append('<h1>Face the Internet</h1>' +
+    '<br>' +
+    '<button class="start">Start</button>' +
+    '<br>' +
+    '<canvas id="canvasElement" width="1280" height="720"></canvas>');
+
+    var output = data.lastOutput;
+
+    drawOutput(output);
 
   });
 
@@ -132,11 +189,11 @@ $(document).on('ready', function() {
 
   */
 
-  $('.start').on('click', function() {
+  $(document).on('click', '.start', function() {
 
     // replace current html with video
     $('.view').html('<video autoplay="true" id="videoElement"></video>' +
-      '<br>' +
+    '<br>' +
     '<button class="capture">Capture</button>' +
     '<br>');
 
@@ -153,7 +210,7 @@ $(document).on('ready', function() {
   $(document).on('click', '.capture', function() {
 
     // replace current html with video
-    $('.view').prepend('<canvas id="canvasElement"></canvas>' +
+    $('.view').prepend('<canvas id="canvasElement" width="1280" height="720"></canvas>' +
       '<br>' +
     '<button class="retake">Retake</button>' +
     '<button class="save">Save</button>' +
@@ -177,7 +234,9 @@ $(document).on('ready', function() {
 
   $(document).on('click', '.save', function() {
 
-    saveImage();
+    console.log('saving capture...')
+
+    saveCapture();
 
   });
 
@@ -187,12 +246,14 @@ $(document).on('ready', function() {
 
   */
 
-  // listen for 'saved' event
-  io.on('saved', function() {
+  // listen for 'capture saved' event
+  io.on('capture saved', function() {
+
+    console.log('capture saved');
 
     stopWebcam();
 
-    $('.view').html('<h1>Image saved</h1>');
+    $('.view').html('<h1>Capture saved</h1>');
 
   });
 
@@ -202,16 +263,58 @@ $(document).on('ready', function() {
 
   */
 
-  // listen for 'slice' creation
-  io.on('initial slice', function(slice) {
+  var hasSliced = false;
 
-    console.log(slice);
+  io.on('slicing capture', function() {
 
-    setTimeout(function() {
+    console.log('slicing capture...');
 
-      $('.view').html('<h1>Image slicing...</h1>');
+    if (!hasSliced) {
 
-    }, 500);
+      console.log('first slice');
+
+      hasSliced = true;
+
+      io.emit('first slice');
+
+    }
+
+    $('.view').html('<h1>Slicing capture...</h1>');
+
+  });
+
+  io.on('first slice', function(data) {
+
+    var isFirstUser = data.isFirstUser;
+
+    if (isFirstUser) {
+
+      $('.view').append('<canvas id="canvasElement" width="1280" height="720"></canvas>');
+
+      var capture = data.firstCapture;
+
+      drawCapture(capture);
+
+    } else {
+
+      $('.view').append('<canvas id="canvasElement" width="1280" height="720"></canvas>');
+
+      var output = 'outputs/' + data.lastOutput;
+
+      drawOutput(output);
+
+    }
+
+  });
+
+  io.on('slice url', function(data) {
+
+    var slice = data.sliceUrl;
+
+    var yPosition = data.yPosition;
+
+    drawSlice(slice, yPosition);
+
 
   });
 
@@ -221,71 +324,33 @@ $(document).on('ready', function() {
 
   */
 
-  // listen for 'sliced' event
-  io.on('sliced', function(sliceGroupCount) {
+  io.on('capture sliced', function() {
 
-    $('.view').html('<h1>Image sliced</h1>');
+    console.log('capture sliced');
+
+    $('h1').remove();
+    $('.view').prepend('<h1>Capture sliced</h1>');
+
+    saveOutput();
+
+  });
+
+  io.on('saving output', function() {
+
+    console.log('saving output...');
+
+  });
+
+  io.on('output saved', function() {
+
+    console.log('output saved');
 
     setTimeout(function() {
 
-      $('.view').append('<canvas id="canvasElement" width="1280" height="720"></canvas>');
-
-      var canvas = document.getElementById('canvasElement');
-      var context = canvas.getContext('2d');
-
-      var sliceCounter = 1;
-
-      var sliceGroupCounter = 1;
-
-      var maxSliceCount = 719;
-
-      (function getSlice() {
-
-        setTimeout(function () {
-
-          var slice = new Image();
-
-          slice.src = 'slices/' + sliceGroupCounter + '/' + sliceCounter + '.png';
-
-          slice.onload = function () {
-            context.drawImage(slice, 0, sliceCounter);
-          }
-
-          if (maxSliceCount > sliceCounter) {
-
-            if (sliceGroupCounter == sliceGroupCount) {
-
-              sliceCounter++;
-              sliceGroupCounter = 1;
-              getSlice();
-
-            } else {
-
-              sliceCounter++;
-              sliceGroupCounter++;
-              getSlice();
-
-            }
-
-          } else {
-
-            saveOutput();
-
-            setTimeout(function() {
-
-              window.location.href = '/';
-
-            }, 500);
-
-          }
-
-        }, 125);
-
-      })();
+      window.location.href = '/';
 
     }, 500);
 
   });
-
 
 });
