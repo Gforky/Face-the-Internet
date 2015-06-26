@@ -72,8 +72,9 @@ function saveCapture(capture) {
 
   // remove unnecessary junk from base64 string
   function decodeBase64Image(dataString) {
+
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-      response = {};
+        response = {};
 
     if (matches.length !== 3) {
       return new Error('Invalid input string');
@@ -132,6 +133,7 @@ function sliceCapture() {
 
       // make directory to put image in
       mkdirp('public/slices/' + captureCount + '/', function (err) {
+
           if (err) {
 
             console.log('Error: ', err);
@@ -145,7 +147,16 @@ function sliceCapture() {
             var captureHeight = value.height;
 
             // start slicing on first pixel
-            var sliceCounter = 1;
+
+            if (captureCount > captureHeight) {
+
+              var sliceCounter = captureCount - 719;
+
+            } else {
+
+              var sliceCounter = 1;
+
+            }
 
             (function makeSlice() {
 
@@ -162,6 +173,8 @@ function sliceCapture() {
 
                     if (err == undefined) {
 
+                      // for production uncomment below:
+                      // if (sliceCounter = captureCount) {
                       if (sliceCounter >= captureCount) {
                         app.io.broadcast('slice url', {'sliceUrl': slice, 'yPosition': sliceCounter});
                       }
@@ -192,7 +205,7 @@ function sliceCapture() {
 
                 }
 
-              }, 125);
+              }, 25);
 
             })();
 
