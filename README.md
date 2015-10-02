@@ -6,9 +6,11 @@ A node.js image experiment.
 
 Clone this repository and follow these steps:
 
-* Install Image Magick to your machine, you can use Homebrew to do this: `brew install imagemagick`
+* Install node on your machine 
+* Install Image Magick to your machine, you can use Homebrew to do this: `$ brew install imagemagick`
 * From the command line run: `$ npm install`
-* From the command line run: `$ bower install`
+* From the command line run: `$ npm start`
+* From a web browser navigate to: `localhost:3000`
 
 ## Technologies
 
