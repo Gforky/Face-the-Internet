@@ -5,8 +5,8 @@
 */
 
 // define the websockets express server
-app = require('express.io')();
-express = require('express.io');
+var app = require('express.io')();
+var express = require('express.io');
 app.http().io();
 
 /*
@@ -16,6 +16,7 @@ app.http().io();
 */
 
 // project dependencies
+var browserify = require('browserify');
 var fs = require('fs');
 var gm = require('gm').subClass({imageMagick: true});
 var mkdirp = require('mkdirp');
@@ -25,11 +26,6 @@ var mkdirp = require('mkdirp');
   FILES REQUESTS
 
 */
-
-// send jquery TO DO: Browserify
-app.get('/js/jquery.js', function(req, res) {
-    res.sendfile(__dirname + '/node_modules/jquery/dist/jquery.min.js');
-});
 
 // set static/public file access
 app.use(express.static(__dirname + '/public'));

@@ -1,10 +1,11 @@
 /*
 
-  VARIABLES
+  BROWSERIFY REQUIRES
 
 */
 
-var $ = jQuery;
+var $ = require('jquery'),
+    react = require('react');
 
 // define 'localStream' to allow access to the camera after access has been granted
 var localStream;
