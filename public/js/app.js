@@ -66,6 +66,16 @@ function startWebcam() {
       console.log('Error in video streaming: ', e);
   }
 
+  $('.view').append('<canvas id="hiddenCanvas" width="320" height="240" style="display:none"></canvas>');
+
+  var hiddenCanvas = document.querySelector('#hiddenCanvas');
+
+  var headTracker = new headtrakr.Tracker();
+  headTracker.init(video, hiddenCanvas);
+  headTracker.start();
+
+  console.log(headtrackingEvent);
+
 }
 
 function stopWebcam() {
