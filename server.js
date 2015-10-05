@@ -26,6 +26,11 @@ var mkdirp = require('mkdirp');
 
 */
 
+// send jquery TO DO: Browserify
+app.get('/js/jquery.js', function(req, res) {
+    res.sendfile(__dirname + '/node_modules/jquery/dist/jquery.min.js');
+});
+
 // set static/public file access
 app.use(express.static(__dirname + '/public'));
 

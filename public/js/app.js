@@ -4,6 +4,8 @@
 
 */
 
+var $ = jQuery;
+
 // define 'localStream' to allow access to the camera after access has been granted
 var localStream;
 
