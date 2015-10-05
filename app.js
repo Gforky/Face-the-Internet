@@ -1,22 +1,23 @@
 /*
 
-  BROWSERIFY REQUIRES
+  BROWSERIFY REQUIRES - browserify will make me in to a friendly bundle for the client
 
 */
 
 var $ = require('jquery'),
     react = require('react');
 
-// define 'localStream' to allow access to the camera after access has been granted
-var localStream;
-
 /*
 
-  FUNCTIONS
+  APPLICATION OBJECT
 
 */
 
-function connectServer() {
+// main application object...
+var app = {} || app;
+
+//
+app.connectServer = function () {
 
   // connect to websocket
   io = io.connect();
@@ -62,7 +63,7 @@ function startWebcam() {
 
   function successCallback(stream) {
       video.src = window.URL.createObjectURL(stream);
-      localStream = stream;
+      app.localStream = stream;
   }
 
   function errorCallback(e) {
@@ -73,18 +74,12 @@ function startWebcam() {
 
   var hiddenCanvas = document.querySelector('#hiddenCanvas');
 
-  var headTracker = new headtrakr.Tracker();
-  headTracker.init(video, hiddenCanvas);
-  headTracker.start();
-
-  console.log(headtrackingEvent);
-
 }
 
 function stopWebcam() {
 
-  localStream.stop();
-  localStream = null;
+  app.localStream.stop();
+  app.localStream = null;
 
 }
 
@@ -158,7 +153,7 @@ function saveOutput() {
 
 $(document).on('ready', function() {
 
-  connectServer();
+  app.connectServer();
 
   /*
 
