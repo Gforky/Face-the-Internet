@@ -21,7 +21,7 @@ app.http().io();
 var browserify = require('browserify'),
     fs = require('fs'),
     gm = require('gm').subClass({imageMagick: true}),
-    mkdirp = require('mkdirp')
+    mkdirp = require('mkdirp'),
     cv = require('opencv');
 
 /*
@@ -102,9 +102,7 @@ function saveCapture(capture) {
       detectFace(fileName);
 
     }
-
   });
-
 };
 
 function detectFace(fileName) {

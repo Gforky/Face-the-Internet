@@ -1,21 +1,39 @@
+/*
+
+    ALL DEPS
+
+*/
+
 var browserify = require('browserify'),
     gulp = require('gulp'),
     watch = require('gulp-watch'),
+    batch = require('gulp-batch'),
+    sass = require('gulp-ruby-sass'),
     source = require('vinyl-source-stream');
 
 /*
 
-  BUNDLE EVERYTHING UP FOR THE BROWSER WITH BROWSERIFY
+  BUNDLE JS UP FOR THE BROWSER WITH BROWSERIFY
 
 */
 
 gulp.task('browserify', function() {
     return browserify('./app.js')
         .bundle()
-        //Pass desired output filename to vinyl-source-stream
-        .pipe(source('main.js'))
-        // Start piping stream to tasks!
+        .pipe(source('app.js'))
         .pipe(gulp.dest('./public/js/'));
+});
+
+/*
+
+    COMPILE SCSS FILES
+
+*/
+
+gulp.task('sass', function () {
+  return sass('./sass/style.scss')
+    .on('error', sass.logError)
+    .pipe(gulp.dest('./public/css/'));
 });
 
 /*
@@ -24,16 +42,12 @@ gulp.task('browserify', function() {
 
 */
 
-// gulp.task('stream', function () {
-//     return gulp.src('./public/css/**/*.css')
-//         .pipe(watch('./public/css/**/*.css'))
-//         .pipe(gulp.dest('build'));
-// });
+gulp.task('watch', function () {
+    watch('./app.js', batch(function (events, done) {
+        gulp.start('browserify', done);
+    }));
 
-// gulp.task('callback', function (cb) {
-//     watch('./public/css/**/*.css', function () {
-//         gulp.src('./public/css/**/*.css')
-//             .pipe(watch('css/**/*.css'))
-//             .on('end', cb);
-//     });
-// });
+    watch('./sass/style.scss', batch(function (events, done) {
+        gulp.start('sass', done);
+    }));
+});

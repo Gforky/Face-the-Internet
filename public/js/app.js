@@ -17,35 +17,35 @@ var $ = require('jquery'),
 // main application object...
 var app = {} || app;
 
-//
 app.connectServer = function () {
 
   // connect to websocket
   io = io.connect();
 
-  // emit 'loaded' event
+  // emit 'loaded' event to server
   io.emit('loaded');
 
 }
 
-function drawOutput(output) {
+app.drawOutput = function(output) {
 
-  var canvas = document.querySelector('#canvasElement');
-  var context = canvas.getContext('2d');
+  app.canvas = document.querySelector('#canvasElement');
+
+  app.context = document.querySelector('#canvasElement').getContext('2d');
 
   var image = new Image();
 
   image.src = output;
 
   image.onload = function () {
-    context.drawImage(image, 0, 0);
+    app.context.drawImage(image, 0, 0);
   }
 
 }
 
-function startWebcam() {
+app.startWebcam = function() {
 
-  var video = document.querySelector("#videoElement");
+  app.video = document.querySelector("#videoElement");
 
   // create cross-browser var to check for webcam support
   navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -63,17 +63,13 @@ function startWebcam() {
   }
 
   function successCallback(stream) {
-      video.src = window.URL.createObjectURL(stream);
+      app.video.src = window.URL.createObjectURL(stream);
       app.localStream = stream;
   }
 
   function errorCallback(e) {
       console.log('Error in video streaming: ', e);
   }
-
-  $('.view').append('<canvas id="hiddenCanvas" width="320" height="240" style="display:none"></canvas>');
-
-  var hiddenCanvas = document.querySelector('#hiddenCanvas');
 
 }
 
@@ -86,13 +82,10 @@ function stopWebcam() {
 
 function captureImage() {
 
-  var video = document.querySelector("#videoElement");
-
   var canvas = document.querySelector('#canvasElement');
-  canvas.width = $(video).width();
-  canvas.height = $(video).height();
   var context = canvas.getContext('2d');
-  context.drawImage(video, 0, 0);
+
+  context.drawImage(app.video, 0, 0);
 
 }
 
@@ -188,7 +181,7 @@ $(document).on('ready', function() {
 
     var output = data.lastOutput;
 
-    drawOutput(output);
+    app.drawOutput(output);
 
   });
 
@@ -206,7 +199,7 @@ $(document).on('ready', function() {
     '<button class="capture">Capture</button>' +
     '<br>');
 
-    startWebcam();
+    app.startWebcam();
 
   });
 
@@ -236,6 +229,8 @@ $(document).on('ready', function() {
   */
 
   $(document).on('click', '.retake', function() {
+
+    $(app.video, '.capture').show();
 
     $('canvas, .retake, .save').remove();
 
@@ -310,7 +305,7 @@ $(document).on('ready', function() {
 
       var output = 'outputs/' + data.lastOutput;
 
-      drawOutput(output);
+      app.drawOutput(output);
 
     }
 

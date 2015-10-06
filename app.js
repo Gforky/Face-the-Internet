@@ -16,14 +16,6 @@ var $ = require('jquery'),
 // main application object...
 var app = {} || app;
 
-app.canvas = document.querySelector('#canvasElement');
-
-app.video = document.querySelector("#videoElement");
-
-app.context = document.querySelector('#canvasElement').getContext('2d');
-
-console.log(app);
-
 app.connectServer = function () {
 
   // connect to websocket
@@ -36,8 +28,9 @@ app.connectServer = function () {
 
 app.drawOutput = function(output) {
 
-  // var canvas = document.querySelector('#canvasElement');
-  // var context = canvas.getContext('2d');
+  app.canvas = document.querySelector('#canvasElement');
+
+  app.context = document.querySelector('#canvasElement').getContext('2d');
 
   var image = new Image();
 
@@ -49,9 +42,9 @@ app.drawOutput = function(output) {
 
 }
 
-function startWebcam() {
+app.startWebcam = function() {
 
-  // var video = document.querySelector("#videoElement");
+  app.video = document.querySelector("#videoElement");
 
   // create cross-browser var to check for webcam support
   navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -77,10 +70,6 @@ function startWebcam() {
       console.log('Error in video streaming: ', e);
   }
 
-  $('.view').append('<canvas id="hiddenCanvas" width="320" height="240" style="display:none"></canvas>');
-
-  var hiddenCanvas = document.querySelector('#hiddenCanvas');
-
 }
 
 function stopWebcam() {
@@ -92,13 +81,10 @@ function stopWebcam() {
 
 function captureImage() {
 
-  var video = document.querySelector("#videoElement");
-
   var canvas = document.querySelector('#canvasElement');
-  canvas.width = $(video).width();
-  canvas.height = $(video).height();
   var context = canvas.getContext('2d');
-  context.drawImage(video, 0, 0);
+
+  context.drawImage(app.video, 0, 0);
 
 }
 
@@ -212,7 +198,7 @@ $(document).on('ready', function() {
     '<button class="capture">Capture</button>' +
     '<br>');
 
-    startWebcam();
+    app.startWebcam();
 
   });
 
@@ -242,6 +228,8 @@ $(document).on('ready', function() {
   */
 
   $(document).on('click', '.retake', function() {
+
+    $(app.video, '.capture').show();
 
     $('canvas, .retake, .save').remove();
 
