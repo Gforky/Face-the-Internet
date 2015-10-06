@@ -23,7 +23,7 @@ var mkdirp = require('mkdirp');
 
 /*
 
-  FILES REQUESTS
+  FILE REQUESTS
 
 */
 
