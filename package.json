@@ -19,15 +19,17 @@
   "homepage": "https://github.com/JohnPett/Face-the-Internet#readme",
   "dependencies": {
     "babel": "^5.8.23",
-    "browserify": "^11.2.0",
-    "express.io": "^1.1.13",
+    "browserify": "11.2.0",
+    "express.io": "1.1.13",
     "fs": "0.0.2",
-    "gm": "^1.18.1",
-    "gulp": "^3.9.0",
-    "gulp-watch": "^4.3.5",
-    "jquery": "^2.1.4",
-    "mkdirp": "^0.5.1",
-    "react": "^0.13.3",
-    "vinyl-source-stream": "^1.1.0"
+    "gm": "1.18.1",
+    "gulp": "3.9.0",
+    "gulp-watch": "4.3.5",
+    "jquery": "2.1.4",
+    "mkdirp": "0.5.1",
+    "opencv": "3.2.0",
+    "react": "0.13.3",
+    "three": "0.72.0",
+    "vinyl-source-stream": "1.1.0"
   }
 }

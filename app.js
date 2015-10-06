@@ -16,35 +16,42 @@ var $ = require('jquery'),
 // main application object...
 var app = {} || app;
 
-//
+app.canvas = document.querySelector('#canvasElement');
+
+app.video = document.querySelector("#videoElement");
+
+app.context = document.querySelector('#canvasElement').getContext('2d');
+
+console.log(app);
+
 app.connectServer = function () {
 
   // connect to websocket
   io = io.connect();
 
-  // emit 'loaded' event
+  // emit 'loaded' event to server
   io.emit('loaded');
 
 }
 
-function drawOutput(output) {
+app.drawOutput = function(output) {
 
-  var canvas = document.querySelector('#canvasElement');
-  var context = canvas.getContext('2d');
+  // var canvas = document.querySelector('#canvasElement');
+  // var context = canvas.getContext('2d');
 
   var image = new Image();
 
   image.src = output;
 
   image.onload = function () {
-    context.drawImage(image, 0, 0);
+    app.context.drawImage(image, 0, 0);
   }
 
 }
 
 function startWebcam() {
 
-  var video = document.querySelector("#videoElement");
+  // var video = document.querySelector("#videoElement");
 
   // create cross-browser var to check for webcam support
   navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -62,7 +69,7 @@ function startWebcam() {
   }
 
   function successCallback(stream) {
-      video.src = window.URL.createObjectURL(stream);
+      app.video.src = window.URL.createObjectURL(stream);
       app.localStream = stream;
   }
 
@@ -187,7 +194,7 @@ $(document).on('ready', function() {
 
     var output = data.lastOutput;
 
-    drawOutput(output);
+    app.drawOutput(output);
 
   });
 
@@ -309,7 +316,7 @@ $(document).on('ready', function() {
 
       var output = 'outputs/' + data.lastOutput;
 
-      drawOutput(output);
+      app.drawOutput(output);
 
     }
 

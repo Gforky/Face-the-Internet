@@ -5,8 +5,10 @@
 */
 
 // define the websockets express server
-var app = require('express.io')();
-var express = require('express.io');
+var app = require('express.io')(),
+    express = require('express.io');
+
+// start server
 app.http().io();
 
 /*
@@ -16,10 +18,11 @@ app.http().io();
 */
 
 // project dependencies
-var browserify = require('browserify');
-var fs = require('fs');
-var gm = require('gm').subClass({imageMagick: true});
-var mkdirp = require('mkdirp');
+var browserify = require('browserify'),
+    fs = require('fs'),
+    gm = require('gm').subClass({imageMagick: true}),
+    mkdirp = require('mkdirp')
+    cv = require('opencv');
 
 /*
 
@@ -88,20 +91,36 @@ function saveCapture(capture) {
   // use time to give each string a unique ID
   var date = new Date();
   var time = date.getTime();
+  var fileName = 'public/captures/capture' + time + '.png'
 
-  fs.writeFile('public/captures/capture' + time + '.png', imageBuffer.data, function (err) {
+  fs.writeFile(fileName, imageBuffer.data, function (err) {
 
     if (err == null) {
 
       console.log('capture saved')
       app.io.broadcast('capture saved');
-      sliceCapture();
+      detectFace(fileName);
 
     }
 
   });
 
 };
+
+function detectFace(fileName) {
+  cv.readImage(fileName, function(err, im){
+    im.detectObject(cv.FACE_CASCADE, {}, function(err, faces){
+      if (faces.length > 0) {
+        console.log('face detected');
+        app.io.broadcast('face detected');
+        sliceCapture();
+      } else {
+        console.log('no face detected');
+        app.io.broadcast('no face detected');
+      }
+    });
+  });
+}
 
 function sliceCapture() {
 

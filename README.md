@@ -6,8 +6,9 @@ A node.js image experiment.
 
 Clone this repository and follow these steps:
 
-* Install node on your machine 
+* Install Node.js (v0.10.36) on your machine 
 * Install Image Magick to your machine, you can use Homebrew to do this: `$ brew install imagemagick`
+* Install OpenCV to your machine, you can use Homebrew to do this: `$ brew install opencv`
 * From the command line run: `$ npm install`
 * From the command line run: `$ npm start`
 * From a web browser navigate to: `localhost:3000`
