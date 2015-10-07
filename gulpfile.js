@@ -9,7 +9,8 @@ var browserify = require('browserify'),
     watch = require('gulp-watch'),
     batch = require('gulp-batch'),
     sass = require('gulp-ruby-sass'),
-    source = require('vinyl-source-stream');
+    source = require('vinyl-source-stream'),
+    minifyCss = require('gulp-minify-css');
 
 /*
 
@@ -38,6 +39,18 @@ gulp.task('sass', function () {
 
 /*
 
+    MINIFY CSS
+
+*/
+
+// gulp.task('minify-css', function() {
+//   return gulp.src('./public/css/style.css')
+//     .pipe(minifyCss({compatibility: 'ie8'}))
+//     .pipe(gulp.dest('./public/css/style.min.css'));
+// });
+
+/*
+
   WATCH FOR ALL FILE CHANGES
 
 */
@@ -50,4 +63,8 @@ gulp.task('watch', function () {
     watch('./sass/style.scss', batch(function (events, done) {
         gulp.start('sass', done);
     }));
+
+    // watch('./public/css/style.css', batch(function (events, done) {
+    //     gulp.start('minify-css', done);
+    // }));
 });
