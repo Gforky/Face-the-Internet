@@ -1,8 +1,6 @@
 node_modules
-dist
-.tmp
-.sass-cache
-captures
-public/slices
-public/outputs
-
+build/main.js
+build/specs.js
+build/vendors.js
+TEST-App.xml
+npm-debug.log
