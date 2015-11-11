@@ -6,7 +6,7 @@ This project was originally conceived between [Florian Hacker](http://cargocolle
 
 ### Introduction
 
-This project sits somewhere between sculpture, technology, art, graphic design and interactivity. An experiment as much as a learning exercise to combine the latest technologies for application development with thoughts on contemporary art and user interaction.
+This project sits somewhere between sculpture, technology, art, graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art and user interaction.
 
 ## Installation
 
@@ -30,12 +30,12 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 9. To `push` for the first time, you will need to reference the tag with the repository and repository, the online [documentation](https://docs.docker.com/mac/step_six/) gives the example of `$ docker tag 7d9495d03763 maryatdocker/docker-whale:latest`, where `7d9495d03763` is the `IMAGE ID`, and `latest` refers to the tag you are going to apply to this repository. Once you have done this, `docker push maryatdocker/docker-whale` using the example above. Once pushed, you can log in to [Docker Hub](https://hub.docker.com/) and see the changes.
 
-11. To `pull` an image, once logged in, simply follow git naming like so `docker push maryatdocker/docker-whale`.
+11. To `pull` an image, once logged in, simply follow git naming like so `$ docker push maryatdocker/docker-whale`.
 
 #### OpenCV
 
 1. [OpenCV](http://opencv.org/) needs to be installed on Mac OSX through a package manager. For this we have used [Brew](http://brew.sh/), but there are other options available. You can find install instructions for Brew [here](http://brew.sh/).
 
-2. To install [OpenCV](http://opencv.org/), once you have [Brew](http://brew.sh/), follow these commands: `brew tap homebrew/science`, followed by `brew install opencv`.
+2. To install [OpenCV](http://opencv.org/), once you have [Brew](http://brew.sh/), follow these commands: `$ brew tap homebrew/science`, followed by `$ brew install opencv`.
 
-3. Once this is installed, you will need the Node bindings to allow for interfacing with Javascript. There are a few options online, bu this project uses [this]() example.
+3. Once this is installed, you will need the Node bindings to allow for interfacing with Javascript. There are a few options online, bu this project uses [this](https://www.npmjs.com/package/opencv) example. To install the bindings, run `$ npm install opencv` from the root of the project directory.
