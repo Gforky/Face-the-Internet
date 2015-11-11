@@ -14,11 +14,11 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 1. Install [Docker](http://docs.docker.com/engine/installation/mac/).
 
-2. Clone Docker Image: `$ docker pull johnrobertpett/face-the-internet`
+2. Install [Node.js](https://nodejs.org/en/) for Docker. More information can be found [here](https://hub.docker.com/_/node/).
 
-3. Install [Node.js](https://nodejs.org/en/). More information can be found [here](https://hub.docker.com/_/node/).
+3. Clone Docker Image: `$ docker pull johnrobertpett/face-the-internet`
 
-4. From the root of the project folder: `$ npm install`
+4. From the root of the project/repository folder: `$ npm install`
 
 5. Run: `$ docker run -v $PWD:/app nodeapp forever start index.js` 
 
