@@ -10,6 +10,21 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 ## Installation
 
+### Quick Install
+
+1. Install [Docker](http://docs.docker.com/engine/installation/mac/).
+
+2. Clone Docker Image: `$ docker pull johnrobertpett/face-the-internet`
+
+3. Install [Node.js](https://nodejs.org/en/). More information can be found [here](https://hub.docker.com/_/node/).
+
+4. From the root of the project folder: `$ npm install`
+
+5. Run: `$ docker run -v $PWD:/app nodeapp forever start index.js` 
+
+
+### Detailed Install
+
 #### Docker
 
 1. [Install Docker](http://docs.docker.com/engine/installation/mac/), and all of the accompanying tools. As this was built on Mac OSX, these instructions are for recreating on that platform. If you want to just run the existing public image of this application, skip to step 8. The following steps give an outline of how to use Docker in general.
@@ -38,4 +53,4 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 2. To install [OpenCV](http://opencv.org/), once you have [Brew](http://brew.sh/), follow these commands: `$ brew tap homebrew/science`, followed by `$ brew install opencv`.
 
-3. Once this is installed, you will need the Node bindings to allow for interfacing with Javascript. There are a few options online, bu this project uses [this](https://www.npmjs.com/package/opencv) example. To install the bindings, run `$ npm install opencv` from the root of the project directory.
+3. Once this is installed, you will need the Node bindings to allow for interfacing with Javascript. There are a few options online, bu this project uses [this](https://www.npmjs.com/package/opencv) example. To install the bindings, run `$ npm install opencv --save` from the root of the project directory. For more information on this, please see [Peter Braden's Github repository](https://github.com/peterbraden/node-opencv).
