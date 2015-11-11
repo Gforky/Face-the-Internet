@@ -6,13 +6,13 @@ This project was originally conceived between [Florian Hacker](http://cargocolle
 
 ### Introduction
 
-This project sits somewhere between sculpture, technology, art, graphic design and interactivity.
+This project sits somewhere between sculpture, technology, art, graphic design and interactivity. An experiment as much as a learning exercise to combine the latest technologies for application development with thoughts on contemporary art and user interaction.
 
 ## Installation
 
 #### Docker
 
-1. [Install Docker](http://docs.docker.com/engine/installation/mac/), and all of the accompanying tools. As this was built on Mac OSX, these instructions are for recreating on that platform. If you want to just run the existing public image of this application, skip to step 8.
+1. [Install Docker](http://docs.docker.com/engine/installation/mac/), and all of the accompanying tools. As this was built on Mac OSX, these instructions are for recreating on that platform. If you want to just run the existing public image of this application, skip to step 8. The following steps give an outline of how to use Docker in general.
 
 2. Create a new `$ docker-machine`. To do this, use the following command: `$ docker-machine create --driver virtualbox dev`, replacing `dev` with your desired name.
 
