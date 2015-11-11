@@ -27,7 +27,7 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 #### Docker
 
-With the nature of development, staging, and local runtime enviroments it is essential to have a wrapper for Node.js so we can have a very specific setup that is not hindered by the host machine. OpenCV and Node,js, while quite widely documented, is very temperamental to updates and versions. It is therefore essential to use something like [Docker](http://docs.docker.com/engine/installation/mac/).
+With the nature of development, staging, and local runtime enviroments it is essential to have a wrapper for Node.js so we can have a very specific setup that is not hindered by the host machine. OpenCV and Node,js, while quite widely documented, are very temperamental to updates and versions. It is therefore essential to use something like [Docker](http://docs.docker.com/engine/installation/mac/).
 
 1. [Install Docker](http://docs.docker.com/engine/installation/mac/), and all of the accompanying tools. As this was built on Mac OSX, these instructions are for recreating on that platform. If you want to just run the existing public image of this application, skip to step 8. The following steps give an outline of how to use Docker in general.
 
@@ -47,7 +47,7 @@ With the nature of development, staging, and local runtime enviroments it is ess
 
 9. To `push` for the first time, you will need to reference the tag with the repository and repository, the online [documentation](https://docs.docker.com/mac/step_six/) gives the example of `$ docker tag 7d9495d03763 maryatdocker/docker-whale:latest`, where `7d9495d03763` is the `IMAGE ID`, and `latest` refers to the tag you are going to apply to this repository. Once you have done this, `docker push maryatdocker/docker-whale` using the example above. Once pushed, you can log in to [Docker Hub](https://hub.docker.com/) and see the changes.
 
-11. To `pull` an image, once logged in, simply follow git naming like so `$ docker push maryatdocker/docker-whale`.
+11. To `pull` an image, once logged in, simply follow git naming conventions like so `$ docker push maryatdocker/docker-whale`.
 
 #### OpenCV
 
