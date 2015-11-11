@@ -27,7 +27,7 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 #### Docker
 
-With the nature of development, staging, and local runtime enviroments it is essential to have a wrapper for 
+With the nature of development, staging, and local runtime enviroments it is essential to have a wrapper for Node.js so we can have a very specific setup that is not hindered by the host machine. OpenCV and Node,js, while quite widely documented, is very temperamental to updates and versions. It is therefore essential to use something like [Docker](http://docs.docker.com/engine/installation/mac/).
 
 1. [Install Docker](http://docs.docker.com/engine/installation/mac/), and all of the accompanying tools. As this was built on Mac OSX, these instructions are for recreating on that platform. If you want to just run the existing public image of this application, skip to step 8. The following steps give an outline of how to use Docker in general.
 
