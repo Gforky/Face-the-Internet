@@ -1,9 +1,11 @@
 #Face the Internet
 
 ### Background
+
 This project was originally conceived between [Florian Hacker](http://cargocollective.com/florianhacker) and [John Pett](http://johnpett.com) as an entry to the [Google and Barbican DevArt](https://devart.withgoogle.com/) contest. This project has also been contributed to by [Ben Harvey](https://github.com/gomako) and [Edu Wass](https://github.com/eduwass) for their lean programming skills!
 
 ### Introduction
+
 This project sits somewhere between sculpture, technology, art, graphic design and interactivity.
 
 ## Installation
@@ -26,8 +28,14 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 8. To `push` and `pull` from the [Docker Hub](https://hub.docker.com/), you will need to `login`. This command will allow you to log in to your account `$ docker login` and then you will be prompted to enter your credentials.
 
-9. To `push` for the first time, you will need to reference the tag with the repository and repository, the online [documentation](https://docs.docker.com/mac/step_six/) gives the example of `$ docker tag 7d9495d03763 maryatdocker/docker-whale:latest`, where `7d9495d03763` is the `IMAGE ID`, and `latest` refers to the tag you are going to apply to this repository. Once you have done this, `docker push maryatdocker/docker-whale` using the example above.
-
-10. Once pushed, you can log in to [Docker Hub](https://hub.docker.com/) and see the changes.
+9. To `push` for the first time, you will need to reference the tag with the repository and repository, the online [documentation](https://docs.docker.com/mac/step_six/) gives the example of `$ docker tag 7d9495d03763 maryatdocker/docker-whale:latest`, where `7d9495d03763` is the `IMAGE ID`, and `latest` refers to the tag you are going to apply to this repository. Once you have done this, `docker push maryatdocker/docker-whale` using the example above. Once pushed, you can log in to [Docker Hub](https://hub.docker.com/) and see the changes.
 
 11. To `pull` an image, once logged in, simply follow git naming like so `docker push maryatdocker/docker-whale`.
+
+#### OpenCV
+
+1. [OpenCV](http://opencv.org/) needs to be installed on Mac OSX through a package manager. For this we have used [Brew](http://brew.sh/), but there are other options available. You can find install instructions for Brew [here](http://brew.sh/).
+
+2. To install [OpenCV](http://opencv.org/), once you have [Brew](http://brew.sh/), follow these commands: `brew tap homebrew/science`, followed by `brew install opencv`.
+
+3. Once this is installed, you will need the Node bindings to allow for interfacing with Javascript. There are a few options online, bu this project uses [this]() example.
