@@ -7,8 +7,6 @@ var App = React.createClass({
 	render: function() {
 		return (
 			<div className="wrapper">
-				
-				<h1>What up?</h1>
 
 				<PhotoBooth></PhotoBooth>
 

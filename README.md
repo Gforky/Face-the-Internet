@@ -44,7 +44,7 @@ Remove all running images:
 
 6. Run: `$ docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`
 
-7. In your browser, navigate to: `http://192.168.99.100:3000/`
+7. In your browser, navigate to: [http://192.168.99.100:3000/](http://192.168.99.100:3000/)
 
 
 ### Detailed Install
@@ -73,7 +73,7 @@ With the nature of development, staging, and local runtime enviroments it is ess
 
 11. To `pull` an image, once logged in, simply follow git naming conventions like so `$ docker push maryatdocker/docker-whale`.
 
-12. When you wish to view the project through your web browser, you will need to bind the port of the docker machine with the port of your local machine, to do this run `docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`, this binds port 3000 exposed within your vm and allows you to view the web version here: `http://192.168.99.100:3000/`
+12. When you wish to view the project through your web browser, you will need to bind the port of the docker machine with the port of your local machine, to do this run `docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`, this binds port 3000 exposed within your vm and allows you to view the web version here: [http://192.168.99.100:3000/](http://192.168.99.100:3000/)
 
 #### OpenCV
 
@@ -84,3 +84,7 @@ With the nature of development, staging, and local runtime enviroments it is ess
 3. Once this is installed, you will need the Node bindings to allow for interfacing with Javascript. There are a few options online, bu this project uses [this](https://www.npmjs.com/package/opencv) example. To install the bindings, run `$ npm install opencv --save` from the root of the project directory. For more information on this, please see [Peter Braden's Github repository](https://github.com/peterbraden/node-opencv).
 
 #### Express + Websockets
+
+#### Development
+
+1. From the root of the project code, run `gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/), you can still see the site on [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
