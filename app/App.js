@@ -8,6 +8,8 @@ var App = React.createClass({
 		return (
 			<div className="wrapper">
 				
+				<h1>What up?</h1>
+
 				<PhotoBooth></PhotoBooth>
 
 			</div>

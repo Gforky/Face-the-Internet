@@ -164,7 +164,7 @@ gulp.task('default', function () {
 
   connect.server({
       root: 'build/',
-      port: 8889
+      port: 4000
   });
 
 });
