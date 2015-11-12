@@ -3,9 +3,9 @@ var React = require('react');
 
 var PhotoBooth = React.createClass({
 
-	_startWebcam function() {
-		
-	}
+	componentDidMount: function() {
+        console.log('Start webcam...');
+    },
 
 	render: function() {
 
