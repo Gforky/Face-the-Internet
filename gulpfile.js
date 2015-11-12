@@ -163,9 +163,9 @@ gulp.task('default', function () {
   });
 
   connect.server({
-        root: 'build/',
-        port: 8889
-    });
+      root: 'build/',
+      port: 8889
+  });
 
 });
 
