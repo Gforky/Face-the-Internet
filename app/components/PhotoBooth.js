@@ -22,9 +22,6 @@ var PhotoBooth = React.createClass({
             height: height
         });
 
-        var video = ReactDOM.findDOMNode(this.refs.video);
-        video.src = this.state.src;
-
     },
 
     _errorHandler: function(e) {
@@ -52,16 +49,7 @@ var PhotoBooth = React.createClass({
 
         if (navigator.getUserMedia) {
 
-            var hdConstraints = {
-                video: {
-                        mandatory: {
-                        minWidth: 1280,
-                        minHeight: 720
-                    }
-                }
-            };
-
-            navigator.getUserMedia(hdConstraints, this._successHandler, this._errorHandler);
+            navigator.getUserMedia({video: true}, this._successHandler, this._errorHandler);
 
         }
 
@@ -71,8 +59,7 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth">
-                <video ref="video" width={this.state.width} height={this.state.height}>
-                </video>
+                <video ref="video" width={this.state.width} height={this.state.height} src={this.state.src} autoPlay></video>
             </div>
         );
     }
