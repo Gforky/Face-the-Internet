@@ -2,9 +2,19 @@
 var React = require('react');
 
 var PhotoBooth = React.createClass({
+
+	_startWebcam function() {
+		
+	}
+
 	render: function() {
+
+		this.width = window.outerWidth;
+
+		this.height = window.outerHeight;
+
 		return (
-			<canvas width="200" height="100"></canvas>
+			<canvas width={this.width} height={this.height}></canvas>
 		);
 	}
 	

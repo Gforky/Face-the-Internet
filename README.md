@@ -14,21 +14,23 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 1. Navigate to 'Documents' on Mac OSX from your Terminal window.
 
-1. Install [Docker](http://docs.docker.com/engine/installation/mac/).
+2. Clone project code repository from [Github](https://github.com/JohnPett/Face-the-Internet) in to 'Documents'.
 
-2. Install [Node.js](https://hub.docker.com/_/node/) for Docker.
+3. Install [Docker](http://docs.docker.com/engine/installation/mac/).
 
-2. From Terminal run: `$ docker-machine env default`
+4. Install [Node.js](https://hub.docker.com/_/node/) for Docker.
+
+5. From Terminal run: `$ docker-machine env default`
  
-3. From Terminal run: `$ eval "$(docker-machine env default)"`
+6. From Terminal run: `$ eval "$(docker-machine env default)"`
 
-4. From Terminal run: `$ docker build -t nodeapp .`
+7. From Terminal run: `$ docker build -t nodeapp .`
 
-5. From Terminal run: `$ docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`
+8. From Terminal run: `$ docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`
 
-6. From the root of the project code `Documents/nodeapp`, run `$ gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/).
+9. From the root of the project code 'Documents/nodeapp', run `$ gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/).
 
-7. To deploy your code to view on the `docker-machine`, you must run `$ gulp deploy`  you can still see the site on the `docker-machine` [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
+10. To deploy your code to view on the `docker-machine`, you must run `$ gulp deploy`  to see the site on the `docker-machine` [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
 
 ### Useful
 
