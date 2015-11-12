@@ -1,8 +1,11 @@
 /** @jsx React.DOM */
 var React = require('react');
 
-var Canvas = React.createClass({
+var PhotoBooth = React.createClass({
 	render: function() {
+
+		let windowWidth = ;
+
 		return (
 			<canvas width="200" height="100"></canvas>
 		);
@@ -10,4 +13,4 @@ var Canvas = React.createClass({
 	
 });
 	
-module.exports = Canvas;
+module.exports = PhotoBooth;
