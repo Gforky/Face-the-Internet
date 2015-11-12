@@ -12,10 +12,17 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 ### Quick Start
 
-1. Navigate to the repository root in terminal. Must be cloned in 'Documents' on Mac OSX.
-2. Run: `$ docker-machine env dev`
-3. Run: `$ eval "$(docker-machine env dev)"`
-4. Run: `docker build -t nodeapp .`
+1. Navigate to the repository root in terminal. Must be cloned in to 'Documents' on Mac OSX.
+
+2. From Terminal run: `$ docker-machine env dev`
+ 
+3. From Terminal run: `$ eval "$(docker-machine env dev)"`
+
+4. From Terminal run: `docker build -t nodeapp .`
+
+5. From Terminal run: `$ docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`
+
+6. From the root of the project code, run `gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/), you can still see the site on the `docker-machine` [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
 
 ### Useful
 
