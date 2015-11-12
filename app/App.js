@@ -7,7 +7,10 @@ var Video = require('./components/Video.js');
 var App = React.createClass({
 	render: function() {
 		return (
-			<Header text="Face the Internet"></Header>
+			<div class="wrapper">
+				<Header text="Face the Internet"></Header>
+				<Canvas></Canvas>
+			</div>
 		);
 	}
 	
