@@ -1,9 +1,20 @@
 /** @jsx React.DOM */
 var React = require('react');
+var Video = require('../components/Video.js');
 
 var PhotoBooth = React.createClass({
 
-    componentDidMount: function() {
+    _setVideoSrc: function(src) {
+
+    },
+
+    componentWillMount: function() {
+
+        this.setState({
+            src: '',
+            width: '',
+            height: ''
+        });
 
         console.log('----------------------------------');
         console.log('[EVENT] ', 'Start webcam...');
@@ -13,6 +24,7 @@ var PhotoBooth = React.createClass({
         navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
         if (navigator.getUserMedia) {
+
             var hdConstraints = {
                 video: {
                         mandatory: {
@@ -21,14 +33,17 @@ var PhotoBooth = React.createClass({
                     }
                 }
             };
+
             navigator.getUserMedia(hdConstraints, successCallback, errorCallback);
+            
         }
 
         function successCallback(stream) {
             console.log('----------------------------------');
-            console.log('[EVENT] ', 'User has accepted webcam...');
+            console.log('[EVENT] ', 'User has accepted webcam: ', stream);
             console.log('----------------------------------');
-            console.log(this);
+            // this.setState({src: stream});
+            // this._setVideoSrc(stream);
         }
 
         function errorCallback(e) {
@@ -47,7 +62,7 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth">
-                <video width={this.width} height={this.height}></video>
+                <Video width={this.state.width} height={this.state.height} src={this.state.src}></Video>
             </div>
         );
     }
