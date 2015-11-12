@@ -6,7 +6,7 @@ This project was originally conceived between [Florian Hacker](http://cargocolle
 
 ### Introduction
 
-This project sits somewhere between sculpture, technology, art, graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art and user interaction.
+This project sits somewhere between sculpture, technology, art, motion graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art, computer vision and user interaction.
 
 ## Installation
 
@@ -89,10 +89,8 @@ Some notes to come...
 
 Some notes to come...
 
-#### Development
-
-1. From the root of the project code, run `gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/), you can still see the site on [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
-
 #### Architecture
 
-`.nodeapp/app` - 
+`.nodeapp/app` - React components and front-end development code.
+
+`.nodeapp/build` - Generated code for development, available on [http://localhost:4000/](http://localhost:4000/).
