@@ -1,10 +1,36 @@
 /** @jsx React.DOM */
 var React = require('react');
-var Video = require('../components/Video.js');
+var ReactDOM = require('react-dom');
 
 var PhotoBooth = React.createClass({
 
-    _setVideoSrc: function(src) {
+    _successHandler: function(stream) {
+
+        console.log('----------------------------------');
+        console.log('[EVENT] ', 'User has accepted webcam: ', stream);
+        console.log('----------------------------------');
+
+        var src = window.URL.createObjectURL(stream);
+
+        var width = window.outerWidth;
+
+        var height = window.outerHeight;
+
+        this.setState({
+            src: src,
+            width: width,
+            height: height
+        });
+
+        console.log(ReactDOM.findDOMNode());
+
+    },
+
+    _errorHandler: function(e) {
+
+        console.log('----------------------------------');
+        console.log('[ERROR] ', 'User has error webcam: ', e);
+        console.log('----------------------------------');
 
     },
 
@@ -34,35 +60,18 @@ var PhotoBooth = React.createClass({
                 }
             };
 
-            navigator.getUserMedia(hdConstraints, successCallback, errorCallback);
-            
-        }
+            navigator.getUserMedia(hdConstraints, this._successHandler, this._errorHandler);
 
-        function successCallback(stream) {
-            console.log('----------------------------------');
-            console.log('[EVENT] ', 'User has accepted webcam: ', stream);
-            console.log('----------------------------------');
-            // this.setState({src: stream});
-            // this._setVideoSrc(stream);
-        }
-
-        function errorCallback(e) {
-            console.log('----------------------------------');
-            console.log('[ERROR] ', 'User has error webcam: ', e);
-            console.log('----------------------------------');
         }
 
     },
 
     render: function() {
 
-        this.width = window.outerWidth;
-
-        this.height = window.outerHeight;
-
         return (
             <div className="PhotoBooth">
-                <Video width={this.state.width} height={this.state.height} src={this.state.src}></Video>
+                <video width={this.state.width} height={this.state.height} src={this.state.src}>
+                </video>
             </div>
         );
     }

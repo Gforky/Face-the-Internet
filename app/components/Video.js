@@ -4,7 +4,7 @@ var React = require('react');
 var Video = React.createClass({
     render: function() {
         return (
-            <video width={this.props.width} height={this.props.height} src={this.props.src}></video>
+            <video></video>
         );
     }
     
