@@ -12,17 +12,23 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 ### Quick Start
 
-1. Navigate to the repository root in terminal. Must be cloned in to 'Documents' on Mac OSX.
+1. Navigate to 'Documents' on Mac OSX from your Terminal window.
 
-2. From Terminal run: `$ docker-machine env dev`
+1. Install [Docker](http://docs.docker.com/engine/installation/mac/).
+
+2. Install [Node.js](https://hub.docker.com/_/node/) for Docker.
+
+2. From Terminal run: `$ docker-machine env default`
  
-3. From Terminal run: `$ eval "$(docker-machine env dev)"`
+3. From Terminal run: `$ eval "$(docker-machine env default)"`
 
-4. From Terminal run: `docker build -t nodeapp .`
+4. From Terminal run: `$ docker build -t nodeapp .`
 
 5. From Terminal run: `$ docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`
 
-6. From the root of the project code, run `gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/), you can still see the site on the `docker-machine` [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
+6. From the root of the project code `Documents/nodeapp`, run `$ gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/).
+
+7. To deploy your code to view on the `docker-machine`, you must run `$ gulp deploy`  you can still see the site on the `docker-machine` [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
 
 ### Useful
 
@@ -36,23 +42,6 @@ Stop all running images:
 
 Remove all running images:
 `$ docker rm $(docker ps -a -q)`
-
-### Quick Install
-
-1. Install [Docker](http://docs.docker.com/engine/installation/mac/).
-
-2. Install [Node.js](https://nodejs.org/en/) for Docker. More information can be found [here](https://hub.docker.com/_/node/).
-
-3. Clone Docker Image: `$ docker pull johnrobertpett/face-the-internet`
-
-4. Clone project code to your 'Documents' folder from: `$ git clone https://github.com/JohnPett/Face-the-Internet.git`
-
-5. From the root of the project code repository folder/'Documents' folder: `$ npm install`
-
-6. Run: `$ docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`
-
-7. In your browser, navigate to: [http://192.168.99.100:3000/](http://192.168.99.100:3000/)
-
 
 ### Detailed Install
 
@@ -92,6 +81,16 @@ With the nature of development, staging, and local runtime enviroments it is ess
 
 #### Express + Websockets
 
+Some notes to come...
+
+#### React
+
+Some notes to come...
+
 #### Development
 
 1. From the root of the project code, run `gulp`, this will give you a development version of the front-end on [http://localhost:4000/](http://localhost:4000/), you can still see the site on [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
+
+#### Architecture
+
+`.nodeapp/app` - 
