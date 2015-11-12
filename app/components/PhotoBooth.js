@@ -28,6 +28,7 @@ var PhotoBooth = React.createClass({
             console.log('----------------------------------');
             console.log('[EVENT] ', 'User has accepted webcam...');
             console.log('----------------------------------');
+            console.log(this);
         }
 
         function errorCallback(e) {
