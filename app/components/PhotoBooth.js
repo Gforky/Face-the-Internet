@@ -29,7 +29,7 @@ var PhotoBooth = React.createClass({
     _errorHandler: function(e) {
 
         console.log('----------------------------------');
-        console.log('[ERROR] ', 'User has error webcam: ', e);
+        console.log('[ERROR] ', 'User has webcam error: ', e);
         console.log('----------------------------------');
 
     },
@@ -70,7 +70,7 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth">
-                <video width={this.state.width} height={this.state.height} src={this.state.src}>
+                <video ref="video" width={this.state.width} height={this.state.height} src={this.state.src}>
                 </video>
             </div>
         );

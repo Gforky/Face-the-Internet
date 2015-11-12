@@ -151,40 +151,20 @@ gulp.task('default', function () {
   livereload.listen();
 
   browserifyTask({
-    development: true,
+    development: false,
     src: './app/main.js',
-    dest: './build'
+    dest: './public'
   });
   
   cssTask({
-    development: true,
+    development: false,
     src: './styles/**/*.css',
-    dest: './build'
+    dest: './public'
   });
 
   connect.server({
-      root: 'build/',
+      root: 'public/',
       port: 4000
   });
 
-});
-
-gulp.task('deploy', function () {
-
-  browserifyTask({
-    development: false,
-    src: './app/main.js',
-    dest: './public'
-  });
-  
-  cssTask({
-    development: false,
-    src: './styles/**/*.css',
-    dest: './public'
-  });
-
-});
-
-gulp.task('test', function () {
-    return gulp.src('./build/testrunner-phantomjs.html').pipe(jasminePhantomJs());
 });
