@@ -94,3 +94,5 @@ Some notes to come...
 `.nodeapp/app` - React components and front-end development code.
 
 `.nodeapp/build` - Generated code for development, available on [http://localhost:4000/](http://localhost:4000/).
+
+`.nodeapp/public` - Generated code for production, available on [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
