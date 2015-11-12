@@ -59,45 +59,6 @@ var browserifyTask = function (options) {
   }
       
   rebundle();
-
-  // We create a separate bundle for our dependencies as they
-  // should not rebundle on file changes. This only happens when
-  // we develop. When deploying the dependencies will be included 
-  // in the application bundle
-  if (options.development) {
-
-    var testFiles = glob.sync('./specs/**/*-spec.js');
-    var testBundler = browserify({
-      entries: testFiles,
-      debug: true, // Gives us sourcemapping
-      transform: [reactify],
-      cache: {}, packageCache: {}, fullPaths: true // Requirement of watchify
-    });
-
-    // Remove react-addons when deploying, as it is only for
-    // testing
-    if (!options.development) {
-      dependencies.splice(dependencies.indexOf('react-addons'), 1);
-    }
-
-    var vendorsBundler = browserify({
-      debug: true,
-      require: dependencies
-    });
-    
-    // Run the vendor bundle
-    var start = new Date();
-    console.log('Building VENDORS bundle');
-    vendorsBundler.bundle()
-      .on('error', gutil.log)
-      .pipe(source('vendors.js'))
-      .pipe(gulpif(!options.development, streamify(uglify())))
-      .pipe(gulp.dest(options.dest))
-      .pipe(notify(function () {
-        console.log('VENDORS bundle built in ' + (Date.now() - start) + 'ms');
-      }));
-    
-  }
   
 }
 
@@ -126,6 +87,7 @@ var cssTask = function (options) {
 
 // Starts our development workflow
 gulp.task('default', function () {
+
   livereload.listen();
 
   browserifyTask({

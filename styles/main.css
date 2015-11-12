@@ -55,3 +55,17 @@ body {
 .PhotoBooth {
 
 }
+
+button {
+    background: black;
+    color: white;
+    border: 3px solid white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 30px;
+    font-size: 20px;
+    cursor: hand;
+    cursor: pointer;
+    letter-spacing: 2px;
+}
