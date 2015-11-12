@@ -13,7 +13,6 @@ var gutil = require('gulp-util');
 var shell = require('gulp-shell');
 var glob = require('glob');
 var livereload = require('gulp-livereload');
-var jasminePhantomJs = require('gulp-jasmine2-phantomjs');
 var connect = require('gulp-connect');
 
 // External dependencies you do not want to rebundle while developing,
@@ -74,27 +73,6 @@ var browserifyTask = function (options) {
       transform: [reactify],
       cache: {}, packageCache: {}, fullPaths: true // Requirement of watchify
     });
-
-    dependencies.forEach(function (dep) {
-      testBundler.external(dep);
-    });
-
-    var rebundleTests = function () {
-      var start = Date.now();
-      console.log('Building TEST bundle');
-      testBundler.bundle()
-      .on('error', gutil.log)
-        .pipe(source('specs.js'))
-        .pipe(gulp.dest(options.dest))
-        .pipe(livereload())
-        .pipe(notify(function () {
-          console.log('TEST bundle built in ' + (Date.now() - start) + 'ms');
-        }));
-    };
-
-    testBundler = watchify(testBundler);
-    testBundler.on('update', rebundleTests);
-    rebundleTests();
 
     // Remove react-addons when deploying, as it is only for
     // testing

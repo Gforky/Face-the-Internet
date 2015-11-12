@@ -22,7 +22,8 @@ var PhotoBooth = React.createClass({
             height: height
         });
 
-        console.log(ReactDOM.findDOMNode());
+        var video = ReactDOM.findDOMNode(this.refs.video);
+        video.src = this.state.src;
 
     },
 
@@ -70,7 +71,7 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth">
-                <video ref="video" width={this.state.width} height={this.state.height} src={this.state.src}>
+                <video ref="video" width={this.state.width} height={this.state.height}>
                 </video>
             </div>
         );
