@@ -10,6 +10,26 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 ## Installation
 
+### Quick Start
+
+1. Navigate to the repository root in terminal. Must be cloned in 'Documents' on Mac OSX.
+2. Run: `$ docker-machine env dev`
+3. Run: `$ eval "$(docker-machine env dev)"`
+4. Run: `docker build -t nodeapp .`
+
+### Useful
+
+[Cheat sheet](https://github.com/wsargent/docker-cheat-sheet).
+
+Remove image:
+`$ docker rmi **image_ID**`
+
+Stop all running images:
+`$ docker stop $(docker ps -a -q)`
+
+Remove all running images:
+`$ docker rm $(docker ps -a -q)`
+
 ### Quick Install
 
 1. Install [Docker](http://docs.docker.com/engine/installation/mac/).
@@ -18,9 +38,13 @@ This project sits somewhere between sculpture, technology, art, graphic design a
 
 3. Clone Docker Image: `$ docker pull johnrobertpett/face-the-internet`
 
-4. From the root of the project/repository folder: `$ npm install`
+4. Clone project code to your 'Documents' folder from: `$ git clone https://github.com/JohnPett/Face-the-Internet.git`
 
-5. Run: `$ docker run -v $PWD:/app nodeapp forever start index.js` 
+5. From the root of the project code repository folder/'Documents' folder: `$ npm install`
+
+6. Run: `$ docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`
+
+7. In your browser, navigate to: `http://192.168.99.100:3000/`
 
 
 ### Detailed Install
@@ -41,13 +65,15 @@ With the nature of development, staging, and local runtime enviroments it is ess
 
 6. To run the project, you can use the command `$ docker run -v $PWD:/app nodeapp node index.js`, this is the same as running `node server.js` or similar, for those coming from working in that kind of enviroment. The major differences are that we associate the application with the Docker volume and the associated image, then run what is normal for [Node.js](https://nodejs.org/en/) development.
 
-7. A useful `npm module` to use is [forever.js](https://github.com/foreverjs/forever), which you can add to your `Dockerfile` to run the file that starts your server, for example. To run the file use this line `RUN npm install forever -g` in your `Dockerfile`. To run the image, now you can use `$ docker run -v $PWD:/app nodeapp forever start index.js`
+7. A useful `npm module` to use is [forever.js](https://github.com/foreverjs/forever), which you can add to your `Dockerfile` to run the file that starts your server, for example. To run the file use this line `RUN npm install forever -g` in your `Dockerfile`. To run the image, now you can use `$ docker run -v $PWD:/app nodeapp forever index.js`
 
 8. To `push` and `pull` from the [Docker Hub](https://hub.docker.com/), you will need to `login`. This command will allow you to log in to your account `$ docker login` and then you will be prompted to enter your credentials.
 
 9. To `push` for the first time, you will need to reference the tag with the repository and repository, the online [documentation](https://docs.docker.com/mac/step_six/) gives the example of `$ docker tag 7d9495d03763 maryatdocker/docker-whale:latest`, where `7d9495d03763` is the `IMAGE ID`, and `latest` refers to the tag you are going to apply to this repository. Once you have done this, `docker push maryatdocker/docker-whale` using the example above. Once pushed, you can log in to [Docker Hub](https://hub.docker.com/) and see the changes.
 
 11. To `pull` an image, once logged in, simply follow git naming conventions like so `$ docker push maryatdocker/docker-whale`.
+
+12. When you wish to view the project through your web browser, you will need to bind the port of the docker machine with the port of your local machine, to do this run `docker run --rm -it -p 3000:3000 -v $PWD:/app nodeapp forever index.js`, this binds port 3000 exposed within your vm and allows you to view the web version here: `http://192.168.99.100:3000/`
 
 #### OpenCV
 
