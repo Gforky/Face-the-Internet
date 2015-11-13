@@ -60,8 +60,6 @@ var browserifyTask = function (options) {
   }
       
   rebundle();
-<<<<<<< HEAD
-=======
 
   // We create a separate bundle for our dependencies as they
   // should not rebundle on file changes. This only happens when
@@ -122,7 +120,6 @@ var browserifyTask = function (options) {
       }));
     
   }
->>>>>>> origin/master
   
 }
 

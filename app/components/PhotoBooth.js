@@ -91,7 +91,7 @@ var PhotoBooth = React.createClass({
             <div className="PhotoBooth">
                 <video ref="video" width={this.state.width} height={this.state.height} src={this.state.src} autoPlay></video>
                 <canvas ref="canvas"></canvas>
-                <button src={this.state.src} onClick={this._clickHandler.bind(this, this.state.src)}>Capture</button>
+                <button src={this.state.src} onClick={this._clickHandler.bind(this, this.state.src)}>Capture Me</button>
             </div>
         );
     }
