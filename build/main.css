@@ -1,9 +1,6 @@
 /*
 	RESET
 */
-/*
-	RESET
-*/
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -44,17 +41,30 @@ table {
 /*
 	GLOBAL
 */
+body {
+  font-family: sans-serif;
+  background: black;
+  color: white; }
 
 button {
-    background: black;
-    color: white;
-    border: 3px solid white;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 30px;
-    font-size: 20px;
-    cursor: hand;
-    cursor: pointer;
-    letter-spacing: 2px;
-}
+  background: black;
+  border: 3px solid white;
+  padding: 15px;
+  color: white;
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  cursor: pointer;
+  cursor: hand; }
+
+/*
+	VIEWS
+*/
+/*
+	VIEWS
+*/
+/*
+	START PAGE
+*/
+/*
+	PHOTOBOOTH
+*/

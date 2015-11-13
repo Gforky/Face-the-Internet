@@ -2,6 +2,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var three = require('three');
+var Face = require('../components/Face.js');
 
 var StartPage = React.createClass({
 
@@ -11,9 +12,6 @@ var StartPage = React.createClass({
         console.log('[EVENT] ', 'New user.');
         console.log('----------------------------------');
 
-        var bust = ReactDOM.findDOMNode(this.refs.bust);
-        console.log(bust);
-
     },
 
     render: function() {
@@ -22,7 +20,7 @@ var StartPage = React.createClass({
             <div className="StartPage">
             	<h1>Headline Title</h1>
             	<button>Click to start</button>
-                <div ref="bust"></div>
+                <Face></Face>
             </div>
         );
     }
