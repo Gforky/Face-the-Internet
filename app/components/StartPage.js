@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
+var three = require('three');
 
 var StartPage = React.createClass({
 
