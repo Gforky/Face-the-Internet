@@ -14,6 +14,7 @@ var shell = require('gulp-shell');
 var glob = require('glob');
 var livereload = require('gulp-livereload');
 var connect = require('gulp-connect');
+var sass = require('gulp-sass');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -145,8 +146,16 @@ var cssTask = function (options) {
     }
 }
 
+// Function to check for SASS compliling and errors
+gulp.task('sass', function () {
+  gulp.src('./sass/main.scss')
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(gulp.dest('./styles'));
+});
+
 // Starts our development workflow
 gulp.task('default', function () {
+
   livereload.listen();
 
   browserifyTask({
@@ -154,6 +163,8 @@ gulp.task('default', function () {
     src: './app/main.js',
     dest: './build'
   });
+
+  gulp.watch('./sass/main.scss', ['sass']);
   
   cssTask({
     development: true,

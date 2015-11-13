@@ -12,7 +12,8 @@ var StartPage = React.createClass({
 
         return (
             <div className="StartPage">
-
+            	<h1>Headline Title</h1>
+            	<button>Click to start</button>
             </div>
         );
     }
