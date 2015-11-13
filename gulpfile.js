@@ -14,28 +14,29 @@ var shell = require('gulp-shell');
 var glob = require('glob');
 var livereload = require('gulp-livereload');
 var connect = require('gulp-connect');
+var sass = require('gulp-sass');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
 var dependencies = [
-  'react',
+	'react',
   'react/addons'
 ];
 
 var browserifyTask = function (options) {
 
   // Our app bundler
-  var appBundler = browserify({
-    entries: [options.src], // Only need initial file, browserify finds the rest
-    transform: [reactify], // We want to convert JSX to normal javascript
-    debug: options.development, // Gives us sourcemapping
-    cache: {}, packageCache: {}, fullPaths: options.development // Requirement of watchify
-  });
+	var appBundler = browserify({
+		entries: [options.src], // Only need initial file, browserify finds the rest
+   	transform: [reactify], // We want to convert JSX to normal javascript
+		debug: options.development, // Gives us sourcemapping
+		cache: {}, packageCache: {}, fullPaths: options.development // Requirement of watchify
+	});
 
-  // We set our dependencies as externals on our app bundler when developing    
-  (options.development ? dependencies : []).forEach(function (dep) {
-    appBundler.external(dep);
-  });
+	// We set our dependencies as externals on our app bundler when developing		
+	(options.development ? dependencies : []).forEach(function (dep) {
+		appBundler.external(dep);
+	});
 
   // The rebundle process
   var rebundle = function () {
@@ -59,6 +60,69 @@ var browserifyTask = function (options) {
   }
       
   rebundle();
+<<<<<<< HEAD
+=======
+
+  // We create a separate bundle for our dependencies as they
+  // should not rebundle on file changes. This only happens when
+  // we develop. When deploying the dependencies will be included 
+  // in the application bundle
+  if (options.development) {
+
+  	var testFiles = glob.sync('./specs/**/*-spec.js');
+		var testBundler = browserify({
+			entries: testFiles,
+			debug: true, // Gives us sourcemapping
+			transform: [reactify],
+			cache: {}, packageCache: {}, fullPaths: true // Requirement of watchify
+		});
+
+		dependencies.forEach(function (dep) {
+			testBundler.external(dep);
+		});
+
+  	var rebundleTests = function () {
+  		var start = Date.now();
+  		console.log('Building TEST bundle');
+  		testBundler.bundle()
+      .on('error', gutil.log)
+	      .pipe(source('specs.js'))
+	      .pipe(gulp.dest(options.dest))
+	      .pipe(livereload())
+	      .pipe(notify(function () {
+	        console.log('TEST bundle built in ' + (Date.now() - start) + 'ms');
+	      }));
+  	};
+
+    testBundler = watchify(testBundler);
+    testBundler.on('update', rebundleTests);
+    rebundleTests();
+
+    // Remove react-addons when deploying, as it is only for
+    // testing
+    if (!options.development) {
+      dependencies.splice(dependencies.indexOf('react-addons'), 1);
+    }
+
+    var vendorsBundler = browserify({
+      debug: true,
+      require: dependencies
+    });
+    
+    // Run the vendor bundle
+    var start = new Date();
+    console.log('Building VENDORS bundle');
+    vendorsBundler.bundle()
+      .on('error', gutil.log)
+      .pipe(source('vendors.js'))
+      .pipe(gulpif(!options.development, streamify(uglify())))
+      .pipe(gulp.dest(options.dest))
+      .pipe(notify(function () {
+        console.log('VENDORS bundle built in ' + (Date.now() - start) + 'ms');
+      }));
+    
+  }
+>>>>>>> origin/master
   
 }
 
@@ -85,10 +149,40 @@ var cssTask = function (options) {
     }
 }
 
+// Function to check for SASS compliling and errors
+gulp.task('sass', function () {
+  gulp.src('./sass/main.scss')
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(gulp.dest('./styles'));
+});
+
 // Starts our development workflow
 gulp.task('default', function () {
 
   livereload.listen();
+
+  browserifyTask({
+    development: true,
+    src: './app/main.js',
+    dest: './build'
+  });
+
+  gulp.watch('./sass/main.scss', ['sass']);
+  
+  cssTask({
+    development: true,
+    src: './styles/**/*.css',
+    dest: './build'
+  });
+
+  connect.server({
+        root: 'build/',
+        port: 4000
+    });
+
+});
+
+gulp.task('deploy', function () {
 
   browserifyTask({
     development: false,
@@ -100,11 +194,6 @@ gulp.task('default', function () {
     development: false,
     src: './styles/**/*.css',
     dest: './public'
-  });
-
-  connect.server({
-      root: 'public/',
-      port: 4000
   });
 
 });
