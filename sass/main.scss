@@ -2,21 +2,10 @@
 	GLOBAL
 */
 
-button {
-	background: black;
-	border: 3px solid white;
-	padding: 15px;
-	color: white;
-}
+@import 'global';
 
 /*
 	VIEWS
 */
 
-.StartPage {
-
-}
-
-.PhotoBooth {
-
-}
+@import 'views';
