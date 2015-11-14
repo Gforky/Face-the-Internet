@@ -18,8 +18,8 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
-
-var server = app.listen(3000, function() {
+var port = process.env.PORT || 5000;
+var server = app.listen(port, function() {
   
   var port = server.address().port;
   console.log('App listening on port:', port);
