@@ -4,7 +4,8 @@
   "description": "### Background",
   "main": "index.js",
   "engines": {
-    "node": "0.10.25"
+    "node": "0.10.25",
+    "npm": "2.7.4"
   },
   "scripts": {
     "start": "node index.js",
