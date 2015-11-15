@@ -1,4 +1,4 @@
-  #Face the Internet
+#Face the Internet
 
 ### Background
 
