@@ -1,7 +1,7 @@
 {
   "name": "face-the-internet",
   "version": "1.0.0",
-  "description": "### Background",
+  "description": "This project sits somewhere between sculpture, technology, art, motion graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art, computer vision and user interaction.",
   "main": "index.js",
   "engines": {
     "node": "0.10.25",
@@ -15,8 +15,8 @@
     "type": "git",
     "url": "git+https://github.com/JohnPett/Face-the-Internet.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "John Pett + Edu Wass",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/JohnPett/Face-the-Internet/issues"
   },
