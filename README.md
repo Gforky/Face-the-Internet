@@ -97,7 +97,7 @@ Flynn is the cluster PaaS that will take care of all the devops for us, we just 
 
 Fire up a DigitalOcean droplet with Ubuntu 14.04 x64
 
-**Setup DigitalOcean droplet**
+###### Setup DigitalOcean droplet 
 
 Bash run [this script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4)
 
@@ -108,7 +108,7 @@ When it finishes, remember the last 10 lines of output contain some important in
 
 ##### When Flynn is already setup:
 
-** Pushing app to Flynn **
+###### Pushing app to Flynn
 
 From your dev machine, go to a folder where you store the face-the-internet repo:
 
