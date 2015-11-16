@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
-var three = require('three');
 var Face = require('../components/Face.js');
 
 var StartPage = React.createClass({
@@ -18,8 +17,6 @@ var StartPage = React.createClass({
 
         return (
             <div className="StartPage">
-            	<h1>Headline Title</h1>
-            	<button>Click to start</button>
                 <Face></Face>
             </div>
         );
