@@ -10,6 +10,9 @@ This project sits somewhere between sculpture, technology, art, motion graphic d
 
 ## Installation
 
+### Prerequisites
+Python & :/pkg-config need installing with Brew.
+
 ### Quick Start
 
 1. Navigate to 'Documents' on Mac OSX from your Terminal window.
