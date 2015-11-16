@@ -173,9 +173,9 @@ gulp.task('default', function () {
   });
 
   connect.server({
-        root: 'build/',
-        port: 4000
-    });
+    root: 'build/',
+    port: 3000
+  });
 
 });
 

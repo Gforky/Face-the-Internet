@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
   
   var port = server.address().port;
