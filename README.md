@@ -93,45 +93,34 @@ Some notes to come...
 
 Flynn is the cluster PaaS that will take care of all the devops for us, we just have to push out app to it.
 
-##### If Flynn is already setup:
-
-In this case I already set up a DigitalOcean droplet @ 178.62.82.175,
-so you would just have to get an SSH key to access it and set up Flynn in your dev machine.
-
-1. To install the CLI itself, run the following command:
-`L=/usr/local/bin/flynn && curl -sSL -A "uname -sp" https://dl.flynn.io/cli | zcat >$L && chmod +x $L`
-2. Next, run the command: `flynn cluster add -p 2Jox82m4rr6SItXGqcl8ikyvNIyjxVVHygBPGlI4vkQ= default site.178.62.82.175.xip.io d4aeb3bbe52ae1a8dc80fb8637b1954f`. This will associate your local dev machine with your VPS' Flynn cluster!
-2. Now acces the dashboard at http://dashboard.site.178.62.82.175.xip.io and your login token is --ask me lol--
-3. Accept the certificate
-4. Now from inside the face-the-internet repo you can `flynn create APP_NAME`and then `git push flynn master` to send it to Flynn
-
-Coming soon... pushing Docker images
-
 ##### If Flynn is not setup yet:
 
-Fire up a DigitalOcean droplet with Ubuntu 14.04 x64 and access its console.
+Fire up a DigitalOcean droplet with Ubuntu 14.04 x64
 
 **Setup DigitalOcean droplet**
 
-1. Install Flynn command-line interface:
+Bash run [this script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4)
+
+When it finishes, remember the last 10 lines of output contain some important info:
+
+1. Copy the `flynn cluster add ...` command
+2. Copy the dashboard URL and login token 
+
+##### When Flynn is already setup:
+
+** Pushing app to Flynn **
+
+From your dev machine, go to a folder where you store the face-the-internet repo:
+
+1. Nnstall the Flynn CLI if you don't have it yet, by using the following command:
 `L=/usr/local/bin/flynn && curl -sSL -A "uname -sp" https://dl.flynn.io/cli | zcat >$L && chmod +x $L`
-1. Download and run the Flynn install script:
-`sudo bash < <(curl -fsSL https://dl.flynn.io/install-flynn)`
-1. Run the following command to get the discovery URL for your one-node cluster. If you want to have multiple nodes of Flynn, please see their documentation
-`sudo flynn-host init --init-discovery`
-1. Run the following two commands to get your one-node cluster going. Make sure the second command returns running process status
-`sudo start flynn-host
-`sudo status flynn-host
-1. Set up your cluster via the next command. Make sure to replace the CLUSTERDOMAIN value with whatever the domain will be for your web server. If you don't have a domain yet, you can use the following formula to get a domain name: site.IPADDRESS.xip.io. An example of this would be 10.0.0.1.xip.io. Also, make sure you repalce the --discovery URL with the URL that was generated earlier.
-`sudo \
-    CLUSTER_DOMAIN=site.[Droplet IP].xip.io \
-    flynn-host bootstrap \
-    --discovery https://discovery.flynn.io/clusters/53e8402e-029.8f-4861-95ba-d5b5a91b5902`
-1. If it's saying it can't find the cluster, then you should powercycle flynn-host like so:
-`stop flynn-host && start flynn-host`
-The above command should say "Flynn bootstrapping complete." if everything finished successfully. It should return a command to run that will look something like this:
-`flynn cluster add -p REktHVsDrKFed7ACeKJCt9xF3TrMd96d1+N3Nr5BArY= default site.104.131.189.57.xip.io fdf9cdda89785ef655e7e787daec8be2`
-this means it's time to install the local Flynn client now on our dev machine! Also, make sure you take note of the dashboard URL and login token listed below. We'll be needing this URL and password for Part 3.
+2. Next, run the command: `flynn cluster add ...` (the exact command is outputted by [the setup script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4) in the setup steps). This will associate your local dev machine with your VPS' Flynn cluster!
+3. Make sure you have accessed the Flynn dashboard and accepted the certificate
+4. Now from inside the face-the-internet repo you can `flynn create APP_NAME`and then `git push flynn master` to send it to Flynn
+
+
+
+ 
 
 
 #### Architecture
