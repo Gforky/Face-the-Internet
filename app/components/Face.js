@@ -3,6 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var THREE = require('three');
 var OrbitControls = require('three-orbit-controls')(THREE);
+var DecalGeometry = require('three-decal-geometry')(THREE);
 
 var renderer, scene, helperScene, camera, fov = 45;
 var mesh, decal;
@@ -84,11 +85,9 @@ var Face = React.createClass({
                 shininess: 10
             });
 
-            mesh = new THREE.Mesh( geometry, new THREE.MeshNormalMaterial() );
-            mesh.scale.set( 10, 10, 10 );
-            mesh.position.y = 0;
-            mesh.position.x = 0;
+            mesh = new THREE.Mesh( geometry, material );
             scene.add( mesh );
+            mesh.scale.set( 10, 10, 10 );
 
         });
 
@@ -140,6 +139,11 @@ var Face = React.createClass({
         spotLight.position.set(100, 50, 100);
         scene.add(spotLight);
 
+        line = new THREE.Line( new THREE.Geometry( ), new THREE.LineBasicMaterial( { linewidth: 4 }) );
+        line.geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );
+        line.geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );
+        scene.add(line);
+
         this._loadJSONModel();
 
         projector = new THREE.Projector();
@@ -151,9 +155,119 @@ var Face = React.createClass({
 
         window.addEventListener( 'resize', this._onWindowResize, false );
 
+        var moved = false;
+
+        controls.addEventListener( 'change', function() {
+            moved = true;
+        });
+
+        controls.addEventListener( 'start', function() {
+            moved = false;
+        });
+
+        controls.addEventListener( 'end', function() {
+            checkIntersection();
+            if( !moved ) shoot();
+        });
+
+        window.addEventListener( 'mousemove', onTouchMove );
+        window.addEventListener( 'touchmove', onTouchMove );
+
+        function onTouchMove( event ) {
+
+            if( event.changedTouches ) {
+                x = event.changedTouches[ 0 ].pageX;
+                y = event.changedTouches[ 0 ].pageY;
+            } else {
+                x = event.clientX;
+                y = event.clientY;
+            }
+            
+            mouse.x = ( x / window.innerWidth ) * 2 - 1;
+            mouse.y = - ( y / window.innerHeight ) * 2 + 1;
+
+            checkIntersection();
+
+        }
+
+        function shoot() {
+
+            if( params.projection == 'camera' ) {
+
+                var dir = camera.target.clone();
+                dir.sub( camera.position );
+
+                p = intersection.point;
+
+                var m = new THREE.Matrix4();
+                var c = dir.clone();
+                c.negate();
+                c.multiplyScalar( 10 );
+                c.add( p );
+                m.lookAt( p, c, up );
+                m = m.extractRotation( m );
+
+                dummy = new THREE.Object3D();
+                dummy.rotation.setFromRotationMatrix( m );
+                r.set( dummy.rotation.x, dummy.rotation.y, dummy.rotation.z );
+
+            } else {
+
+                p = intersection.point;
+                r.copy( mouseHelper.rotation );
+
+            }
+
+            var scale = params.minScale + Math.random() * ( params.maxScale - params.minScale );
+            s.set( scale, scale, scale );
+
+            if( params.rotate) r.z = Math.random() * 2 * Math.PI;
+
+            var m = new THREE.Mesh( new THREE.DecalGeometry( mesh, p, r, s, check ), decalMaterial );
+            decals.push( m );
+            scene.add( m );
+
+        }
+
+        function checkIntersection() {
+
+            mouseVector.set( mouse.x, mouse.y, 1 );
+            projector.unprojectVector( mouseVector, camera );
+
+            raycaster.set( camera.position, mouseVector.sub( camera.position ).normalize() );
+
+            var intersects = raycaster.intersectObjects( [ mesh ] );
+
+            if ( intersects.length > 0 ) {
+
+                var p = intersects[ 0 ].point;
+                mouseHelper.position.copy( p );
+                intersection.point.copy( p );
+                var n = intersects[ 0 ].face.normal.clone();
+                n.multiplyScalar( 10 );
+                n.add( intersects[ 0 ].point );
+                intersection.normal.copy( intersects[ 0 ].face.normal );
+                mouseHelper.lookAt( n );
+
+                line.geometry.vertices[ 0 ].copy( intersection.point );
+                line.geometry.vertices[ 1 ].copy( n );
+                line.geometry.verticesNeedUpdate = true;
+
+                intersection.intersects = true;
+
+            } else {
+
+                intersection.intersects = false;
+
+            }
+
+        }
+
         (function render() {
-            requestAnimationFrame(render);
+            requestAnimationFrame( render );
+            renderer.autoClear = false;
             renderer.render( scene, camera );
+            if( renderHelpers ) renderer.render( helperScene, camera );
         })();
 
     },
