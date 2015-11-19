@@ -194,3 +194,11 @@ gulp.task('deploy', function () {
   });
 
 });
+
+gulp.task('crop', function () {
+
+});
+
+gulp.task('slice', function () {
+
+});

@@ -8,7 +8,7 @@ var App = React.createClass({
     render: function() {
         return (
             <div className="wrapper">
-                <StartPage></StartPage>
+                <PhotoBooth></PhotoBooth>
             </div>
         );
     }
