@@ -4,6 +4,10 @@
 
 This project was originally conceived between [Florian Hacker](http://cargocollective.com/florianhacker) and [John Pett](http://johnpett.com) as an entry to the [Google and Barbican DevArt](https://devart.withgoogle.com/) contest. This project has also been contributed to by [Ben Harvey](https://github.com/gomako) and [Edu Wass](https://github.com/eduwass) for their lean programming skills!
 
+![Early Output](https://github.com/JohnPett/Face-the-Internet/docs/head-shot.png)
+
+![Exhibition Proposal](https://github.com/JohnPett/Face-the-Internet/docs/exhibition.png)
+
 ### Introduction
 
 This project sits somewhere between sculpture, technology, art, motion graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art, computer vision and user interaction.
@@ -89,6 +93,10 @@ With the nature of development, staging, and local runtime enviroments it is ess
 Some notes to come...
 
 #### React
+
+#### Three + dependencies
+
+https://www.npmjs.com/package/three-decal-geometry
 
 Some notes to come...
 
