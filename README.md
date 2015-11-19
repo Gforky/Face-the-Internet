@@ -5,6 +5,8 @@ This project was originally conceived between [Florian Hacker](http://cargocolle
 
 Here is some imagery from the previous incarnations of this project, outlining the original concept of both online and real-world manifestations.
 
+![Face Test](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/face-test.png)
+
 ![Early Output](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/head-shot.jpg)
 
 ![Exhibition Proposal](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/exhibition.png)
