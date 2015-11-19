@@ -4,9 +4,11 @@
 
 This project was originally conceived between [Florian Hacker](http://cargocollective.com/florianhacker) and [John Pett](http://johnpett.com) as an entry to the [Google and Barbican DevArt](https://devart.withgoogle.com/) contest. This project has also been contributed to by [Ben Harvey](https://github.com/gomako) and [Edu Wass](https://github.com/eduwass) for their lean programming skills!
 
-![Early Output](https://github.com/JohnPett/Face-the-Internet/docs/head-shot.png)
+Here is some imagery from the 
 
-![Exhibition Proposal](https://github.com/JohnPett/Face-the-Internet/docs/exhibition.png)
+![Early Output](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/head-shot.jpg)
+
+![Exhibition Proposal](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/exhibition.png)
 
 ### Introduction
 
