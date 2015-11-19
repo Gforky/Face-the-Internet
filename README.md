@@ -26,53 +26,46 @@ Before you start you will need the following installed on your machine. [Python]
 
 3. Once this is installed, you will need the Node bindings to allow for interfacing with Javascript. There are a few options online, bu this project uses [this](https://www.npmjs.com/package/opencv) example. To install the bindings, run `$ npm install opencv --save` from the root of the project directory. For more information on this, please see [Peter Braden's Github repository](https://github.com/peterbraden/node-opencv).
 
+
 #### Express + Websockets
 To take advantage of real-time face recognition and giving instant feedback to the user, this project uses websockets. [Express.io](http://express-io.org/) provide the solution to client and server interactions, which you can install as an `npm-module`, you can find further information [here](https://www.npmjs.com/package/express.io).
 
+
 #### React
 [React](https://facebook.github.io/react/) is a relatively new tool to help create interfaces in JavaScript. In addition it cares very little about the rest of the of your stack, making it perfect for a project like this.
+
 
 #### Three
 [THREE](http://threejs.org/)
 
 [THREE Decal Geometry](https://www.npmjs.com/package/three-decal-geometry)
 
-#### Flynn
 
+#### Flynn
 Flynn is the cluster PaaS that will take care of all the devops for us, we just have to push out app to it.
 
-##### If Flynn is not setup yet:
 
+##### Setup
 Fire up a DigitalOcean droplet with Ubuntu 14.04 x64
 
-###### Setup DigitalOcean droplet 
 
+##### Digital Ocean
 Bash run [this script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4)
 
 When it finishes, remember the last 10 lines of output contain some important info:
 
-1. Copy the `flynn cluster add ...` command
+1. Copy the `$ flynn cluster add ...` command
 2. Copy the dashboard URL and login token 
 
-##### When Flynn is already setup:
 
-###### Pushing app to Flynn
-
+##### Push to Flynn
 From your dev machine, go to a folder where you store the face-the-internet repo:
 
 1. Nnstall the Flynn CLI if you don't have it yet, by using the following command:
-`L=/usr/local/bin/flynn && curl -sSL -A "uname -sp" https://dl.flynn.io/cli | zcat >$L && chmod +x $L`
-2. Next, run the command: `flynn cluster add ...` (the exact command is outputted by [the setup script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4) in the setup steps). This will associate your local dev machine with your VPS' Flynn cluster!
-3. Make sure you have accessed the Flynn dashboard and accepted the certificate
-4. Now from inside the face-the-internet repo you can `flynn create APP_NAME`and then `git push flynn master` to send it to Flynn
+`$ L=/usr/local/bin/flynn && curl -sSL -A "uname -sp" https://dl.flynn.io/cli | zcat >$L && chmod +x $L`
 
-
-
+2. Next, run the command: `flynn cluster add ...` (the exact command is outputted by [the setup script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4) in the setup steps). This will associate your local dev machine with your VPS Flynn cluster.
  
+3. Make sure you have accessed the Flynn dashboard and accepted the certificate.
 
-
-#### Architecture
-
-`.nodeapp/app` - React components and front-end development code.
-
-`.nodeapp/public` - Generated code for production, available on [http://192.168.99.100:3000/](http://192.168.99.100:3000/).
+4. Now from inside the `face-the-internet` repo you can `$ flynn create APP_NAME`and then `$ git push flynn master` to send it to Flynn.
