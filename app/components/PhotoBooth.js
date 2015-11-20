@@ -4,22 +4,16 @@ var ReactDOM = require('react-dom');
 
 var PhotoBooth = React.createClass({
 
-    _clickHandler: function(blob, e) {
+    _clickHandler: function(e) {
 
         console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'First click... ');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture: ', e);
         console.log('----------------------------------');
 
-        var canvas = this.canvas;
-        console.log(this.canvas);
+        var context = this.canvas.getContext('2d');
+        console.log(context);
 
-        var Blob =blob;
-        
-
-        canvas.toBlob(function(blob) {
-            saveAs(blob, capture);
-            console.log(capture);
-        });
+        context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
 
     },
 
@@ -36,7 +30,7 @@ var PhotoBooth = React.createClass({
         var height = window.outerHeight;
 
         this.setState({
-            src: src,
+            video: src,
             width: width,
             height: height
         });
@@ -54,7 +48,8 @@ var PhotoBooth = React.createClass({
     componentWillMount: function() {
 
         this.setState({
-            src: '',
+            video: '',
+            image: '',
             width: '',
             height: ''
         });
@@ -87,9 +82,9 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth">
-                <video ref="video" width={this.state.width} height={this.state.height} src={this.state.src} autoPlay></video>
+                <video ref={(ref) => this.video = ref} width={this.state.width} height={this.state.height} src={this.state.video} autoPlay></video>
                 <canvas ref={(ref) => this.canvas = ref} width={this.state.width} height={this.state.height}></canvas>
-                <button src={this.state.src} onClick={this._clickHandler.bind(this, this.state.src)}>Capture Me</button>
+                <button src={this.state.src} onClick={this._clickHandler}>Capture Me</button>
             </div>
         );
     }
