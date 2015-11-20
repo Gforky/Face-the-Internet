@@ -42,7 +42,7 @@ To take advantage of real-time face recognition and giving instant feedback to t
 
 
 #### Flynn
-Flynn is the cluster PaaS that will take care of all the devops for us, we just have to push out app to it.
+[Flynn](https://flynn.io/docs) is the cluster PaaS that will take care of all the devops for us, we just have to push out app to it.
 
 
 ##### Setup
@@ -59,12 +59,12 @@ When it finishes, remember the last 10 lines of output contain some important in
 
 
 ##### Push to Flynn
-From your dev machine, go to a folder where you store the face-the-internet repo:
+From your development machine, go to a folder where you store the `face-the-internet` repo:
 
-1. Nnstall the Flynn CLI if you don't have it yet, by using the following command:
+1. Install the Flynn CLI if you don't have it yet, by using the following command:
 `$ L=/usr/local/bin/flynn && curl -sSL -A "uname -sp" https://dl.flynn.io/cli | zcat >$L && chmod +x $L`
 
-2. Next, run the command: `flynn cluster add ...` (the exact command is outputted by [the setup script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4) in the setup steps). This will associate your local dev machine with your VPS Flynn cluster.
+2. Next, run the command: `$ flynn cluster add ...` (the exact command is outputted by [the setup script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4) in the setup steps). This will associate your local dev machine with your VPS Flynn cluster.
  
 3. Make sure you have accessed the Flynn dashboard and accepted the certificate.
 
