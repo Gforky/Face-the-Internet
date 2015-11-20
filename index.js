@@ -5,24 +5,24 @@
 */
 
 // define the websockets express server
-var app = require('express.io')(),
-    express = require('express.io');
+// var app = require('express.io')(),
+//     express = require('express.io');
 
 // start http server
-app.http().io();
+// app.http().io();
 
 // set static/public file access
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
 
 // test connection
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+// app.get('/', function (req, res) {
+//   res.send('Hello World!');
+// });
 
-var port = process.env.PORT || 3000;
-var server = app.listen(port, function() {
+// var port = 3000;
+// var server = app.listen(port, function() {
   
-  var port = server.address().port;
-  console.log('App listening on port:', port);
+//   var port = server.address().port;
+//   console.log('App listening on port:', port);
 
-});
+// });

@@ -4,25 +4,23 @@ var ReactDOM = require('react-dom');
 
 var PhotoBooth = React.createClass({
 
-    _clickHandler: function(uno, dos) {
+    _clickHandler: function(blob, e) {
 
-        console.log(uno);
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'First click... ');
+        console.log('----------------------------------');
 
-        console.log(dos);
+        var canvas = this.canvas;
+        console.log(this.canvas);
 
-        // var src = this.state.src;
+        var Blob =blob;
+        
 
-        // this.context = ReactDOM.findDOMNode(this.refs.canvas).getContext('2d');
+        canvas.toBlob(function(blob) {
+            saveAs(blob, capture);
+            console.log(capture);
+        });
 
-        // var image = new Image();
-
-        // image.src = src;
-
-        // image.onload = function () {
-        //     this.context.drawImage(image, 0, 0);
-        // }
-
-        console.log('button click');
     },
 
     _successHandler: function(stream) {
@@ -90,7 +88,7 @@ var PhotoBooth = React.createClass({
         return (
             <div className="PhotoBooth">
                 <video ref="video" width={this.state.width} height={this.state.height} src={this.state.src} autoPlay></video>
-                <canvas ref="canvas"></canvas>
+                <canvas ref={(ref) => this.canvas = ref} width={this.state.width} height={this.state.height}></canvas>
                 <button src={this.state.src} onClick={this._clickHandler.bind(this, this.state.src)}>Capture Me</button>
             </div>
         );
