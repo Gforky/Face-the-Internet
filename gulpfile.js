@@ -164,7 +164,7 @@ gulp.task('default', function () {
     dest: './build'
   });
 
-  gulp.watch('./sass/main.scss', ['sass']);
+  gulp.watch('./sass/*.scss', ['sass']);
   
   cssTask({
     development: true,

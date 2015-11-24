@@ -12,7 +12,6 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture: ', e);
         console.log('----------------------------------');
 
-        console.log(this.video.readyState);
         this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
 
     },
