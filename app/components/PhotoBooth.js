@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
+var JSFeat = require('jsfeat');
+var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
@@ -11,7 +13,6 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
 
         var context = this.canvas.getContext('2d');
-        console.log(context);
 
         context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
 
@@ -24,9 +25,7 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
 
         var src = window.URL.createObjectURL(stream);
-
         var width = window.outerWidth;
-
         var height = window.outerHeight;
 
         this.setState({
@@ -46,6 +45,8 @@ var PhotoBooth = React.createClass({
     },
 
     componentWillMount: function() {
+
+        console.log('componentWillMount');
 
         this.setState({
             video: '',
@@ -78,13 +79,44 @@ var PhotoBooth = React.createClass({
 
     },
 
+    componentDidMount: function() {
+
+        console.log('componentDidMount');
+
+        console.log(this.video);
+
+        var context = this.canvas.getContext('2d');
+
+        context.fillStyle = 'rgb(0, 255, 0)';
+        context.strokeStyle = 'rgb(0, 255, 0)';
+
+        var maxSize = 160;
+        var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
+        var w = (this.state.width * scale) | 0;
+        var h = (this.state.height * scale) | 0;
+
+        imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
+        workContext = this.work.getContext('2d');
+
+        $.getJSON('cascade/bbf_face.js', function(data) {
+            JSFeat.bbf.prepare_cascade(data);
+        });
+
+        context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+
+        workContext.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+        var imageData = workContext.getImageData(0, 0, this.state.width, this.state.height);
+
+    },
+
     render: function() {
 
         return (
             <div className="PhotoBooth">
-                <video ref={(ref) => this.video = ref} width={this.state.width} height={this.state.height} src={this.state.video} autoPlay></video>
-                <canvas ref={(ref) => this.canvas = ref} width={this.state.width} height={this.state.height}></canvas>
-                <button src={this.state.src} onClick={this._clickHandler}>Capture Me</button>
+                <video className="webcam" ref={(ref) => this.video = ref} width={this.state.width} height={this.state.height} src={this.state.video} autoPlay></video>
+                <canvas className="output" ref={(ref) => this.canvas = ref} width={this.state.width} height={this.state.height}></canvas>
+                <canvas className="input" ref={(ref) => this.work = ref} width={this.state.width} height={this.state.height}></canvas>
+                <button onClick={this._clickHandler}>Capture Me</button>
             </div>
         );
     }

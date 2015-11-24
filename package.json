@@ -24,6 +24,7 @@
   "dependencies": {
     "browserify": "^10.2.1",
     "express.io": "^1.1.13",
+    "flux": "^2.1.1",
     "glob": "^4.0.6",
     "gulp": "^3.8.9",
     "gulp-concat": "^2.3.4",
@@ -37,6 +38,8 @@
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
+    "jquery": "^2.1.4",
+    "jsfeat": "0.0.8",
     "opencv": "^3.2.0",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
