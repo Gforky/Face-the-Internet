@@ -12,9 +12,8 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture: ', e);
         console.log('----------------------------------');
 
-        var context = this.canvas.getContext('2d');
-
-        context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+        console.log(this.video.readyState);
+        this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
 
     },
 
@@ -46,11 +45,8 @@ var PhotoBooth = React.createClass({
 
     componentWillMount: function() {
 
-        console.log('componentWillMount');
-
         this.setState({
             video: '',
-            image: '',
             width: '',
             height: ''
         });
@@ -79,33 +75,30 @@ var PhotoBooth = React.createClass({
 
     },
 
-    componentDidMount: function() {
+    componentDidUpdate: function() {
 
-        console.log('componentDidMount');
+        this.context = this.canvas.getContext('2d');
+        // var workContext = this.work.getContext('2d');
 
-        console.log(this.video);
+        // context.fillStyle = 'rgb(0, 255, 0)';
+        // context.strokeStyle = 'rgb(0, 255, 0)';
 
-        var context = this.canvas.getContext('2d');
+        // var maxSize = 160;
+        // var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
+        // var w = (this.state.width * scale) | 0;
+        // var h = (this.state.height * scale) | 0;
 
-        context.fillStyle = 'rgb(0, 255, 0)';
-        context.strokeStyle = 'rgb(0, 255, 0)';
+        // imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
 
-        var maxSize = 160;
-        var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
-        var w = (this.state.width * scale) | 0;
-        var h = (this.state.height * scale) | 0;
+        // $.getJSON('cascade/bbf_face.js', function(data) {
+        //     JSFeat.bbf.prepare_cascade(data);
+        // });
 
-        imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
-        workContext = this.work.getContext('2d');
+        this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
 
-        $.getJSON('cascade/bbf_face.js', function(data) {
-            JSFeat.bbf.prepare_cascade(data);
-        });
+        // workContext.drawImage(this.video, 0, 0, this.state.width, this.state.height);
 
-        context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
-
-        workContext.drawImage(this.video, 0, 0, this.state.width, this.state.height);
-        var imageData = workContext.getImageData(0, 0, this.state.width, this.state.height);
+        // var imageData = workContext.getImageData(0, 0, this.state.width, this.state.height);
 
     },
 
