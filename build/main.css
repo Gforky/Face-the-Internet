@@ -81,3 +81,7 @@ button {
   .PhotoBooth .buttons li {
     float: left;
     margin: 0 5px; }
+    .PhotoBooth .buttons li button {
+      display: none; }
+      .PhotoBooth .buttons li button.active {
+        display: block; }

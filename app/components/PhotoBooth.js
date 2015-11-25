@@ -53,6 +53,12 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', e);
         console.log('----------------------------------');
 
+        this.setState({
+            captureActive: false,
+            saveActive: true,
+            retakeActive: true
+        });
+
         this.webcam.pause();
 
         this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
@@ -67,6 +73,12 @@ var PhotoBooth = React.createClass({
 
         var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
 
+        this.webcam.pause();
+
+        this.setState({
+            webcam: ''
+        });
+
         console.log(imageData);
 
     },
@@ -76,6 +88,12 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to retake image: ', e);
         console.log('----------------------------------');
+
+        this.setState({
+            captureActive: true,
+            saveActive: false,
+            retakeActive: false
+        });
 
         this.webcam.play();
 
@@ -114,7 +132,10 @@ var PhotoBooth = React.createClass({
         this.setState({
             webcam: '',
             width: '',
-            height: ''
+            height: '',
+            captureActive: true,
+            saveActive: false,
+            retakeActive: false
         });
 
         console.log('----------------------------------');
@@ -187,9 +208,9 @@ var PhotoBooth = React.createClass({
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
                 <ul className="buttons">
-                    <li><button onClick={this._captureHandler}>Capture</button></li>
-                    <li><button onClick={this._saveHandler}>Save</button></li>
-                    <li><button onClick={this._retakeHandler}>Retake</button></li>
+                    <li><button className={this.state.captureActive ? 'active' : ''} onClick={this._captureHandler}>Capture</button></li>
+                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
+                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>
             </div>
         );
