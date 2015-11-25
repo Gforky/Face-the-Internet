@@ -6,7 +6,7 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
-    _drawFaces: function(context, rects, sc, max) {
+    _drawFaces: function(rects, sc, max) {
 
         var on = rects.length;
 
@@ -41,7 +41,7 @@ var PhotoBooth = React.createClass({
 
             var rects = JSFeat.bbf.detect(pyr, window.cascadeData);
 
-            this._drawFaces(this.context, rects, this.state.width/this.imageU8.cols, 1);
+            this._drawFaces(rects, this.state.width/this.imageU8.cols, 1);
 
         }
     },
