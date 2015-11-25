@@ -76,7 +76,10 @@ var PhotoBooth = React.createClass({
         this.webcam.pause();
 
         this.setState({
-            webcam: ''
+            webcam: '',
+            captureActive: false,
+            saveActive: false,
+            retakeActive: false
         });
 
         console.log(imageData);
@@ -106,8 +109,11 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
 
         var src = window.URL.createObjectURL(stream);
-        var width = window.outerWidth;
-        var height = window.outerHeight;
+        // TO DO: Full bleed video gets a little nasty on big browsers...
+        // var width = window.outerWidth;
+        // var height = window.outerHeight;
+        var width = 600;
+        var height = 400;
 
         this.setState({
             webcam: src,
