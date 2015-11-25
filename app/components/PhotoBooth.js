@@ -77,7 +77,7 @@ var PhotoBooth = React.createClass({
     componentDidUpdate: function(animate) {
 
         // I don't work, but I am the solution!
-        // window.requestAnimationFrame(animate);
+        window.requestAnimationFrame(animate);
 
         this.context = this.canvas.getContext('2d');
         // var workContext = this.work.getContext('2d');
