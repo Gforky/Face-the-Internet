@@ -6,6 +6,15 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
+    _faceDetection: function() {
+
+        window.requestAnimFrame(this._faceDetection);
+        
+        if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
+            this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+        }
+    },
+
     _clickHandler: function(e) {
 
         console.log('----------------------------------');
@@ -72,35 +81,40 @@ var PhotoBooth = React.createClass({
 
         }
 
+        // add animation requests to the window
+        window.requestAnimFrame = (function(){
+          return  window.requestAnimationFrame       || 
+                  window.webkitRequestAnimationFrame || 
+                  window.mozRequestAnimationFrame    || 
+                  window.oRequestAnimationFrame      || 
+                  window.msRequestAnimationFrame     || 
+                  function(/* function */ callback, /* DOMElement */ element){
+                    window.setTimeout(callback, 1000 / 60);
+                  };
+        })();
+
     },
 
-    componentDidUpdate: function(animate) {
-
-        // I don't work, but I am the solution!
-        // window.requestAnimationFrame(animate);
+    componentDidUpdate: function() {
 
         this.context = this.canvas.getContext('2d');
-        // var workContext = this.work.getContext('2d');
+        this.workContext = this.work.getContext('2d');
 
-        // context.fillStyle = 'rgb(0, 255, 0)';
-        // context.strokeStyle = 'rgb(0, 255, 0)';
+        this.context.fillStyle = 'rgb(0, 255, 0)';
+        this.context.strokeStyle = 'rgb(0, 255, 0)';
 
-        // var maxSize = 160;
-        // var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
-        // var w = (this.state.width * scale) | 0;
-        // var h = (this.state.height * scale) | 0;
+        var maxSize = 160;
+        var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
+        var w = (this.state.width * scale) | 0;
+        var h = (this.state.height * scale) | 0;
 
-        // imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
+        imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
 
-        // $.getJSON('cascade/bbf_face.js', function(data) {
-        //     JSFeat.bbf.prepare_cascade(data);
-        // });
+        $.getJSON('cascade/bbf_face.js', function(data) {
+            JSFeat.bbf.prepare_cascade(data);
+        });
 
-        this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
-
-        // workContext.drawImage(this.video, 0, 0, this.state.width, this.state.height);
-
-        // var imageData = workContext.getImageData(0, 0, this.state.width, this.state.height);
+        this._faceDetection();
 
     },
 
