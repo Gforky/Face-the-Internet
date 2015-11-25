@@ -53,6 +53,8 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture: ', e);
         console.log('----------------------------------');
 
+        this.webcam.pause();
+
         this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
     },
