@@ -6,7 +6,7 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
-    _drawFaces: function(sc, max) {
+    _drawFaces: function(scale, max) {
 
         var on = this.rects.length;
 
@@ -19,7 +19,7 @@ var PhotoBooth = React.createClass({
         var r;
         for(var i = 0; i < n; i++) {
             r = this.rects[i];
-            this.outputContext.strokeRect((r.x*sc) | 0, (r.y*sc) | 0, (r.width*sc) | 0, (r.height*sc) | 0);
+            this.outputContext.strokeRect( (r.x * scale) | 0, (r.y * scale) | 0, (r.width * scale) | 0, (r.height * scale) | 0);
         }
 
     },
