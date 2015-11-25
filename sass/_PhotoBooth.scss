@@ -9,5 +9,14 @@
 	.input {
 		display: none;
 	}
+	.buttons {
+		position: fixed;
+		top: 30px;
+		left: 30px;
+		li {
+			float: left;
+			margin: 0 5px;
+		}
+	}
 }
 

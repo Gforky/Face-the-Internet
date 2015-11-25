@@ -47,15 +47,37 @@ var PhotoBooth = React.createClass({
         }
     },
 
-    _clickHandler: function(e) {
+    _captureHandler: function(e) {
 
         console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture: ', e);
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', e);
         console.log('----------------------------------');
 
         this.webcam.pause();
 
         this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+
+    },
+
+    _saveHandler: function(e) {
+
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to save image: ', e);
+        console.log('----------------------------------');
+
+        var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+
+        console.log(imageData);
+
+    },
+
+    _retakeHandler: function(e) {
+
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to retake image: ', e);
+        console.log('----------------------------------');
+
+        this.webcam.play();
 
     },
 
@@ -164,7 +186,11 @@ var PhotoBooth = React.createClass({
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.width} height={this.state.height} src={this.state.webcam} autoPlay></video>
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
-                <button onClick={this._clickHandler}>Capture Me</button>
+                <ul className="buttons">
+                    <li><button onClick={this._captureHandler}>Capture</button></li>
+                    <li><button onClick={this._saveHandler}>Save</button></li>
+                    <li><button onClick={this._retakeHandler}>Retake</button></li>
+                </ul>
             </div>
         );
     }

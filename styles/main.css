@@ -47,9 +47,6 @@ body {
   color: white; }
 
 button {
-  position: fixed;
-  top: 30px;
-  left: 30px;
   background: black;
   border: 3px solid white;
   padding: 15px;
@@ -76,3 +73,11 @@ button {
 
 .PhotoBooth .input {
   display: none; }
+
+.PhotoBooth .buttons {
+  position: fixed;
+  top: 30px;
+  left: 30px; }
+  .PhotoBooth .buttons li {
+    float: left;
+    margin: 0 5px; }
