@@ -6,20 +6,20 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
-    _drawFaces: function(rects, sc, max) {
+    _drawFaces: function(sc, max) {
 
-        var on = rects.length;
+        var on = this.rects.length;
 
         if (on && max) {
-            JSFeat.math.qsort(rects, 0, on-1, function(a,b){return (b.confidence<a.confidence)});
+            JSFeat.math.qsort(this.rects, 0, on-1, function(a,b){return (b.confidence<a.confidence)});
         }
 
         var n = max || on;
         n = Math.min(n, on);
         var r;
         for(var i = 0; i < n; i++) {
-            r = rects[i];
-            this.context.strokeRect((r.x*sc) | 0, (r.y*sc) | 0, (r.width*sc) | 0, (r.height*sc) | 0);
+            r = this.rects[i];
+            this.outputContext.strokeRect((r.x*sc) | 0, (r.y*sc) | 0, (r.width*sc) | 0, (r.height*sc) | 0);
         }
 
     },
@@ -28,20 +28,21 @@ var PhotoBooth = React.createClass({
 
         window.requestAnimFrame(this._faceDetection);
         
-        if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
+        if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA) {
 
-            this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+            this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
-            this.workContext.drawImage(this.video, 0, 0, this.state.width, this.state.height);
-            var imageData = this.workContext.getImageData(0, 0, this.state.width, this.state.height);
+            this.inputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+
+            var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
 
             JSFeat.imgproc.grayscale(imageData.data, this.state.width, this.state.height, this.imageU8);
 
             var pyr = JSFeat.bbf.build_pyramid(this.imageU8, 24*2, 24*2, 4);
 
-            var rects = JSFeat.bbf.detect(pyr, window.cascadeData);
+            this.rects = JSFeat.bbf.detect(pyr, window.cascadeData);
 
-            this._drawFaces(rects, this.state.width/this.imageU8.cols, 1);
+            this._drawFaces(this.state.width/this.imageU8.cols, 1);
 
         }
     },
@@ -52,7 +53,7 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture: ', e);
         console.log('----------------------------------');
 
-        this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+        this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
     },
 
@@ -67,10 +68,12 @@ var PhotoBooth = React.createClass({
         var height = window.outerHeight;
 
         this.setState({
-            video: src,
+            webcam: src,
             width: width,
             height: height
         });
+
+        this._faceDetection();
 
     },
 
@@ -85,7 +88,7 @@ var PhotoBooth = React.createClass({
     componentWillMount: function() {
 
         this.setState({
-            video: '',
+            webcam: '',
             width: '',
             height: ''
         });
@@ -124,18 +127,25 @@ var PhotoBooth = React.createClass({
                   };
         })();
 
+        // attach cascade data to the global object
+        $.getJSON('cascade/bbf_face.js', function(data) {
+            JSFeat.bbf.prepare_cascade(data);
+            window.cascadeData = data;
+        });
+
     },
 
     componentDidUpdate: function() {
 
         // added on update to the window, as the video streams it is updating...
-        this.context = this.canvas.getContext('2d');
-        this.workContext = this.work.getContext('2d');
+        this.outputContext = this.output.getContext('2d');
+        this.inputContext = this.input.getContext('2d');
 
         // face detection box styles
-        this.context.fillStyle = 'rgb(0, 255, 0)';
-        this.context.strokeStyle = 'rgb(0, 255, 0)';
+        this.outputContext.fillStyle = 'rgb(0, 255, 0)';
+        this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
 
+        // set up parameters for detection box
         var maxSize = 160;
         var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
         var w = (this.state.width * scale) | 0;
@@ -143,24 +153,15 @@ var PhotoBooth = React.createClass({
 
         this.imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
 
-        var cascadeData;
-
-        $.getJSON('cascade/bbf_face.js', function(data) {
-            JSFeat.bbf.prepare_cascade(data);
-            window.cascadeData = data;
-        });
-
-        this._faceDetection();
-
     },
 
     render: function() {
 
         return (
             <div className="PhotoBooth">
-                <video className="webcam" ref={(ref) => this.video = ref} width={this.state.width} height={this.state.height} src={this.state.video} autoPlay></video>
-                <canvas className="output" ref={(ref) => this.canvas = ref} width={this.state.width} height={this.state.height}></canvas>
-                <canvas className="input" ref={(ref) => this.work = ref} width={this.state.width} height={this.state.height}></canvas>
+                <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.width} height={this.state.height} src={this.state.webcam} autoPlay></video>
+                <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
+                <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
                 <button onClick={this._clickHandler}>Capture Me</button>
             </div>
         );
