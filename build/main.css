@@ -73,3 +73,6 @@ button {
 */
 .PhotoBooth .webcam {
   display: none; }
+
+.PhotoBooth .input {
+  display: none; }

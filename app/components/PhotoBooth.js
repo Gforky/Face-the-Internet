@@ -6,12 +6,43 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
+    _drawFaces: function(context, rects, sc, max) {
+
+        var on = rects.length;
+
+        if (on && max) {
+            JSFeat.math.qsort(rects, 0, on-1, function(a,b){return (b.confidence<a.confidence)});
+        }
+
+        var n = max || on;
+        n = Math.min(n, on);
+        var r;
+        for(var i = 0; i < n; i++) {
+            r = rects[i];
+            this.context.strokeRect((r.x*sc) | 0, (r.y*sc) | 0, (r.width*sc) | 0, (r.height*sc) | 0);
+        }
+
+    },
+
     _faceDetection: function() {
 
         window.requestAnimFrame(this._faceDetection);
         
         if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
+
             this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+
+            this.workContext.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+            var imageData = this.workContext.getImageData(0, 0, this.state.width, this.state.height);
+
+            JSFeat.imgproc.grayscale(imageData.data, this.state.width, this.state.height, this.imageU8);
+
+            var pyr = JSFeat.bbf.build_pyramid(this.imageU8, 24*2, 24*2, 4);
+
+            var rects = JSFeat.bbf.detect(pyr, window.cascadeData);
+
+            this._drawFaces(this.context, rects, this.state.width/this.imageU8.cols, 1);
+
         }
     },
 
@@ -97,9 +128,11 @@ var PhotoBooth = React.createClass({
 
     componentDidUpdate: function() {
 
+        // added on update to the window, as the video streams it is updating...
         this.context = this.canvas.getContext('2d');
         this.workContext = this.work.getContext('2d');
 
+        // face detection box styles
         this.context.fillStyle = 'rgb(0, 255, 0)';
         this.context.strokeStyle = 'rgb(0, 255, 0)';
 
@@ -108,10 +141,13 @@ var PhotoBooth = React.createClass({
         var w = (this.state.width * scale) | 0;
         var h = (this.state.height * scale) | 0;
 
-        imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
+        this.imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
+
+        var cascadeData;
 
         $.getJSON('cascade/bbf_face.js', function(data) {
             JSFeat.bbf.prepare_cascade(data);
+            window.cascadeData = data;
         });
 
         this._faceDetection();
