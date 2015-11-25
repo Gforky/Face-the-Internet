@@ -6,13 +6,99 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
-    _clickHandler: function(e) {
+    _drawFaces: function(scale, max) {
+
+        var on = this.rects.length;
+
+        if (on && max) {
+            JSFeat.math.qsort(this.rects, 0, on-1, function(a,b){return (b.confidence<a.confidence)});
+        }
+
+        var n = max || on;
+        n = Math.min(n, on);
+        var r;
+        for(var i = 0; i < n; i++) {
+            r = this.rects[i];
+            this.outputContext.strokeRect( (r.x * scale) | 0, (r.y * scale) | 0, (r.width * scale) | 0, (r.height * scale) | 0);
+        }
+
+    },
+
+    _faceDetection: function() {
+
+        window.requestAnimFrame(this._faceDetection);
+        
+        if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA) {
+
+            this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+
+            this.inputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+
+            var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+
+            JSFeat.imgproc.grayscale(imageData.data, this.state.width, this.state.height, this.imageU8);
+
+            var pyr = JSFeat.bbf.build_pyramid(this.imageU8, 24*2, 24*2, 4);
+
+            this.rects = JSFeat.bbf.detect(pyr, window.cascadeData);
+
+            this._drawFaces(this.state.width/this.imageU8.cols, 1);
+
+        }
+    },
+
+    _captureHandler: function(e) {
 
         console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture: ', e);
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', e);
         console.log('----------------------------------');
 
-        this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+        this.setState({
+            captureActive: false,
+            saveActive: true,
+            retakeActive: true
+        });
+
+        this.webcam.pause();
+
+        this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+
+    },
+
+    _saveHandler: function(e) {
+
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to save image: ', e);
+        console.log('----------------------------------');
+
+        var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+
+        this.webcam.pause();
+
+        this.setState({
+            webcam: '',
+            captureActive: false,
+            saveActive: false,
+            retakeActive: false
+        });
+
+        console.log(imageData);
+
+    },
+
+    _retakeHandler: function(e) {
+
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to retake image: ', e);
+        console.log('----------------------------------');
+
+        this.setState({
+            captureActive: true,
+            saveActive: false,
+            retakeActive: false
+        });
+
+        this.webcam.play();
 
     },
 
@@ -23,14 +109,19 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
 
         var src = window.URL.createObjectURL(stream);
-        var width = window.outerWidth;
-        var height = window.outerHeight;
+        // TO DO: Full bleed video gets a little nasty on big browsers...
+        // var width = window.outerWidth;
+        // var height = window.outerHeight;
+        var width = 600;
+        var height = 400;
 
         this.setState({
-            video: src,
+            webcam: src,
             width: width,
             height: height
         });
+
+        this._faceDetection();
 
     },
 
@@ -45,9 +136,12 @@ var PhotoBooth = React.createClass({
     componentWillMount: function() {
 
         this.setState({
-            video: '',
+            webcam: '',
             width: '',
-            height: ''
+            height: '',
+            captureActive: true,
+            saveActive: false,
+            retakeActive: false
         });
 
         console.log('----------------------------------');
@@ -76,31 +170,43 @@ var PhotoBooth = React.createClass({
 
     componentDidUpdate: function(animate) {
 
-        // I don't work, but I am the solution!
-        window.requestAnimationFrame(animate);
+        // add animation requests to the window
+        window.requestAnimFrame = (function(){
+          return  window.requestAnimationFrame       || 
+                  window.webkitRequestAnimationFrame || 
+                  window.mozRequestAnimationFrame    || 
+                  window.oRequestAnimationFrame      || 
+                  window.msRequestAnimationFrame     || 
+                  function(/* function */ callback, /* DOMElement */ element){
+                    window.setTimeout(callback, 1000 / 60);
+                  };
+        })();
 
-        this.context = this.canvas.getContext('2d');
-        // var workContext = this.work.getContext('2d');
+        // attach cascade data to the global object
+        $.getJSON('cascade/bbf_face.js', function(data) {
+            JSFeat.bbf.prepare_cascade(data);
+            window.cascadeData = data;
+        });
 
-        // context.fillStyle = 'rgb(0, 255, 0)';
-        // context.strokeStyle = 'rgb(0, 255, 0)';
+    },
 
-        // var maxSize = 160;
-        // var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
-        // var w = (this.state.width * scale) | 0;
-        // var h = (this.state.height * scale) | 0;
+    componentDidUpdate: function() {
 
-        // imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
+        // added on update to the window, as the video streams it is updating...
+        this.outputContext = this.output.getContext('2d');
+        this.inputContext = this.input.getContext('2d');
 
-        // $.getJSON('cascade/bbf_face.js', function(data) {
-        //     JSFeat.bbf.prepare_cascade(data);
-        // });
+        // face detection box styles
+        this.outputContext.fillStyle = 'rgb(0, 255, 0)';
+        this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
 
-        this.context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+        // set up parameters for detection box
+        var maxSize = 160;
+        var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
+        var w = (this.state.width * scale) | 0;
+        var h = (this.state.height * scale) | 0;
 
-        // workContext.drawImage(this.video, 0, 0, this.state.width, this.state.height);
-
-        // var imageData = workContext.getImageData(0, 0, this.state.width, this.state.height);
+        this.imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
 
     },
 
@@ -108,10 +214,14 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth">
-                <video className="webcam" ref={(ref) => this.video = ref} width={this.state.width} height={this.state.height} src={this.state.video} autoPlay></video>
-                <canvas className="output" ref={(ref) => this.canvas = ref} width={this.state.width} height={this.state.height}></canvas>
-                <canvas className="input" ref={(ref) => this.work = ref} width={this.state.width} height={this.state.height}></canvas>
-                <button onClick={this._clickHandler}>Capture Me</button>
+                <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.width} height={this.state.height} src={this.state.webcam} autoPlay></video>
+                <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
+                <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
+                <ul className="buttons">
+                    <li><button className={this.state.captureActive ? 'active' : ''} onClick={this._captureHandler}>Capture</button></li>
+                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
+                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
+                </ul>
             </div>
         );
     }
