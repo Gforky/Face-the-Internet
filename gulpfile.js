@@ -45,6 +45,7 @@ var browserifyTask = function (options) {
     var start = Date.now();
     console.log('----------------------------------');
     console.log('[SERVER - BUILD] Building APP bundle...');
+    console.log('----------------------------------');
     appBundler.bundle()
       .on('error', gutil.log)
       .pipe(source('main.js'))
@@ -52,6 +53,7 @@ var browserifyTask = function (options) {
       .pipe(gulp.dest(options.dest))
       .pipe(gulpif(options.development, livereload()))
       .pipe(notify(function () {
+        console.log('----------------------------------');
         console.log('[SERVER - BUILD] APP bundle built in ' + (Date.now() - start) + 'ms');
         console.log('----------------------------------');
       }));
@@ -87,12 +89,14 @@ var browserifyTask = function (options) {
   		var start = Date.now();
       console.log('----------------------------------');
       console.log('[SERVER - BUILD] Building TEST bundle...');
+      console.log('----------------------------------');
   		testBundler.bundle()
       .on('error', gutil.log)
 	      .pipe(source('specs.js'))
 	      .pipe(gulp.dest(options.dest))
 	      .pipe(livereload())
 	      .pipe(notify(function () {
+          console.log('----------------------------------');
           console.log('[SERVER - BUILD] TEST bundle built in ' + (Date.now() - start) + 'ms');
           console.log('----------------------------------');
 	      }));
@@ -117,12 +121,14 @@ var browserifyTask = function (options) {
     var start = new Date();
     console.log('----------------------------------');
     console.log('[SERVER - BUILD] Building VENDORS bundle...');
+    console.log('----------------------------------');
     vendorsBundler.bundle()
       .on('error', gutil.log)
       .pipe(source('vendors.js'))
       .pipe(gulpif(!options.development, streamify(uglify())))
       .pipe(gulp.dest(options.dest))
       .pipe(notify(function () {
+        console.log('----------------------------------');
         console.log('[SERVER - BUILD] VENDORS bundle built in ' + (Date.now() - start) + 'ms');
         console.log('----------------------------------');
       }));
@@ -134,14 +140,15 @@ var browserifyTask = function (options) {
 var cssTask = function (options) {
     if (options.development) {
       var run = function () {
-        console.log(arguments);
         var start = new Date();
         console.log('----------------------------------');
-      console.log('[SERVER - BUILD] Building CSS bundle...');
+        console.log('[SERVER - BUILD] Building CSS bundle...');
+        console.log('----------------------------------');
         gulp.src(options.src)
           .pipe(concat('main.css'))
           .pipe(gulp.dest(options.dest))
           .pipe(notify(function () {
+            console.log('----------------------------------');
             console.log('[SERVER - BUILD] CSS bundle built in ' + (Date.now() - start) + 'ms');
             console.log('----------------------------------');
           }));

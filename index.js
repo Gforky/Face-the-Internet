@@ -18,7 +18,7 @@ app.use(express.static('build'));
 
 app.get('/',function(request, response){
 	console.log('----------------------------------');
-	console.log('[SERVER - EVENT] ', 'Express server connected to client...'));
+	console.log('[SERVER - EVENT] ', 'Express server connected to client...');
 	console.log('----------------------------------');
 });
 
