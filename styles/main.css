@@ -47,9 +47,6 @@ body {
   color: white; }
 
 button {
-  position: fixed;
-  top: 30px;
-  right: 30px;
   background: black;
   border: 3px solid white;
   padding: 15px;
@@ -80,10 +77,14 @@ button {
 .PhotoBooth .buttons {
   position: fixed;
   top: 30px;
-  left: 30px; }
+  left: 30px;
+  width: 100%;
+  display: block;
+  overflow: visible; }
   .PhotoBooth .buttons li {
     float: left;
-    margin: 0 5px; }
+    margin: 0 5px;
+    display: block; }
     .PhotoBooth .buttons li button {
       display: none; }
       .PhotoBooth .buttons li button.active {
