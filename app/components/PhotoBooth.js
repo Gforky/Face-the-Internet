@@ -105,7 +105,7 @@ var PhotoBooth = React.createClass({
         });
 
         $.ajax({
-            url: 'http://localhost:3000/capture',
+            url: '/capture',
             type: 'post',
             dataType: 'jsonp',
             data: JSON.stringify({name: "test"}),

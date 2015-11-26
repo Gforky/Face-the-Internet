@@ -166,6 +166,10 @@ var cssTask = function (options) {
 // Starts our development workflow
 gulp.task('default', function () {
 
+  console.log('----------------------------------');
+  console.log('[SERVER - GULP] Running default task...');
+  console.log('----------------------------------');
+
   // Listen for script changes in app
   livereload.listen();
 
