@@ -17,7 +17,9 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static('build'));
 
 app.get('/',function(request, response){
-	// console.log(request, response);
+	console.log('----------------------------------');
+	console.log('[SERVER - EVENT] ', 'Express server connected to client...'));
+	console.log('----------------------------------');
 });
 
 app.post('/capture', function(request, response, next) { 
