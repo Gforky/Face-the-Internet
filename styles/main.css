@@ -111,3 +111,6 @@ button {
         display: none; }
         .PhotoBooth .buttons li button.active {
           display: block; }
+        .PhotoBooth .buttons li button.disabled {
+          opacity: 0.5;
+          cursor: auto; }

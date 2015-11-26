@@ -6,6 +6,10 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
+    _facePosition: function(x, y) {
+
+    },
+
     _drawFaces: function(scale, max) {
 
         var on = this.rects.length;
@@ -20,7 +24,7 @@ var PhotoBooth = React.createClass({
         for(var i = 0; i < n; i++) {
             r = this.rects[i];
             this.outputContext.strokeRect( (r.x * scale) | 0, (r.y * scale) | 0, (r.width * scale) | 0, (r.height * scale) | 0);
-
+            this._facePosition((r.x * scale), (r.y * scale))
         }
 
     },
@@ -220,7 +224,7 @@ var PhotoBooth = React.createClass({
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
                 <ul className="buttons">
-                    <li><button className={this.state.captureActive ? 'active' : ''} onClick={this._captureHandler}>Capture</button></li>
+                    <li><button className={this.state.captureActive ? 'active' : 'disabled'} onClick={this._captureHandler}>Capture</button></li>
                     <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
                     <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>
