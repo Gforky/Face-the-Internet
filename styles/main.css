@@ -94,6 +94,10 @@ button {
     display: none; }
     .PhotoBooth .overlay.active {
       display: block; }
+    .PhotoBooth .overlay p {
+      width: 100%;
+      text-align: center;
+      padding: 10px; }
   .PhotoBooth .silhouette-wrapper {
     display: block;
     position: absolute;

@@ -96,6 +96,7 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
 
         var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+        console.log('SEND ME TO THE SERVER >>> ', imageData);
 
         this.webcam.pause();
 
@@ -106,8 +107,6 @@ var PhotoBooth = React.createClass({
             retakeActive: false,
             overlayActive: true
         });
-
-        console.log('SEND ME TO THE SERVER >>> ', imageData);
 
     },
 
