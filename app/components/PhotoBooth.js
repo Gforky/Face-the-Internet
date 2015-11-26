@@ -91,10 +91,6 @@ var PhotoBooth = React.createClass({
 
     _saveHandler: function(e) {
 
-        console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to save image: ', e);
-        console.log('----------------------------------');
-
         var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
         console.log('SEND ME TO THE SERVER >>> ', imageData);
 
@@ -106,6 +102,18 @@ var PhotoBooth = React.createClass({
             saveActive: false,
             retakeActive: false,
             overlayActive: true
+        });
+
+        $.ajax({
+            url: 'http://localhost:3000/capture',
+            type: 'post',
+            dataType: 'jsonp',
+            data: JSON.stringify({name: "test"}),
+            contentType: 'application/json',
+            success: function(data){
+                console.log("success");
+                console.log(data);
+            }
         });
 
     },

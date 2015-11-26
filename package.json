@@ -8,7 +8,7 @@
     "npm": "2.7.4"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,8 +22,10 @@
   },
   "homepage": "https://github.com/JohnPett/Face-the-Internet#readme",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "browserify": "^10.2.1",
     "express": "^4.13.3",
+    "fs": "0.0.2",
     "glob": "^4.0.6",
     "gulp": "^3.8.9",
     "gulp-concat": "^2.3.4",
@@ -37,6 +39,7 @@
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
+    "http": "0.0.0",
     "jquery": "^2.1.4",
     "jsfeat": "0.0.8",
     "opencv": "^3.2.0",

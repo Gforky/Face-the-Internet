@@ -15,6 +15,8 @@ var glob = require('glob');
 var livereload = require('gulp-livereload');
 var connect = require('gulp-connect');
 var sass = require('gulp-sass');
+var child = require('child_process');
+var fs = require('fs');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -146,35 +148,37 @@ var cssTask = function (options) {
     }
 }
 
-// Function to check for SASS compliling and errors
-gulp.task('sass', function () {
-  gulp.src('./sass/main.scss')
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(gulp.dest('./styles'));
-});
-
 // Starts our development workflow
 gulp.task('default', function () {
 
+  // Listen for script changes in app
   livereload.listen();
 
+  // start up server
+  var server = child.spawn('node', ['index.js']);
+  var log = fs.createWriteStream('server.log', {flags: 'a'});
+  server.stdout.pipe(log);
+  server.stderr.pipe(log);
+
+  // Browserify dependencies
   browserifyTask({
     development: true,
     src: './app/main.js',
     dest: './build'
   });
 
-  gulp.watch('./sass/*.scss', ['sass']);
+  // Watch changes to SASS
+  gulp.watch('./sass/*.scss', function() {
+    gulp.src('./sass/main.scss')
+      .pipe(sass.sync().on('error', sass.logError))
+      .pipe(gulp.dest('./styles'));
+  });
   
+  // Build css file
   cssTask({
     development: true,
     src: './styles/**/*.css',
     dest: './build'
-  });
-
-  connect.server({
-    root: 'build/',
-    port: 4000
   });
 
 });
