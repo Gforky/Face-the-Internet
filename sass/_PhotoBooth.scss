@@ -3,16 +3,46 @@
 */
 
 .PhotoBooth {
+	position: relative;
+	max-width: 600px;
+	max-height: 400px;
 	.webcam {
 		display: none;
+		z-index: 0;
 	}
 	.input {
 		display: none;
+		z-index: 1;
+	}
+	.output{
+		position: relative;
+		z-index: 2;
+	}
+	.silhouette-wrapper {
+		background: red;
+		opacity: 0.5;
+		display: block;
+		position: absolute;
+		min-width: 600px;
+		min-height: 400px;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: 3;
+		.silhouette {
+			background: blue;
+			opacity: 2.5;
+			width: 25%;
+			height: 50%;
+			transform: translate(150%, 50%);
+		}
 	}
 	.buttons {
-		position: fixed;
+		position: absolute;
 		top: 30px;
 		left: 30px;
+		z-index: 4;
 		li {
 			float: left;
 			margin: 0 5px;

@@ -47,9 +47,6 @@ body {
   color: white; }
 
 button {
-  position: fixed;
-  top: 30px;
-  right: 30px;
   background: black;
   border: 3px solid white;
   padding: 15px;
@@ -71,20 +68,46 @@ button {
 /*
 	PHOTOBOOTH
 */
-.PhotoBooth .webcam {
-  display: none; }
-
-.PhotoBooth .input {
-  display: none; }
-
-.PhotoBooth .buttons {
-  position: fixed;
-  top: 30px;
-  left: 30px; }
-  .PhotoBooth .buttons li {
-    float: left;
-    margin: 0 5px; }
-    .PhotoBooth .buttons li button {
-      display: none; }
-      .PhotoBooth .buttons li button.active {
-        display: block; }
+.PhotoBooth {
+  position: relative;
+  max-width: 600px;
+  max-height: 400px; }
+  .PhotoBooth .webcam {
+    display: none;
+    z-index: 0; }
+  .PhotoBooth .input {
+    display: none;
+    z-index: 1; }
+  .PhotoBooth .output {
+    position: relative;
+    z-index: 2; }
+  .PhotoBooth .silhouette-wrapper {
+    background: red;
+    opacity: 0.5;
+    display: block;
+    position: absolute;
+    min-width: 600px;
+    min-height: 400px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 3; }
+    .PhotoBooth .silhouette-wrapper .silhouette {
+      background: blue;
+      opacity: 2.5;
+      width: 25%;
+      height: 50%;
+      transform: translate(150%, 50%); }
+  .PhotoBooth .buttons {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    z-index: 4; }
+    .PhotoBooth .buttons li {
+      float: left;
+      margin: 0 5px; }
+      .PhotoBooth .buttons li button {
+        display: none; }
+        .PhotoBooth .buttons li button.active {
+          display: block; }

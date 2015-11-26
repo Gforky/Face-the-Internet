@@ -20,6 +20,7 @@ var PhotoBooth = React.createClass({
         for(var i = 0; i < n; i++) {
             r = this.rects[i];
             this.outputContext.strokeRect( (r.x * scale) | 0, (r.y * scale) | 0, (r.width * scale) | 0, (r.height * scale) | 0);
+
         }
 
     },
@@ -82,7 +83,7 @@ var PhotoBooth = React.createClass({
             retakeActive: false
         });
 
-        console.log(imageData);
+        console.log('SEND ME TO THE SERVER >>> ', imageData);
 
     },
 
@@ -108,7 +109,6 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has allowed webcam: ', stream);
         console.log('----------------------------------');
 
-        var src = window.URL.createObjectURL(stream);
         // TO DO: Full bleed video gets a little nasty on big browsers...
         // var width = window.outerWidth;
         // var height = window.outerHeight;
@@ -116,7 +116,7 @@ var PhotoBooth = React.createClass({
         var height = 400;
 
         this.setState({
-            webcam: src,
+            webcam: window.URL.createObjectURL(stream),
             width: width,
             height: height
         });
@@ -148,7 +148,7 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'Start webcam...');
         console.log('----------------------------------');
 
-        // create cross-browser var to check for webcam support
+        // create cross-browser var to check for webcam support, attach to window
         navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
         if (navigator.getUserMedia) {
@@ -166,31 +166,30 @@ var PhotoBooth = React.createClass({
 
         }
 
-    },
-
-    componentDidUpdate: function(animate) {
-
-        // add animation requests to the window
+        // attach animation requests to the window
         window.requestAnimFrame = (function(){
-          return  window.requestAnimationFrame       || 
-                  window.webkitRequestAnimationFrame || 
-                  window.mozRequestAnimationFrame    || 
-                  window.oRequestAnimationFrame      || 
-                  window.msRequestAnimationFrame     || 
-                  function(/* function */ callback, /* DOMElement */ element){
-                    window.setTimeout(callback, 1000 / 60);
-                  };
+            return  window.requestAnimationFrame       || 
+                    window.webkitRequestAnimationFrame || 
+                    window.mozRequestAnimationFrame    || 
+                    window.oRequestAnimationFrame      || 
+                    window.msRequestAnimationFrame     || 
+                    function(/* function */ callback, /* DOMElement */ element){
+                        window.setTimeout(callback, 1000 / 60);
+                    };
         })();
 
         // attach cascade data to the global object
         $.getJSON('cascade/bbf_face.js', function(data) {
             JSFeat.bbf.prepare_cascade(data);
             window.cascadeData = data;
+            console.log('----------------------------------');
+            console.log('[PHOTOBOOTH - DATA] ', 'Face array data received: ', data);
+            console.log('----------------------------------');
         });
 
     },
 
-    componentDidUpdate: function() {
+    componentDidUpdate: function(animate) {
 
         // added on update to the window, as the video streams it is updating...
         this.outputContext = this.output.getContext('2d');
@@ -213,7 +212,10 @@ var PhotoBooth = React.createClass({
     render: function() {
 
         return (
-            <div className="PhotoBooth">
+            <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
+                <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
+                    <div className="silhouette"></div>
+                </div>  
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.width} height={this.state.height} src={this.state.webcam} autoPlay></video>
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
