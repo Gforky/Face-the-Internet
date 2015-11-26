@@ -109,12 +109,12 @@ var PhotoBooth = React.createClass({
             dataType: 'jsonp',
             data: JSON.stringify({image: imageData}),
             contentType: 'application/json',
-            success: function(data){
+            success: function(data) {
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Successfully posted image to server: ', data);
                 console.log('----------------------------------');
             },
-            error: function(error) {
+            error: function(xhr, textStatus, error) {
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Error posting image to server: ', error);
                 console.log('----------------------------------');
@@ -266,7 +266,8 @@ var PhotoBooth = React.createClass({
         return (
             <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
-                    <p>Image saved</p>
+                    <div className={this.state.loadingActive ? 'loading active' : 'loading disabled'}></div>
+                    <div className={this.state.loadingActive ? 'message active' : 'message disabled'}></div>
                 </div>
                 <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
                     <div className="silhouette"></div>

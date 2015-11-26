@@ -23,7 +23,9 @@ app.get('/',function(request, response){
     console.log('----------------------------------');
 });
 
-app.post('/capture', function(request, response, next) { 
+app.post('/capture', function(request, response, next) {
+
+    console.log(request.body);
 
     var capturedImageData = request.body.image.replace(/^data:image\/jpeg;base64,/, '');
 
@@ -36,10 +38,10 @@ app.post('/capture', function(request, response, next) {
             console.log('----------------------------------');
             console.log('[PHOTOBOOTH - DATA] ', 'Success writing image to server!');
             console.log('----------------------------------');
+
+            response.jsonp(request.body);
         }
     });
-
-    response.send(request.body);
 
 });
 
