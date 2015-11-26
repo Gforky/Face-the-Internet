@@ -68,10 +68,10 @@ var PhotoBooth = React.createClass({
         }
     },
 
-    _captureHandler: function(e) {
+    _captureHandler: function(event) {
 
         console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', e);
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', event);
         console.log('----------------------------------');
 
         window.cancelAnimationFrame(this._faceDetection);
@@ -91,7 +91,7 @@ var PhotoBooth = React.createClass({
 
     _saveHandler: function(e) {
 
-        var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+        var imageData = this.input.toDataURL("image/jpeg", 0.85);
 
         this.webcam.pause();
 
@@ -241,7 +241,7 @@ var PhotoBooth = React.createClass({
 
     },
 
-    componentDidUpdate: function(animate) {
+    componentDidUpdate: function() {
 
         // added on update to the window, as the video streams it is updating...
         this.outputContext = this.output.getContext('2d');

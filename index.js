@@ -5,8 +5,9 @@
 */
 
 var express = require('express'),
-	http = require('http'),
-	bodyParser = require('body-parser');
+    http = require('http'),
+    bodyParser = require('body-parser'),
+    fs = require('fs');
 
 var app = express();
 
@@ -17,23 +18,33 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static('build'));
 
 app.get('/',function(request, response){
-	console.log('----------------------------------');
-	console.log('[SERVER - EVENT] ', 'Express server connected to client...');
-	console.log('----------------------------------');
+    console.log('----------------------------------');
+    console.log('[SERVER - EVENT] ', 'Express server connected to client...');
+    console.log('----------------------------------');
 });
 
 app.post('/capture', function(request, response, next) { 
 
-	var capturedImage = request.body.image;
+    var capturedImageData = request.body.image.replace(/^data:image\/jpeg;base64,/, '');
 
-	response.send(request.body);
+    fs.writeFile('captures/' + Date.now() + '.png', capturedImageData, 'base64', function(error) {
+        if (error) {
+            console.log('----------------------------------');
+            console.log('[PHOTOBOOTH - DATA] ', 'Error writing image to server: ', error);
+            console.log('----------------------------------');
+        } else {
+            console.log('----------------------------------');
+            console.log('[PHOTOBOOTH - DATA] ', 'Success writing image to server!');
+            console.log('----------------------------------');
+        }
+    });
+
+    response.send(request.body);
 
 });
 
 http.createServer(app).listen(app.get('port'), function(){
-
-	console.log('----------------------------------');
-	console.log('[SERVER - EVENT] ', 'Express server listening on port ' + app.get('port'));
-	console.log('----------------------------------');
-
+    console.log('----------------------------------');
+    console.log('[SERVER - EVENT] ', 'Express server listening on port ' + app.get('port'));
+    console.log('----------------------------------');
 });
