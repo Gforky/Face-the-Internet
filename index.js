@@ -10,7 +10,7 @@ var express = require('express'),
 
 var app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
 
 app.set('port', process.env.PORT || 3000);
 
@@ -24,7 +24,7 @@ app.get('/',function(request, response){
 
 app.post('/capture', function(request, response, next) { 
 
-	console.log(request, response, next);
+	var capturedImage = request.body.image;
 
 	response.send(request.body);
 

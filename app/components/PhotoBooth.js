@@ -92,7 +92,6 @@ var PhotoBooth = React.createClass({
     _saveHandler: function(e) {
 
         var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
-        console.log('SEND ME TO THE SERVER >>> ', imageData);
 
         this.webcam.pause();
 
@@ -108,11 +107,17 @@ var PhotoBooth = React.createClass({
             url: '/capture',
             type: 'post',
             dataType: 'jsonp',
-            data: JSON.stringify({name: "test"}),
+            data: JSON.stringify({image: imageData}),
             contentType: 'application/json',
             success: function(data){
-                console.log("success");
-                console.log(data);
+                console.log('----------------------------------');
+                console.log('[PHOTOBOOTH - DATA] ', 'Successfully posted image to server: ', data);
+                console.log('----------------------------------');
+            },
+            error: function(error) {
+                console.log('----------------------------------');
+                console.log('[PHOTOBOOTH - DATA] ', 'Error posting image to server: ', error);
+                console.log('----------------------------------');
             }
         });
 
