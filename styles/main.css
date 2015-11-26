@@ -129,4 +129,5 @@ button {
         .PhotoBooth .buttons li button.disabled {
           display: block;
           opacity: 0.5;
-          cursor: auto; }
+          cursor: auto;
+          pointer-events: none; }

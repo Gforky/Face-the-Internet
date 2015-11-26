@@ -4,25 +4,10 @@
 
 */
 
-// define the websockets express server
-// var app = require('express.io')(),
-//     express = require('express.io');
+var express = require('express');
 
-// start http server
-// app.http().io();
+var app = express();
 
-// set static/public file access
-// app.use(express.static(__dirname + '/public'));
-
-// test connection
-// app.get('/', function (req, res) {
-//   res.send('Hello World!');
-// });
-
-// var port = 3000;
-// var server = app.listen(port, function() {
-  
-//   var port = server.address().port;
-//   console.log('App listening on port:', port);
-
-// });
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
