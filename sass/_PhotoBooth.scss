@@ -3,19 +3,70 @@
 */
 
 .PhotoBooth {
+	position: relative;
+	max-width: 600px;
+	max-height: 400px;
 	.webcam {
 		display: none;
+		z-index: 0;
 	}
 	.input {
 		display: none;
+		z-index: 1;
+	}
+	.output{
+		position: relative;
+		z-index: 2;
+	}
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: red;
+		width: 100%;
+		height: 100%;
+		z-index: 5;
+		display: none;
+		&.active {
+			display: block;
+		}
+		p {
+			width: 100%;
+			text-align: center;
+			padding: 10px;
+		}
+	}
+	.silhouette-wrapper {
+		display: block;
+		position: absolute;
+		min-width: 600px;
+		min-height: 400px;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: 3;
+		.silhouette {
+			border: 2px solid blue;
+			opacity: 0.5;
+			width: 25%;
+			height: 50%;
+			transform: translate(150%, 50%);
+		}
 	}
 	.buttons {
-		position: fixed;
+		position: absolute;
 		top: 30px;
 		left: 30px;
+<<<<<<< HEAD
 		width: 100%;
 		display: block;
 		overflow: visible;
+=======
+		z-index: 4;
+>>>>>>> origin/master
 		li {
 			float: left;
 			margin: 0 5px;
@@ -24,6 +75,12 @@
 				display: none;
 				&.active {
 					display: block;
+				}
+				&.disabled {
+					display: block;
+					opacity: 0.5;
+					cursor: auto;
+					pointer-events: none;
 				}
 			} 
 		}

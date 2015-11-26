@@ -6,6 +6,26 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
+    _facePosition: function(x, y) {
+
+        // TO DO: Make me responsive...
+        var minX;
+        var minY;
+        var maxX;
+        var maxY;
+
+        if (x > 200 && x < 300 && y > 100 && y < 200) {
+            this.setState({
+                captureActive: true
+            });
+        } else {
+            this.setState({
+                captureActive: false
+            });
+        }
+
+    },
+
     _drawFaces: function(scale, max) {
 
         var on = this.rects.length;
@@ -20,13 +40,14 @@ var PhotoBooth = React.createClass({
         for(var i = 0; i < n; i++) {
             r = this.rects[i];
             this.outputContext.strokeRect( (r.x * scale) | 0, (r.y * scale) | 0, (r.width * scale) | 0, (r.height * scale) | 0);
+            this._facePosition((r.x * scale), (r.y * scale));
         }
 
     },
 
     _faceDetection: function() {
 
-        window.requestAnimFrame(this._faceDetection);
+        window.requestAnimationFrame(this._faceDetection);
         
         if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA) {
 
@@ -47,19 +68,22 @@ var PhotoBooth = React.createClass({
         }
     },
 
-    _captureHandler: function(e) {
+    _captureHandler: function(event) {
 
         console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', e);
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', event);
         console.log('----------------------------------');
+
+        window.cancelAnimationFrame(this._faceDetection);
+
+        this.webcam.pause();
 
         this.setState({
             captureActive: false,
             saveActive: true,
-            retakeActive: true
+            retakeActive: true,
+            webcam: ''
         });
-
-        this.webcam.pause();
 
         this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
@@ -67,11 +91,7 @@ var PhotoBooth = React.createClass({
 
     _saveHandler: function(e) {
 
-        console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to save image: ', e);
-        console.log('----------------------------------');
-
-        var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+        var imageData = this.input.toDataURL("image/jpeg", 0.85);
 
         this.webcam.pause();
 
@@ -79,10 +99,27 @@ var PhotoBooth = React.createClass({
             webcam: '',
             captureActive: false,
             saveActive: false,
-            retakeActive: false
+            retakeActive: false,
+            overlayActive: true
         });
 
-        console.log(imageData);
+        $.ajax({
+            url: '/capture',
+            type: 'post',
+            dataType: 'jsonp',
+            data: JSON.stringify({image: imageData}),
+            contentType: 'application/json',
+            success: function(data) {
+                console.log('----------------------------------');
+                console.log('[PHOTOBOOTH - DATA] ', 'Successfully posted image to server: ', data);
+                console.log('----------------------------------');
+            },
+            error: function(xhr, textStatus, error) {
+                console.log('----------------------------------');
+                console.log('[PHOTOBOOTH - DATA] ', 'Error posting image to server: ', error);
+                console.log('----------------------------------');
+            }
+        });
 
     },
 
@@ -93,6 +130,7 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
 
         this.setState({
+            webcam: window.URL.createObjectURL(this.stream),
             captureActive: true,
             saveActive: false,
             retakeActive: false
@@ -108,7 +146,8 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has allowed webcam: ', stream);
         console.log('----------------------------------');
 
-        var src = window.URL.createObjectURL(stream);
+        this.stream = stream;
+
         // TO DO: Full bleed video gets a little nasty on big browsers...
         // var width = window.outerWidth;
         // var height = window.outerHeight;
@@ -116,7 +155,7 @@ var PhotoBooth = React.createClass({
         var height = 400;
 
         this.setState({
-            webcam: src,
+            webcam: window.URL.createObjectURL(this.stream),
             width: width,
             height: height
         });
@@ -141,14 +180,15 @@ var PhotoBooth = React.createClass({
             height: '',
             captureActive: true,
             saveActive: false,
-            retakeActive: false
+            retakeActive: false,
+            overlayActive: false
         });
 
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'Start webcam...');
         console.log('----------------------------------');
 
-        // create cross-browser var to check for webcam support
+        // create cross-browser var to check for webcam support, attach to window
         navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
         if (navigator.getUserMedia) {
@@ -166,22 +206,37 @@ var PhotoBooth = React.createClass({
 
         }
 
-        // add animation requests to the window
-        window.requestAnimFrame = (function(){
-            return  window.requestAnimationFrame   || 
-                window.webkitRequestAnimationFrame || 
-                window.mozRequestAnimationFrame    || 
-                window.oRequestAnimationFrame      || 
-                window.msRequestAnimationFrame     || 
-                function(/* function */ callback, /* DOMElement */ element){
-                window.setTimeout(callback, 1000 / 60);
+        // attach animation requests to the window
+        var lastTime = 0;
+        var vendors = ['webkit', 'moz'];
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame =
+              window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame)
+            window.requestAnimationFrame = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                  timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
             };
-        })();
+
+        if (!window.cancelAnimationFrame)
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
 
         // attach cascade data to the global object
         $.getJSON('cascade/bbf_face.js', function(data) {
             JSFeat.bbf.prepare_cascade(data);
             window.cascadeData = data;
+            console.log('----------------------------------');
+            console.log('[PHOTOBOOTH - DATA] ', 'Face array data received: ', data);
+            console.log('----------------------------------');
         });
 
     },
@@ -209,12 +264,19 @@ var PhotoBooth = React.createClass({
     render: function() {
 
         return (
-            <div className="PhotoBooth">
+            <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
+                <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
+                    <div className={this.state.loadingActive ? 'loading active' : 'loading disabled'}></div>
+                    <div className={this.state.loadingActive ? 'message active' : 'message disabled'}></div>
+                </div>
+                <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
+                    <div className="silhouette"></div>
+                </div>  
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.width} height={this.state.height} src={this.state.webcam} autoPlay></video>
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
                 <ul className="buttons">
-                    <li><button className={this.state.captureActive ? 'active' : ''} onClick={this._captureHandler}>Capture</button></li>
+                    <li><button className={this.state.captureActive ? 'active' : 'disabled'} onClick={this._captureHandler}>Capture</button></li>
                     <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
                     <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>

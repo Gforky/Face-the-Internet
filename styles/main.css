@@ -68,6 +68,7 @@ button {
 /*
 	PHOTOBOOTH
 */
+<<<<<<< HEAD
 .PhotoBooth .webcam {
   display: none; }
 
@@ -89,3 +90,68 @@ button {
       display: none; }
       .PhotoBooth .buttons li button.active {
         display: block; }
+=======
+.PhotoBooth {
+  position: relative;
+  max-width: 600px;
+  max-height: 400px; }
+  .PhotoBooth .webcam {
+    display: none;
+    z-index: 0; }
+  .PhotoBooth .input {
+    display: none;
+    z-index: 1; }
+  .PhotoBooth .output {
+    position: relative;
+    z-index: 2; }
+  .PhotoBooth .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: red;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    display: none; }
+    .PhotoBooth .overlay.active {
+      display: block; }
+    .PhotoBooth .overlay p {
+      width: 100%;
+      text-align: center;
+      padding: 10px; }
+  .PhotoBooth .silhouette-wrapper {
+    display: block;
+    position: absolute;
+    min-width: 600px;
+    min-height: 400px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 3; }
+    .PhotoBooth .silhouette-wrapper .silhouette {
+      border: 2px solid blue;
+      opacity: 0.5;
+      width: 25%;
+      height: 50%;
+      transform: translate(150%, 50%); }
+  .PhotoBooth .buttons {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    z-index: 4; }
+    .PhotoBooth .buttons li {
+      float: left;
+      margin: 0 5px; }
+      .PhotoBooth .buttons li button {
+        display: none; }
+        .PhotoBooth .buttons li button.active {
+          display: block; }
+        .PhotoBooth .buttons li button.disabled {
+          display: block;
+          opacity: 0.5;
+          cursor: auto;
+          pointer-events: none; }
+>>>>>>> origin/master
