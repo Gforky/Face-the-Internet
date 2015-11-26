@@ -103,7 +103,8 @@ var PhotoBooth = React.createClass({
             webcam: '',
             captureActive: false,
             saveActive: false,
-            retakeActive: false
+            retakeActive: false,
+            overlayActive: true
         });
 
         console.log('SEND ME TO THE SERVER >>> ', imageData);
@@ -167,7 +168,8 @@ var PhotoBooth = React.createClass({
             height: '',
             captureActive: true,
             saveActive: false,
-            retakeActive: false
+            retakeActive: false,
+            overlayActive: false
         });
 
         console.log('----------------------------------');
@@ -251,7 +253,9 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
-                <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}></div>
+                <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
+                    <p>Image saved</p>
+                </div>
                 <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
                     <div className="silhouette"></div>
                 </div>  

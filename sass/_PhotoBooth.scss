@@ -18,6 +18,21 @@
 		position: relative;
 		z-index: 2;
 	}
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: red;
+		width: 100%;
+		height: 100%;
+		z-index: 5;
+		display: none;
+		&.active {
+			display: block;
+		}
+	}
 	.silhouette-wrapper {
 		display: block;
 		position: absolute;
