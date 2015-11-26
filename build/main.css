@@ -82,8 +82,6 @@ button {
     position: relative;
     z-index: 2; }
   .PhotoBooth .silhouette-wrapper {
-    background: red;
-    opacity: 0.5;
     display: block;
     position: absolute;
     min-width: 600px;
@@ -94,8 +92,8 @@ button {
     width: 100%;
     z-index: 3; }
     .PhotoBooth .silhouette-wrapper .silhouette {
-      background: blue;
-      opacity: 2.5;
+      border: 2px solid blue;
+      opacity: 0.5;
       width: 25%;
       height: 50%;
       transform: translate(150%, 50%); }
@@ -112,5 +110,6 @@ button {
         .PhotoBooth .buttons li button.active {
           display: block; }
         .PhotoBooth .buttons li button.disabled {
+          display: block;
           opacity: 0.5;
           cursor: auto; }

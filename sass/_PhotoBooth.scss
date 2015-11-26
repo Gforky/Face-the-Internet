@@ -19,8 +19,6 @@
 		z-index: 2;
 	}
 	.silhouette-wrapper {
-		background: red;
-		opacity: 0.5;
 		display: block;
 		position: absolute;
 		min-width: 600px;
@@ -31,8 +29,8 @@
 		width: 100%;
 		z-index: 3;
 		.silhouette {
-			background: blue;
-			opacity: 2.5;
+			border: 2px solid blue;
+			opacity: 0.5;
 			width: 25%;
 			height: 50%;
 			transform: translate(150%, 50%);
@@ -52,6 +50,7 @@
 					display: block;
 				}
 				&.disabled {
+					display: block;
 					opacity: 0.5;
 					cursor: auto;
 				}

@@ -8,6 +8,22 @@ var PhotoBooth = React.createClass({
 
     _facePosition: function(x, y) {
 
+        // TO DO: Make me responsive...
+        var minX;
+        var minY;
+        var maxX;
+        var maxY;
+
+        if (x > 200 && x < 300 && y > 100 && y < 200) {
+            this.setState({
+                captureActive: true
+            });
+        } else {
+            this.setState({
+                captureActive: false
+            });
+        }
+
     },
 
     _drawFaces: function(scale, max) {
@@ -24,14 +40,14 @@ var PhotoBooth = React.createClass({
         for(var i = 0; i < n; i++) {
             r = this.rects[i];
             this.outputContext.strokeRect( (r.x * scale) | 0, (r.y * scale) | 0, (r.width * scale) | 0, (r.height * scale) | 0);
-            this._facePosition((r.x * scale), (r.y * scale))
+            this._facePosition((r.x * scale), (r.y * scale));
         }
 
     },
 
     _faceDetection: function() {
 
-        window.requestAnimFrame(this._faceDetection);
+        window.requestAnimationFrame(this._faceDetection);
         
         if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA) {
 
@@ -58,13 +74,16 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', e);
         console.log('----------------------------------');
 
+        window.cancelAnimationFrame(this._faceDetection);
+
+        this.webcam.pause();
+
         this.setState({
             captureActive: false,
             saveActive: true,
-            retakeActive: true
+            retakeActive: true,
+            webcam: ''
         });
-
-        this.webcam.pause();
 
         this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
@@ -98,6 +117,7 @@ var PhotoBooth = React.createClass({
         console.log('----------------------------------');
 
         this.setState({
+            webcam: window.URL.createObjectURL(this.stream),
             captureActive: true,
             saveActive: false,
             retakeActive: false
@@ -113,6 +133,8 @@ var PhotoBooth = React.createClass({
         console.log('[PHOTOBOOTH - EVENT] ', 'User has allowed webcam: ', stream);
         console.log('----------------------------------');
 
+        this.stream = stream;
+
         // TO DO: Full bleed video gets a little nasty on big browsers...
         // var width = window.outerWidth;
         // var height = window.outerHeight;
@@ -120,7 +142,7 @@ var PhotoBooth = React.createClass({
         var height = 400;
 
         this.setState({
-            webcam: window.URL.createObjectURL(stream),
+            webcam: window.URL.createObjectURL(this.stream),
             width: width,
             height: height
         });
@@ -171,16 +193,28 @@ var PhotoBooth = React.createClass({
         }
 
         // attach animation requests to the window
-        window.requestAnimFrame = (function(){
-            return  window.requestAnimationFrame       || 
-                    window.webkitRequestAnimationFrame || 
-                    window.mozRequestAnimationFrame    || 
-                    window.oRequestAnimationFrame      || 
-                    window.msRequestAnimationFrame     || 
-                    function(/* function */ callback, /* DOMElement */ element){
-                        window.setTimeout(callback, 1000 / 60);
-                    };
-        })();
+        var lastTime = 0;
+        var vendors = ['webkit', 'moz'];
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame =
+              window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame)
+            window.requestAnimationFrame = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                  timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+
+        if (!window.cancelAnimationFrame)
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
 
         // attach cascade data to the global object
         $.getJSON('cascade/bbf_face.js', function(data) {
@@ -217,6 +251,7 @@ var PhotoBooth = React.createClass({
 
         return (
             <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
+                <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}></div>
                 <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
                     <div className="silhouette"></div>
                 </div>  
