@@ -70,8 +70,8 @@ button {
 */
 .PhotoBooth {
   position: relative;
-  max-width: 600px;
-  max-height: 400px; }
+  max-width: 800px;
+  max-height: 450px; }
   .PhotoBooth .webcam {
     display: none;
     z-index: 0; }
@@ -101,8 +101,8 @@ button {
   .PhotoBooth .silhouette-wrapper {
     display: block;
     position: absolute;
-    min-width: 600px;
-    min-height: 400px;
+    min-width: 800px;
+    min-height: 450px;
     top: 0;
     left: 0;
     bottom: 0;

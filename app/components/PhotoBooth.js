@@ -53,11 +53,11 @@ var PhotoBooth = React.createClass({
 
             this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
-            this.inputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+            this.inputContext.drawImage(this.webcam, 0, 0, this.state.webcamWidth, this.state.webcamHeight);
 
-            var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+            var imageData = this.inputContext.getImageData(0, 0, this.state.webcamWidth, this.state.webcamHeight);
 
-            JSFeat.imgproc.grayscale(imageData.data, this.state.width, this.state.height, this.imageU8);
+            JSFeat.imgproc.grayscale(imageData.data, this.state.webcamWidth, this.state.webcamHeight, this.imageU8);
 
             var pyr = JSFeat.bbf.build_pyramid(this.imageU8, 24*2, 24*2, 4);
 
@@ -150,12 +150,11 @@ var PhotoBooth = React.createClass({
 
         // TO DO: Full bleed video gets a little nasty on big browsers...
         // var width = window.outerWidth;
-        // var height = window.outerHeight;
-        var width = 600;
-        var height = 400;
+        var height = window.outerHeight;
+        var width = (16/9) * height;
 
         this.setState({
-            webcam: window.URL.createObjectURL(this.stream),
+            webcamSrc: window.URL.createObjectURL(this.stream),
             width: width,
             height: height
         });
@@ -174,30 +173,37 @@ var PhotoBooth = React.createClass({
 
     componentWillMount: function() {
 
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'Start webcam...');
+        console.log('----------------------------------');
+
         this.setState({
-            webcam: '',
             width: '',
             height: '',
+            webcamSrc: '',
+            webcamWidth: 400,
+            webcamHeight: 225,
+            inputWidth: '',
+            inputHeight: '',
             captureActive: true,
             saveActive: false,
             retakeActive: false,
             overlayActive: false
         });
 
-        console.log('----------------------------------');
-        console.log('[PHOTOBOOTH - EVENT] ', 'Start webcam...');
-        console.log('----------------------------------');
-
         // create cross-browser var to check for webcam support, attach to window
-        navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        navigator.getUserMedia  = navigator.getUserMedia || 
+                                  navigator.webkitGetUserMedia || 
+                                  navigator.mozGetUserMedia || 
+                                  navigator.msGetUserMedia;
 
         if (navigator.getUserMedia) {
 
             var hdConstraints = {
                 video: {
                         mandatory: {
-                        minWidth: 1280,
-                        minHeight: 720
+                        minWidth: 800,
+                        minHeight: 450
                     }
                 }
             };
@@ -272,7 +278,7 @@ var PhotoBooth = React.createClass({
                 <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
                     <div className="silhouette"></div>
                 </div>  
-                <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.width} height={this.state.height} src={this.state.webcam} autoPlay></video>
+                <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
                 <ul className="buttons">
