@@ -8,13 +8,13 @@ var PhotoBooth = React.createClass({
 
     _facePosition: function(x, y) {
 
-        // TO DO: Make me responsive...
-        var minX;
-        var minY;
-        var maxX;
-        var maxY;
+        // centre 50% of screen
+        var minX = this.state.width * 0.25;
+        var minY = this.state.height * 0.25;
+        var maxX = this.state.width * 0.75;
+        var maxY = this.state.height * 0.75;
 
-        if (x > 200 && x < 300 && y > 100 && y < 200) {
+        if (x > minX && x < maxX && y > minY && y < maxY) {
             this.setState({
                 captureActive: true
             });

@@ -4,8 +4,6 @@
 
 .PhotoBooth {
 	position: relative;
-	max-width: 800px;
-	max-height: 450px;
 	.webcam {
 		display: none;
 		z-index: 0;
@@ -41,8 +39,6 @@
 	.silhouette-wrapper {
 		display: block;
 		position: absolute;
-		min-width: 800px;
-		min-height: 450px;
 		top: 0;
 		left: 0;
 		bottom: 0;
@@ -51,9 +47,6 @@
 		.silhouette {
 			border: 2px solid blue;
 			opacity: 0.5;
-			width: 25%;
-			height: 50%;
-			transform: translate(150%, 50%);
 		}
 	}
 	.buttons {

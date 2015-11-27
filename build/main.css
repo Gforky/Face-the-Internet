@@ -69,9 +69,7 @@ button {
 	PHOTOBOOTH
 */
 .PhotoBooth {
-  position: relative;
-  max-width: 800px;
-  max-height: 450px; }
+  position: relative; }
   .PhotoBooth .webcam {
     display: none;
     z-index: 0; }
@@ -101,8 +99,6 @@ button {
   .PhotoBooth .silhouette-wrapper {
     display: block;
     position: absolute;
-    min-width: 800px;
-    min-height: 450px;
     top: 0;
     left: 0;
     bottom: 0;
@@ -110,10 +106,7 @@ button {
     z-index: 3; }
     .PhotoBooth .silhouette-wrapper .silhouette {
       border: 2px solid blue;
-      opacity: 0.5;
-      width: 25%;
-      height: 50%;
-      transform: translate(150%, 50%); }
+      opacity: 0.5; }
   .PhotoBooth .buttons {
     position: absolute;
     top: 30px;
