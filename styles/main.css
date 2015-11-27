@@ -118,10 +118,14 @@ button {
     position: absolute;
     top: 30px;
     left: 30px;
+    width: 100%;
+    display: block;
+    overflow: visible;
     z-index: 4; }
     .PhotoBooth .buttons li {
       float: left;
-      margin: 0 5px; }
+      margin: 0 5px;
+      display: block; }
       .PhotoBooth .buttons li button {
         display: none; }
         .PhotoBooth .buttons li button.active {

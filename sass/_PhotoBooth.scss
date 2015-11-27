@@ -60,10 +60,14 @@
 		position: absolute;
 		top: 30px;
 		left: 30px;
+		width: 100%;
+		display: block;
+		overflow: visible;
 		z-index: 4;
 		li {
 			float: left;
 			margin: 0 5px;
+			display: block;
 			button {
 				display: none;
 				&.active {
