@@ -6,6 +6,12 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
+    _onWindowResize: function() {
+
+        console.log('on resize');
+
+    },
+
     _facePosition: function(x, y) {
 
         // centre 50% of screen
@@ -148,7 +154,7 @@ var PhotoBooth = React.createClass({
 
         this.stream = stream;
 
-        var height = window.outerHeight;
+        var height = window.innerHeight;
         var width = (16/9) * height;
 
         this.setState({
@@ -181,8 +187,6 @@ var PhotoBooth = React.createClass({
             webcamSrc: '',
             webcamWidth: 400,
             webcamHeight: 225,
-            inputWidth: '',
-            inputHeight: '',
             captureActive: true,
             saveActive: false,
             retakeActive: false,
@@ -215,16 +219,16 @@ var PhotoBooth = React.createClass({
         var vendors = ['webkit', 'moz'];
         for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
             window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame =
-              window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
         }
 
         if (!window.requestAnimationFrame)
             window.requestAnimationFrame = function(callback, element) {
                 var currTime = new Date().getTime();
                 var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-                  timeToCall);
+                var id = window.setTimeout(function() {
+                    callback(currTime + timeToCall); 
+                }, timeToCall);
                 lastTime = currTime + timeToCall;
                 return id;
             };
@@ -278,11 +282,11 @@ var PhotoBooth = React.createClass({
                 </div>  
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
-                <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
+                <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 <ul className="buttons">
-                    <li><button className={this.state.captureActive ? 'active' : 'disabled'} onClick={this._captureHandler}>Capture</button></li>
-                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
-                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
+                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>capture</button></li>
+                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
+                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
             </div>
         );
