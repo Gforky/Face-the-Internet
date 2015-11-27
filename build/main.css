@@ -126,10 +126,13 @@ body {
     display: none; }
     .PhotoBooth .overlay.active {
       display: block; }
-    .PhotoBooth .overlay p {
+    .PhotoBooth .overlay .loading {
       width: 100%;
-      text-align: center;
-      padding: 10px; }
+      height: 100%;
+      display: block;
+      background: url("img/loading.gif") no-repeat center blue; }
+    .PhotoBooth .overlay .message {
+      background: green; }
   .PhotoBooth .silhouette-wrapper {
     display: block;
     position: absolute;

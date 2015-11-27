@@ -31,10 +31,14 @@
 		&.active {
 			display: block;
 		}
-		p {
+		.loading {
 			width: 100%;
-			text-align: center;
-			padding: 10px;
+			height: 100%;
+			display: block;
+			background: url('img/loading.gif') no-repeat center blue;
+		}
+		.message {
+			background: green;
 		}
 	}
 	.silhouette-wrapper {
