@@ -4,6 +4,7 @@
 
 .PhotoBooth {
 	position: relative;
+	overflow: hidden;
 	.webcam {
 		display: none;
 		z-index: 0;
@@ -39,14 +40,17 @@
 	.silhouette-wrapper {
 		display: block;
 		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		width: 100%;
+		top: 25%;
+		left: 37.5%;
+		bottom: 25%;
+		right: 37.5%;
 		z-index: 3;
 		.silhouette {
 			border: 2px solid blue;
 			opacity: 0.5;
+			width: 100%;
+			height: 100%;
+			display: block;
 		}
 	}
 	.buttons {
