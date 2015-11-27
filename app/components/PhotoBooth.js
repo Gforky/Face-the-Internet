@@ -148,8 +148,6 @@ var PhotoBooth = React.createClass({
 
         this.stream = stream;
 
-        // TO DO: Full bleed video gets a little nasty on big browsers...
-        // var width = window.outerWidth;
         var height = window.outerHeight;
         var width = (16/9) * height;
 
