@@ -105,7 +105,7 @@ var PhotoBooth = React.createClass({
             captureActive: false,
             saveActive: false,
             retakeActive: false,
-            overlayActive: true.
+            overlayActive: true,
             loadingActive: true
         });
 
