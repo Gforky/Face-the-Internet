@@ -38,23 +38,56 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+@font-face {
+  font-family: 'Apercu';
+  src: url("./fonts/Apercu Bold.eot");
+  /* IE9 Compat Modes */
+  src: url("./fonts/Apercu Bold.eot?#iefix") format("embedded-opentype"), url("./fonts/Apercu Bold.woff") format("woff"), url("./fonts/Apercu Bold.ttf") format("truetype"), url("./fonts/Apercu Bold.svg#0173572ae23caf3e4e6d6c9b98fd6474") format("svg");
+  /* Legacy iOS */
+  font-style: normal;
+  font-weight: 700; }
+
+/*
+	MIXINS
+*/
+/* -------------------------------------------------------------
+  Sass CSS3 Mixins! The Cross-Browser CSS3 Sass Library
+  By: Matthieu Aussaguel, http://www.mynameismatthieu.com, @matthieu_tweets
+
+  List of CSS3 Sass Mixins File to be @imported and @included as you need
+
+  The purpose of this library is to facilitate the use of CSS3 on different browsers avoiding HARD TO READ and NEVER
+  ENDING css files
+
+  note: All CSS3 Properties are being supported by Safari 5
+  more info: http://www.findmebyip.com/litmus/#css3-properties
+
+------------------------------------------------------------- */
 /*
 	GLOBAL
 */
 body {
-  font-family: sans-serif;
+  font-size: 12px;
+  font-family: 'Apercu', sans-serif;
   background: black;
   color: white; }
-
-button {
-  background: black;
-  border: 3px solid white;
-  padding: 15px;
-  color: white;
-  letter-spacing: 1px;
-  font-family: sans-serif;
-  cursor: pointer;
-  cursor: hand; }
+  body button {
+    font-size: 18px;
+    padding: 20px;
+    color: white;
+    background: black;
+    border: 3px solid black;
+    appearance: none;
+    letter-spacing: 2px;
+    font-family: 'Apercu', sans-serif;
+    cursor: pointer;
+    cursor: hand;
+    -webkit-transition: all 0.2s ease-in-out 0s;
+    -khtml-transition: all 0.2s ease-in-out 0s;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -ms-transition: all 0.2s ease-in-out 0s;
+    -o-transition: all 0.2s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s; }
 
 /*
 	VIEWS
@@ -68,33 +101,9 @@ button {
 /*
 	PHOTOBOOTH
 */
-<<<<<<< HEAD
-.PhotoBooth .webcam {
-  display: none; }
-
-.PhotoBooth .input {
-  display: none; }
-
-.PhotoBooth .buttons {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  width: 100%;
-  display: block;
-  overflow: visible; }
-  .PhotoBooth .buttons li {
-    float: left;
-    margin: 0 5px;
-    display: block; }
-    .PhotoBooth .buttons li button {
-      display: none; }
-      .PhotoBooth .buttons li button.active {
-        display: block; }
-=======
 .PhotoBooth {
   position: relative;
-  max-width: 600px;
-  max-height: 400px; }
+  overflow: hidden; }
   .PhotoBooth .webcam {
     display: none;
     z-index: 0; }
@@ -117,41 +126,75 @@ button {
     display: none; }
     .PhotoBooth .overlay.active {
       display: block; }
-    .PhotoBooth .overlay p {
+    .PhotoBooth .overlay .loading {
       width: 100%;
-      text-align: center;
-      padding: 10px; }
+      height: 100%;
+      display: block;
+      background: url("img/loading.gif") no-repeat center blue; }
+    .PhotoBooth .overlay .message {
+      background: green; }
   .PhotoBooth .silhouette-wrapper {
     display: block;
     position: absolute;
-    min-width: 600px;
-    min-height: 400px;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    top: 25%;
+    left: 37.5%;
+    bottom: 25%;
+    right: 37.5%;
     z-index: 3; }
     .PhotoBooth .silhouette-wrapper .silhouette {
       border: 2px solid blue;
-      opacity: 0.5;
-      width: 25%;
-      height: 50%;
-      transform: translate(150%, 50%); }
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: alpha(opacity=50);
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+      -webkit-opacity: 0.5;
+      -khtml-opacity: 0.5;
+      -moz-opacity: 0.5;
+      -ms-opacity: 0.5;
+      -o-opacity: 0.5;
+      opacity: 0.5; }
   .PhotoBooth .buttons {
     position: absolute;
-    top: 30px;
-    left: 30px;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: block;
+    overflow: visible;
+    text-align: center;
     z-index: 4; }
     .PhotoBooth .buttons li {
-      float: left;
-      margin: 0 5px; }
+      margin: 0 5px;
+      display: inline-block; }
       .PhotoBooth .buttons li button {
         display: none; }
         .PhotoBooth .buttons li button.active {
           display: block; }
+          .PhotoBooth .buttons li button.active.capture {
+            background: green;
+            border: 3px solid green; }
         .PhotoBooth .buttons li button.disabled {
           display: block;
-          opacity: 0.5;
           cursor: auto;
-          pointer-events: none; }
->>>>>>> origin/master
+          pointer-events: none;
+          filter: alpha(opacity=50);
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+          -webkit-opacity: 0.5;
+          -khtml-opacity: 0.5;
+          -moz-opacity: 0.5;
+          -ms-opacity: 0.5;
+          -o-opacity: 0.5;
+          opacity: 0.5; }
+          .PhotoBooth .buttons li button.disabled.capture {
+            background: red;
+            border: 3px solid red; }
+        .PhotoBooth .buttons li button:hover {
+          filter: alpha(opacity=75);
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+          -webkit-opacity: 0.75;
+          -khtml-opacity: 0.75;
+          -moz-opacity: 0.75;
+          -ms-opacity: 0.75;
+          -o-opacity: 0.75;
+          opacity: 0.75; }
