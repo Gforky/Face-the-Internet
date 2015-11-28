@@ -221,7 +221,7 @@ var Face = React.createClass({
             var scale = params.minScale + Math.random() * ( params.maxScale - params.minScale );
             s.set( scale, scale, scale );
 
-            if( params.rotate) r.z = Math.random() * 2 * Math.PI;
+            if (params.rotate) r.z = Math.random() * 2 * Math.PI;
 
             var m = new THREE.Mesh( new THREE.DecalGeometry( mesh, p, r, s, check ), decalMaterial );
             decals.push( m );
@@ -267,7 +267,7 @@ var Face = React.createClass({
             requestAnimationFrame( render );
             renderer.autoClear = false;
             renderer.render( scene, camera );
-            if( renderHelpers ) renderer.render( helperScene, camera );
+            if ( renderHelpers ) renderer.render( helperScene, camera );
         })();
 
     },

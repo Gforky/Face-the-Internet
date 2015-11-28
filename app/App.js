@@ -9,7 +9,7 @@ var App = React.createClass({
 
         return (
             <div className="wrapper">
-                <PhotoBooth></PhotoBooth>
+                <StartPage></StartPage>
             </div>
         );
     }

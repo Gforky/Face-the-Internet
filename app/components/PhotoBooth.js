@@ -49,7 +49,7 @@ var PhotoBooth = React.createClass({
 
         window.requestAnimationFrame(this._faceDetection);
         
-        if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA) {
+        if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA)
 
             this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
@@ -65,7 +65,6 @@ var PhotoBooth = React.createClass({
 
             this._drawFaces(this.state.width/this.imageU8.cols, 1);
 
-        }
     },
 
     _captureHandler: function(event) {
@@ -114,7 +113,7 @@ var PhotoBooth = React.createClass({
                 console.log('[PHOTOBOOTH - DATA] ', 'Successfully posted image to server: ', data);
                 console.log('----------------------------------');
             },
-            error: function(xhr, textStatus, error) {
+            error: function(error) {
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Error posting image to server: ', error);
                 console.log('----------------------------------');
@@ -206,6 +205,15 @@ var PhotoBooth = React.createClass({
 
         }
 
+        // attach cascade data to the global object
+        $.getJSON('cascade/bbf_face.js', function(data) {
+            JSFeat.bbf.prepare_cascade(data);
+            window.cascadeData = data;
+            console.log('----------------------------------');
+            console.log('[PHOTOBOOTH - DATA] ', 'Face array data received: ', data);
+            console.log('----------------------------------');
+        });
+
         // attach animation requests to the window
         var lastTime = 0;
         var vendors = ['webkit', 'moz'];
@@ -229,15 +237,6 @@ var PhotoBooth = React.createClass({
             window.cancelAnimationFrame = function(id) {
                 clearTimeout(id);
             };
-
-        // attach cascade data to the global object
-        $.getJSON('cascade/bbf_face.js', function(data) {
-            JSFeat.bbf.prepare_cascade(data);
-            window.cascadeData = data;
-            console.log('----------------------------------');
-            console.log('[PHOTOBOOTH - DATA] ', 'Face array data received: ', data);
-            console.log('----------------------------------');
-        });
 
     },
 
