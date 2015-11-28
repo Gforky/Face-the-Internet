@@ -4,8 +4,7 @@
 
 .PhotoBooth {
 	position: relative;
-	max-width: 600px;
-	max-height: 400px;
+	overflow: hidden;
 	.webcam {
 		display: none;
 		z-index: 0;
@@ -32,55 +31,66 @@
 		&.active {
 			display: block;
 		}
-		p {
+		.loading {
 			width: 100%;
-			text-align: center;
-			padding: 10px;
+			height: 100%;
+			display: block;
+			background: url('img/loading.gif') no-repeat center blue;
+		}
+		.message {
+			background: green;
 		}
 	}
 	.silhouette-wrapper {
 		display: block;
 		position: absolute;
-		min-width: 600px;
-		min-height: 400px;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		width: 100%;
+		top: 25%;
+		left: 37.5%;
+		bottom: 25%;
+		right: 37.5%;
 		z-index: 3;
 		.silhouette {
 			border: 2px solid blue;
-			opacity: 0.5;
-			width: 25%;
-			height: 50%;
-			transform: translate(150%, 50%);
+			width: 100%;
+			height: 100%;
+			display: block;
+			@include opacity(0.5);
 		}
 	}
 	.buttons {
 		position: absolute;
-		top: 30px;
-		left: 30px;
-<<<<<<< HEAD
+		bottom: 5%;
+		left: 0;
+		right: 0;
 		width: 100%;
 		display: block;
 		overflow: visible;
-=======
+		text-align: center;
 		z-index: 4;
->>>>>>> origin/master
 		li {
-			float: left;
 			margin: 0 5px;
-			display: block;
+			display: inline-block;
 			button {
 				display: none;
 				&.active {
 					display: block;
+					&.capture {
+						background: green;
+						border: 3px solid green;
+					}
 				}
 				&.disabled {
 					display: block;
-					opacity: 0.5;
 					cursor: auto;
 					pointer-events: none;
+					@include opacity(0.5);
+					&.capture {
+						background: red;
+						border: 3px solid red;
+					}
+				}
+				&:hover {
+					@include opacity(0.75);
 				}
 			} 
 		}

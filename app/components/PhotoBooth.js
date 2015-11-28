@@ -6,15 +6,21 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
+    _onWindowResize: function() {
+
+        console.log('on resize');
+
+    },
+
     _facePosition: function(x, y) {
 
-        // TO DO: Make me responsive...
-        var minX;
-        var minY;
-        var maxX;
-        var maxY;
+        // centre 50% of screen
+        var minX = this.state.width * 0.25;
+        var minY = this.state.height * 0.375;
+        var maxX = this.state.width * 0.5;
+        var maxY = this.state.height * 0.75;
 
-        if (x > 200 && x < 300 && y > 100 && y < 200) {
+        if (x > minX && x < maxX && y > minY && y < maxY) {
             this.setState({
                 captureActive: true
             });
@@ -53,11 +59,11 @@ var PhotoBooth = React.createClass({
 
             this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
-            this.inputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+            this.inputContext.drawImage(this.webcam, 0, 0, this.state.webcamWidth, this.state.webcamHeight);
 
-            var imageData = this.inputContext.getImageData(0, 0, this.state.width, this.state.height);
+            var imageData = this.inputContext.getImageData(0, 0, this.state.webcamWidth, this.state.webcamHeight);
 
-            JSFeat.imgproc.grayscale(imageData.data, this.state.width, this.state.height, this.imageU8);
+            JSFeat.imgproc.grayscale(imageData.data, this.state.webcamWidth, this.state.webcamHeight, this.imageU8);
 
             var pyr = JSFeat.bbf.build_pyramid(this.imageU8, 24*2, 24*2, 4);
 
@@ -99,7 +105,8 @@ var PhotoBooth = React.createClass({
             captureActive: false,
             saveActive: false,
             retakeActive: false,
-            overlayActive: true
+            overlayActive: true.
+            loadingActive: true
         });
 
         $.ajax({
@@ -147,14 +154,11 @@ var PhotoBooth = React.createClass({
 
         this.stream = stream;
 
-        // TO DO: Full bleed video gets a little nasty on big browsers...
-        // var width = window.outerWidth;
-        // var height = window.outerHeight;
-        var width = 600;
-        var height = 400;
+        var height = window.innerHeight;
+        var width = (16/9) * height;
 
         this.setState({
-            webcam: window.URL.createObjectURL(this.stream),
+            webcamSrc: window.URL.createObjectURL(this.stream),
             width: width,
             height: height
         });
@@ -173,30 +177,37 @@ var PhotoBooth = React.createClass({
 
     componentWillMount: function() {
 
-        this.setState({
-            webcam: '',
-            width: '',
-            height: '',
-            captureActive: true,
-            saveActive: false,
-            retakeActive: false,
-            overlayActive: false
-        });
-
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'Start webcam...');
         console.log('----------------------------------');
 
+        this.setState({
+            width: '',
+            height: '',
+            webcamSrc: '',
+            webcamWidth: 400,
+            webcamHeight: 225,
+            captureActive: true,
+            saveActive: false,
+            retakeActive: false,
+            overlayActive: false,
+            loadingActive: false,
+            messageActive: false
+        });
+
         // create cross-browser var to check for webcam support, attach to window
-        navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        navigator.getUserMedia  = navigator.getUserMedia || 
+                                  navigator.webkitGetUserMedia || 
+                                  navigator.mozGetUserMedia || 
+                                  navigator.msGetUserMedia;
 
         if (navigator.getUserMedia) {
 
             var hdConstraints = {
                 video: {
                         mandatory: {
-                        minWidth: 1280,
-                        minHeight: 720
+                        minWidth: 800,
+                        minHeight: 450
                     }
                 }
             };
@@ -219,16 +230,16 @@ var PhotoBooth = React.createClass({
         var vendors = ['webkit', 'moz'];
         for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
             window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame =
-              window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
         }
 
         if (!window.requestAnimationFrame)
             window.requestAnimationFrame = function(callback, element) {
                 var currTime = new Date().getTime();
                 var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-                  timeToCall);
+                var id = window.setTimeout(function() {
+                    callback(currTime + timeToCall); 
+                }, timeToCall);
                 lastTime = currTime + timeToCall;
                 return id;
             };
@@ -266,18 +277,22 @@ var PhotoBooth = React.createClass({
             <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
                     <div className={this.state.loadingActive ? 'loading active' : 'loading disabled'}></div>
-                    <div className={this.state.loadingActive ? 'message active' : 'message disabled'}></div>
+                        <p>Success!</p>
+                    <div className={this.state.successActive ? 'message active' : 'message disabled'}></div>
+                    <div className={this.state.errorActive ? 'message active' : 'message disabled'}>
+                        <p>Error!</p>
+                    </div>
                 </div>
                 <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
                     <div className="silhouette"></div>
                 </div>  
-                <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.width} height={this.state.height} src={this.state.webcam} autoPlay></video>
+                <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
-                <canvas className="input" ref={(ref) => this.input = ref} width={this.state.width} height={this.state.height}></canvas>
+                <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 <ul className="buttons">
-                    <li><button className={this.state.captureActive ? 'active' : 'disabled'} onClick={this._captureHandler}>Capture</button></li>
-                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
-                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
+                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>capture</button></li>
+                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
+                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
             </div>
         );
