@@ -6,9 +6,37 @@ var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
 
-    _onWindowResize: function() {
+    _onWindowResize: function(event) {
 
-        console.log('on resize');
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has resized the browser: ', event);
+        console.log('----------------------------------');
+
+        var height = window.innerHeight;
+        var width = (16/9) * height;
+
+        if (window.innerWidth > width) {
+
+            width = window.outerWidth;
+            height = (9/16) * width;
+
+            this.setState({
+                width: width,
+                height: window.innerHeight,
+                outputWidth: width,
+                outputHeight: height
+            });
+
+        } else {
+
+            this.setState({
+                width: width,
+                height: window.innerHeight,
+                outputWidth: width,
+                outputHeight: height
+            });
+
+        }
 
     },
 
@@ -20,14 +48,29 @@ var PhotoBooth = React.createClass({
         var maxX = this.state.width * 0.5;
         var maxY = this.state.height * 0.75;
 
-        if (x > minX && x < maxX && y > minY && y < maxY) {
+        if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
-                captureActive: true
+                captureActive: true,
+                buttonsActive: true,
+                silhouetteActive: false
             });
+            // face detection box styles
+            this.outputContext.fillStyle = 'rgb(0, 255, 0)';
+            this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
         } else {
             this.setState({
-                captureActive: false
+                captureActive: false,
+                buttonsActive: true,
+                silhouetteActive: true
             });
+            // face detection box styles
+            this.outputContext.fillStyle = 'rgb(255, 0, 0)';
+            this.outputContext.strokeStyle = 'rgb(255, 0, 0)';
+        }
+
+        if (this.state.hasCaptured) {
+            this.outputContext.fillStyle = 'rgba(255, 255, 255, 0)';
+            this.outputContext.strokeStyle = 'rgba(255, 255, 255, 0)';
         }
 
     },
@@ -57,7 +100,7 @@ var PhotoBooth = React.createClass({
         
         if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA)
 
-            this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
+            this.outputContext.drawImage(this.webcam, 0, 0, this.state.outputWidth, this.state.outputHeight);
 
             this.inputContext.drawImage(this.webcam, 0, 0, this.state.webcamWidth, this.state.webcamHeight);
 
@@ -69,7 +112,7 @@ var PhotoBooth = React.createClass({
 
             this.rects = JSFeat.bbf.detect(pyr, window.cascadeData);
 
-            this._drawFaces(this.state.width/this.imageU8.cols, 1);
+            this._drawFaces(this.state.outputWidth/this.imageU8.cols, 1);
 
     },
 
@@ -83,14 +126,15 @@ var PhotoBooth = React.createClass({
 
         this.webcam.pause();
 
+        this.outputContext.drawImage(this.webcam, 0, 0, this.state.outputWidth, this.state.outputHeight);
+
         this.setState({
             captureActive: false,
+            hasCaptured: true,
             saveActive: true,
             retakeActive: true,
             webcam: ''
         });
-
-        this.outputContext.drawImage(this.webcam, 0, 0, this.state.width, this.state.height);
 
     },
 
@@ -109,7 +153,7 @@ var PhotoBooth = React.createClass({
             loadingActive: true
         });
 
-        var self = this;
+        var parent = this;
 
         $.ajax({
             url: '/capture',
@@ -118,6 +162,7 @@ var PhotoBooth = React.createClass({
             data: JSON.stringify({image: imageData}),
             contentType: 'application/json',
             success: function(data) {
+
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Successfully posted image to server: ', data);
                 console.log('----------------------------------');
@@ -125,19 +170,20 @@ var PhotoBooth = React.createClass({
                 var minWait = 1500;
 
                 setTimeout(function() {
-                    self.setState({
+                    parent.setState({
                         loadingActive: false,
                         successActive: true
                     });
                 }, minWait);
             },
             error: function(error) {
+
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Error posting image to server: ', error);
                 console.log('----------------------------------');
 
                 setTimeout(function() {
-                    self.setState({
+                    parent.setState({
                         loadingActive: true,
                         successActive: false
                     });
@@ -156,11 +202,14 @@ var PhotoBooth = React.createClass({
         this.setState({
             webcam: window.URL.createObjectURL(this.stream),
             captureActive: true,
+            hasCaptured: false,
             saveActive: false,
             retakeActive: false
         });
 
         this.webcam.play();
+
+        this._faceDetection();
 
     },
 
@@ -175,13 +224,30 @@ var PhotoBooth = React.createClass({
         var height = window.innerHeight;
         var width = (16/9) * height;
 
-        this.setState({
-            webcamSrc: window.URL.createObjectURL(this.stream),
-            width: width,
-            height: height,
-            buttonsActive: true,
-            silhouetteActive: true
-        });
+        if (window.innerWidth > width) {
+
+            width = window.outerWidth;
+            height = (9/16) * width;
+
+            this.setState({
+                webcamSrc: window.URL.createObjectURL(this.stream),
+                width: width,
+                height: window.innerHeight,
+                outputWidth: width,
+                outputHeight: height
+            });
+
+        } else {
+
+            this.setState({
+                webcamSrc: window.URL.createObjectURL(this.stream),
+                width: width,
+                height: window.innerHeight,
+                outputWidth: width,
+                outputHeight: height
+            });
+
+        }
 
         this._faceDetection();
 
@@ -266,6 +332,8 @@ var PhotoBooth = React.createClass({
                 clearTimeout(id);
             };
 
+        window.addEventListener('resize', this._onWindowResize);
+
     },
 
     componentDidUpdate: function() {
@@ -274,13 +342,9 @@ var PhotoBooth = React.createClass({
         this.outputContext = this.output.getContext('2d');
         this.inputContext = this.input.getContext('2d');
 
-        // face detection box styles
-        this.outputContext.fillStyle = 'rgb(0, 255, 0)';
-        this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
-
         // set up parameters for detection box
         var maxSize = 160;
-        var scale = Math.min(maxSize/this.state.width, maxSize/this.state.height);
+        var scale = Math.min(maxSize/this.state.outputWidth, maxSize/this.state.outputHeight);
         var w = (this.state.width * scale) | 0;
         var h = (this.state.height * scale) | 0;
 
@@ -290,28 +354,40 @@ var PhotoBooth = React.createClass({
 
     render: function() {
 
+        var css = {
+            width: this.state.width + 'px',
+            height: this.state.height + 'px'
+        }
+
         return (
-            <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
+            <div className="PhotoBooth" width={this.state.width} height={this.state.height} style={css}>
+
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
                     <div className={this.state.loadingActive ? 'loading active' : 'loading disabled'}></div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
-                        <h2>Success!</h2>
+                        <h2>success</h2>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
-                        <h2>Error!</h2>
+                        <h2>error</h2>
                     </div>
                 </div>
+
                 <div className={this.state.silhouetteActive ? 'silhouette-wrapper active' : 'silhouette-wrapper disabled'} ref={(ref) => this.silhouette = ref}>
                     <div className="silhouette"></div>
-                </div>  
+                </div> 
+
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
-                <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
+                
+                <canvas className="output" ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
+                
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
+                
                 <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
                     <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>capture</button></li>
                     <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
                     <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
+
             </div>
         );
     }
