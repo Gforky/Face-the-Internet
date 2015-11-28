@@ -109,6 +109,8 @@ var PhotoBooth = React.createClass({
             loadingActive: true
         });
 
+        var self = this;
+
         $.ajax({
             url: '/capture',
             type: 'post',
@@ -119,11 +121,27 @@ var PhotoBooth = React.createClass({
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Successfully posted image to server: ', data);
                 console.log('----------------------------------');
+
+                var minWait = 1500;
+
+                setTimeout(function() {
+                    self.setState({
+                        loadingActive: false,
+                        successActive: true
+                    });
+                }, minWait);
             },
             error: function(error) {
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Error posting image to server: ', error);
                 console.log('----------------------------------');
+
+                setTimeout(function() {
+                    self.setState({
+                        loadingActive: true,
+                        successActive: false
+                    });
+                }, minWait);
             }
         });
 
@@ -160,7 +178,9 @@ var PhotoBooth = React.createClass({
         this.setState({
             webcamSrc: window.URL.createObjectURL(this.stream),
             width: width,
-            height: height
+            height: height,
+            buttonsActive: true,
+            silhouetteActive: true
         });
 
         this._faceDetection();
@@ -190,9 +210,6 @@ var PhotoBooth = React.createClass({
             captureActive: true,
             saveActive: false,
             retakeActive: false,
-            overlayActive: false,
-            loadingActive: false,
-            messageActive: false
         });
 
         // create cross-browser var to check for webcam support, attach to window
@@ -277,19 +294,20 @@ var PhotoBooth = React.createClass({
             <div className="PhotoBooth" width={this.state.width} height={this.state.height}>
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
                     <div className={this.state.loadingActive ? 'loading active' : 'loading disabled'}></div>
-                        <p>Success!</p>
-                    <div className={this.state.successActive ? 'message active' : 'message disabled'}></div>
-                    <div className={this.state.errorActive ? 'message active' : 'message disabled'}>
-                        <p>Error!</p>
+                    <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
+                        <h2>Success!</h2>
+                    </div>
+                    <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
+                        <h2>Error!</h2>
                     </div>
                 </div>
-                <div className="silhouette-wrapper" ref={(ref) => this.silhouette = ref}>
+                <div className={this.state.silhouetteActive ? 'silhouette-wrapper active' : 'silhouette-wrapper disabled'} ref={(ref) => this.silhouette = ref}>
                     <div className="silhouette"></div>
                 </div>  
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className="output" ref={(ref) => this.output = ref} width={this.state.width} height={this.state.height}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
-                <ul className="buttons">
+                <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
                     <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>capture</button></li>
                     <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
                     <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>

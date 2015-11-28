@@ -70,7 +70,12 @@ body {
   font-size: 12px;
   font-family: 'Apercu', sans-serif;
   background: black;
-  color: white; }
+  color: white;
+  letter-spacing: 2px; }
+  body h2 {
+    font-size: 24px; }
+  body p {
+    font-size: 16px; }
   body button {
     font-size: 18px;
     padding: 20px;
@@ -78,7 +83,6 @@ body {
     background: black;
     border: 3px solid black;
     appearance: none;
-    letter-spacing: 2px;
     font-family: 'Apercu', sans-serif;
     cursor: pointer;
     cursor: hand;
@@ -103,7 +107,8 @@ body {
 */
 .PhotoBooth {
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
+  /* The element to be centered, can also be of any width and height */ }
   .PhotoBooth .webcam {
     display: none;
     z-index: 0; }
@@ -119,28 +124,61 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: red;
+    background: yellow;
     width: 100%;
     height: 100%;
     z-index: 5;
-    display: none; }
+    display: none;
+    text-align: center; }
     .PhotoBooth .overlay.active {
       display: block; }
     .PhotoBooth .overlay .loading {
       width: 100%;
       height: 100%;
-      display: block;
+      display: none;
       background: url("img/loading.gif") no-repeat center blue; }
+      .PhotoBooth .overlay .loading.active {
+        display: block; }
     .PhotoBooth .overlay .message {
-      background: green; }
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%; }
+      .PhotoBooth .overlay .message:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25em;
+        /* Adjusts for spacing */ }
+      .PhotoBooth .overlay .message.active {
+        display: inline-block; }
+      .PhotoBooth .overlay .message.success {
+        background: green; }
+      .PhotoBooth .overlay .message.error {
+        background: red; }
+      .PhotoBooth .overlay .message > * {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%; }
+  .PhotoBooth .centered {
+    display: inline-block;
+    vertical-align: middle;
+    width: 300px; }
   .PhotoBooth .silhouette-wrapper {
-    display: block;
+    display: none;
     position: absolute;
     top: 25%;
     left: 37.5%;
     bottom: 25%;
     right: 37.5%;
     z-index: 3; }
+    .PhotoBooth .silhouette-wrapper.active {
+      display: block; }
     .PhotoBooth .silhouette-wrapper .silhouette {
       border: 2px solid blue;
       width: 100%;
@@ -160,10 +198,12 @@ body {
     left: 0;
     right: 0;
     width: 100%;
-    display: block;
     overflow: visible;
     text-align: center;
-    z-index: 4; }
+    z-index: 4;
+    display: none; }
+    .PhotoBooth .buttons.active {
+      display: block; }
     .PhotoBooth .buttons li {
       margin: 0 5px;
       display: inline-block; }

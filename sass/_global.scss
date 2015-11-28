@@ -7,6 +7,15 @@ body {
 	font-family: 'Apercu', sans-serif;
 	background: black;
 	color: white;
+	letter-spacing: 2px;
+
+	h2 {
+		font-size: 24px;
+	}
+
+	p {
+		font-size: 16px;
+	}
 
 	button {
 		font-size: 18px;
@@ -15,7 +24,6 @@ body {
 		background: black;
 		border: 3px solid black;
 		appearance: none;
-		letter-spacing: 2px;
 		font-family: 'Apercu', sans-serif;
 		cursor: pointer;
 		cursor: hand;
