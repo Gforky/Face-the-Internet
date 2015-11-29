@@ -95,6 +95,32 @@ body {
     -ms-transition: all 0.2s ease-in-out 0s;
     -o-transition: all 0.2s ease-in-out 0s;
     transition: all 0.2s ease-in-out 0s; }
+  body .icon {
+    font-size: 14px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    display: block;
+    color: black;
+    background: white;
+    width: 30px;
+    height: 30px;
+    cursor: hand;
+    cursor: pointer;
+    z-index: 6;
+    -webkit-border-radius: 15px;
+    -khtml-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    border-radius: 15px; }
+    body .icon > * {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: block; }
+      body .icon > *:before {
+        position: absolute; }
 
 /*
 	VIEWS
@@ -158,6 +184,15 @@ body {
       -ms-opacity: 1;
       -o-opacity: 1;
       opacity: 1; }
+    .PhotoBooth .overlay.information {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block; }
+      .PhotoBooth .overlay.information .icon > *:before {
+        content: "i";
+        top: 9px;
+        left: -2px; }
     .PhotoBooth .overlay .message {
       display: none;
       position: absolute;

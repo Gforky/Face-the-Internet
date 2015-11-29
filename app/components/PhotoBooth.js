@@ -398,6 +398,11 @@ var PhotoBooth = React.createClass({
                     <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
 
+                <div className="information overlay">
+                    <div className="message"></div>
+                    <span className="icon"><span></span></span>
+                </div>
+
             </div>
         );
     }

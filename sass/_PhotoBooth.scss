@@ -43,6 +43,21 @@
 			display: block;
 			@include opacity(1);
 		}
+		&.information {
+			position: absolute;
+			top: 0;
+			right: 0;
+			display: block;
+			.icon {
+				& > * {
+					&:before {
+						content: "i";
+						top: 9px;
+						left: -2px;
+					}
+				}
+			}
+		}
 		.message {
 			display: none;
 			position: absolute;
