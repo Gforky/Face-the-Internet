@@ -124,12 +124,12 @@ body {
     z-index: 1; }
   .PhotoBooth .output {
     position: relative;
-    z-index: 2; }
+    z-index: 2;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: 177.78vh;
+    height: 56.25vw; }
     .PhotoBooth .output.portrait {
-      min-width: 100vw;
-      min-height: 100vh;
-      width: 177.78vh;
-      height: 56.25vw;
       margin-left: 50%;
       -webkit-transform: translateX(-50%);
       -khtml-transform: translateX(-50%);

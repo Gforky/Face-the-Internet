@@ -20,16 +20,16 @@
 	.output{
 		position: relative;
 		z-index: 2;
+		min-width: 100vw;
+	    min-height:100vh;
+	    width:177.78vh;
+	    height:56.25vw;
 		&.portrait {
-			min-width: 100vw;
-		    min-height:100vh;
-		    width:177.78vh;
-		    height:56.25vw;
 		    margin-left: 50%;
 		    @include transform(translateX(-50%));
 		}
 		&.landscape {
-
+			
 		}
 	}
 	.overlay {
