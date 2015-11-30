@@ -24,7 +24,8 @@ var PhotoBooth = React.createClass({
                 width: width,
                 height: window.innerHeight,
                 outputWidth: width,
-                outputHeight: height
+                outputHeight: height,
+                outputLandscape: true
             });
 
         } else {
@@ -33,7 +34,8 @@ var PhotoBooth = React.createClass({
                 width: width,
                 height: window.innerHeight,
                 outputWidth: width,
-                outputHeight: height
+                outputHeight: height,
+                outputLandscape: false
             });
 
         }
@@ -234,7 +236,8 @@ var PhotoBooth = React.createClass({
                 width: width,
                 height: window.innerHeight,
                 outputWidth: width,
-                outputHeight: height
+                outputHeight: height,
+                outputLandscape: true
             });
 
         } else {
@@ -244,7 +247,8 @@ var PhotoBooth = React.createClass({
                 width: width,
                 height: window.innerHeight,
                 outputWidth: width,
-                outputHeight: height
+                outputHeight: height,
+                outputLandscape: false
             });
 
         }
@@ -378,7 +382,7 @@ var PhotoBooth = React.createClass({
 
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 
-                <canvas className="output" ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
+                <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
                 
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 
