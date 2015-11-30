@@ -75,10 +75,12 @@ body {
   background: black;
   color: white;
   letter-spacing: 2px; }
+  body h1 {
+    font-size: 26px;
+    font-weight: normal; }
   body h2 {
     font-size: 14px;
-    font-weight: normal;
-    text-transform: uppercase; }
+    font-weight: normal; }
   body button {
     font-size: 12px;
     padding: 20px;
@@ -106,6 +108,13 @@ body {
 /*
 	START PAGE
 */
+.StartPage .overlay .message:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em; }
+
 /*
 	PHOTOBOOTH
 */

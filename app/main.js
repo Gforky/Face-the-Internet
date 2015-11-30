@@ -9,6 +9,7 @@ var StartPage = require('./components/StartPage.js');
 var PhotoBooth = require('./components/PhotoBooth.js');
 
 ReactDOM.render(<App/>, document.getElementById('app'));
+
 ReactDOM.render((
   <Router>
     <Route path="/" component={StartPage} />

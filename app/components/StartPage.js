@@ -16,9 +16,11 @@ var StartPage = React.createClass({
     render: function() {
 
         return (
-            <div className="StartPage">
-                <h1>Face the Internet</h1>
-                <Link to="/photo-booth">Start</Link>
+            <div className="StartPage overlay">
+                <div className="welcome message">
+                    <h1>Face the Internet</h1>
+                    <Link to="/photo-booth">Start</Link>
+                </div>
             </div>
         );
     }
