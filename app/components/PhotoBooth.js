@@ -356,6 +356,18 @@ var PhotoBooth = React.createClass({
 
     },
 
+    componentWillUnmount: function() {
+
+        window.cancelAnimationFrame(this._faceDetection);
+
+        this.webcam.pause();
+
+        this.setState({
+            webcam: ''
+        });
+
+    },
+
     render: function() {
 
         var css = {

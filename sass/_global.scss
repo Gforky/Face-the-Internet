@@ -3,31 +3,40 @@
 */
 
 body {
-	font-size: 12px;
-	font-family: 'Apercu', sans-serif;
+	font-size: 4vw;
+	line-height: 4.5vw;
+	font-family: 'Circular Std Bold', sans-serif;
 	background: black;
 	color: white;
 	letter-spacing: 2px;
 
 	h1 {
-		font-size: 32px;
-		font-weight: normal;
+		font-size: 6.5vw;
+		line-height: 7vw;
 	}
 
 	h2 {
-		font-size: 14px;
-		font-weight: normal;
+		font-size: 3vw;
+		line-height: 3.5vw;
 	}
 
-	button {
-		font-size: 12px;
-		padding: 20px;
+	a {
+		text-decoration: none;
+	}
+
+	button,
+	.button {
+		font-size: 1vw;
+		line-height: 2.5vw;
 		color: white;
+		min-width: 200px;
+		height: auto;
+		display: inline-block;
 		letter-spacing: 2px;
 		background: black;
 		border: 3px solid black;
 		appearance: none;
-		font-family: 'Apercu', sans-serif;
+		font-family: 'Circular Pro Medium', sans-serif;
 		cursor: pointer;
 		cursor: hand;
 		@include transition();

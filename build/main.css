@@ -42,13 +42,22 @@ textarea:focus, input:focus, button:focus {
   outline: 0; }
 
 @font-face {
-  font-family: 'Apercu';
-  src: url("./fonts/Apercu Bold.eot");
+  font-family: 'Circular Std Bold';
+  src: url("./fonts/CircularStd-Bold.eot");
   /* IE9 Compat Modes */
-  src: url("./fonts/Apercu Bold.eot?#iefix") format("embedded-opentype"), url("./fonts/Apercu Bold.woff") format("woff"), url("./fonts/Apercu Bold.ttf") format("truetype"), url("./fonts/Apercu Bold.svg#0173572ae23caf3e4e6d6c9b98fd6474") format("svg");
+  src: url("./fonts/CircularStd-Bold.eot?#iefix") format("embedded-opentype"), url("./fonts/CircularStd-Bold.woff") format("woff"), url("./fonts/CircularStd-Bold.ttf") format("truetype"), url("./fonts/CircularStd-Bold.svg#b333381778fc1f96de44d359c7f8b95e") format("svg");
   /* Legacy iOS */
   font-style: normal;
   font-weight: 700; }
+
+@font-face {
+  font-family: 'Circular Pro Medium';
+  src: url("./fonts/CircularPro-Medium.eot");
+  /* IE9 Compat Modes */
+  src: url("./fonts/CircularPro-Medium.eot?#iefix") format("embedded-opentype"), url("./fonts/CircularPro-Medium.woff") format("woff"), url("./fonts/CircularPro-Medium.ttf") format("truetype"), url("./fonts/CircularPro-Medium.svg#d89566e73316b912948a6f259bd3bd02") format("svg");
+  /* Legacy iOS */
+  font-style: normal;
+  font-weight: 400; }
 
 /*
 	MIXINS
@@ -70,26 +79,33 @@ textarea:focus, input:focus, button:focus {
 	GLOBAL
 */
 body {
-  font-size: 12px;
-  font-family: 'Apercu', sans-serif;
+  font-size: 4vw;
+  line-height: 4.5vw;
+  font-family: 'Circular Std Bold', sans-serif;
   background: black;
   color: white;
   letter-spacing: 2px; }
   body h1 {
-    font-size: 32px;
-    font-weight: normal; }
+    font-size: 6.5vw;
+    line-height: 7vw; }
   body h2 {
-    font-size: 14px;
-    font-weight: normal; }
-  body button {
-    font-size: 12px;
-    padding: 20px;
+    font-size: 3vw;
+    line-height: 3.5vw; }
+  body a {
+    text-decoration: none; }
+  body button,
+  body .button {
+    font-size: 1vw;
+    line-height: 2.5vw;
     color: white;
+    min-width: 200px;
+    height: auto;
+    display: inline-block;
     letter-spacing: 2px;
     background: black;
     border: 3px solid black;
     appearance: none;
-    font-family: 'Apercu', sans-serif;
+    font-family: 'Circular Pro Medium', sans-serif;
     cursor: pointer;
     cursor: hand;
     -webkit-transition: all 0.2s ease-in-out 0s;
