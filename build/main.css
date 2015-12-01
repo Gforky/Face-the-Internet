@@ -51,7 +51,7 @@ textarea:focus, input:focus, button:focus {
   font-weight: 700; }
 
 @font-face {
-  font-family: 'Circular Pro Medium';
+  font-family: 'Circular Std Medium';
   src: url("./fonts/CircularPro-Medium.eot");
   /* IE9 Compat Modes */
   src: url("./fonts/CircularPro-Medium.eot?#iefix") format("embedded-opentype"), url("./fonts/CircularPro-Medium.woff") format("woff"), url("./fonts/CircularPro-Medium.ttf") format("truetype"), url("./fonts/CircularPro-Medium.svg#d89566e73316b912948a6f259bd3bd02") format("svg");
@@ -123,7 +123,7 @@ body {
     background: black;
     border: 3px solid black;
     appearance: none;
-    font-family: 'Apercu Mono', sans-serif;
+    font-family: 'Circular Std Medium', sans-serif;
     cursor: pointer;
     cursor: hand;
     -webkit-transition: opacity;
