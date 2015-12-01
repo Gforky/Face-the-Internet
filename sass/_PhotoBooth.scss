@@ -50,7 +50,6 @@ PHOTOBOOTH
 			position: absolute;
 			top: 0;
 			right: 0;
-			display: block;
 
 			.icon {
 				& > * {
@@ -62,46 +61,47 @@ PHOTOBOOTH
 				}
 			}
 
-			.loading {
-				width: 100%;
+		}
+
+		.loading {
+			width: 100%;
+			height: 100%;
+			display: none;
+			background: url('img/loading.gif') no-repeat center blue;
+			will-change: opacity;
+			@include opacity(0);
+			@include transition(opacity);
+			&.active {
+				display: block;
+				@include opacity(1);
+			}
+		}
+
+		.message {
+			display: none;
+			will-change: opacity;
+			@include opacity(0);
+			@include transition(opacity);
+
+			&:before {
+				content: '';
+				display: inline-block;
 				height: 100%;
-				display: none;
-				background: url('img/loading.gif') no-repeat center blue;
-				will-change: opacity;
-				@include opacity(0);
-				@include transition(opacity);
-				&.active {
-					display: block;
-					@include opacity(1);
-				}
+				vertical-align: middle;
+				margin-right: -0.25em;
 			}
 
-			.message {
-				display: none;
-				will-change: opacity;
-				@include opacity(0);
-				@include transition(opacity);
+			&.active {
+				display: inline-block;
+				@include opacity(1);
+			}
 
-				&:before {
-					content: '';
-					display: inline-block;
-					height: 100%;
-					vertical-align: middle;
-					margin-right: -0.25em;
-				}
+			&.success {
+				background: lime;
+			}
 
-				&.active {
-					display: inline-block;
-					@include opacity(1);
-				}
-
-				&.success {
-					background: lime;
-				}
-
-				&.error {
-					background: red;
-				}
+			&.error {
+				background: red;
 			}
 		}
 	}
@@ -152,6 +152,7 @@ PHOTOBOOTH
 			button {
 				display: none;
 				will-change: opacity;
+				pointer-events: default;
 				@include opacity(0);
 				@include transition(opacity);
 
