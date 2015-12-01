@@ -1,5 +1,5 @@
 /*
-	PHOTOBOOTH
+PHOTOBOOTH
 */
 
 .PhotoBooth {
@@ -9,44 +9,49 @@
 	max-height: 100%;
 	width: 100%;
 	max-width: 100%;
+
 	.webcam {
 		display: none;
 		z-index: 0;
 	}
+
 	.input {
 		display: none;
 		z-index: 1;
 	}
-	.output{
+
+	.output {
 		position: relative;
 		z-index: 2;
 		min-width: 100vw;
-	    min-height: 100vh;
-	    width: 177.78vh;
-	    height: 56.25vw;
+		min-height: 100vh;
+		width: 177.78vh;
+		height: 56.25vw;
+
 		&.portrait {
-		    margin-left: 50%;
-		    @include transform(translateX(-50%));
-		}
-		&.landscape {
-			
+			margin-left: 50%;
+			@include transform(translateX(-50%));
 		}
 	}
+
 	.overlay {
 		background: yellow;
 		display: none;
 		will-change: opacity;
 		@include opacity(0);
 		@include transition(opacity);
+
 		&.active {
 			display: block;
 			@include opacity(1);
 		}
+
 		&.information {
 			position: absolute;
 			top: 0;
 			right: 0;
 			display: block;
+
 			.icon {
 				& > * {
 					&:before {
@@ -55,40 +60,48 @@
 						left: -2px;
 					}
 				}
-		.loading {
-			width: 100%;
-			height: 100%;
-			display: none;
-			background: url('img/loading.gif') no-repeat center blue;
-			will-change: opacity;
-			@include opacity(0);
-			@include transition(opacity);
-			&.active {
-				display: block;
-				@include opacity(1);
 			}
-		}
-		.message {
-			display: none;
-			will-change: opacity;
-			@include opacity(0);
-			@include transition(opacity);
-			&:before {
-				content: '';
-				display: inline-block;
+
+			.loading {
+				width: 100%;
 				height: 100%;
-				vertical-align: middle;
-				margin-right: -0.25em;
+				display: none;
+				background: url('img/loading.gif') no-repeat center blue;
+				will-change: opacity;
+				@include opacity(0);
+				@include transition(opacity);
+				&.active {
+					display: block;
+					@include opacity(1);
+				}
 			}
-			&.active {
-				display: inline-block;
-				@include opacity(1);
-			}
-			&.success {
-				background: lime;
-			}
-			&.error {
-				background: red;
+
+			.message {
+				display: none;
+				will-change: opacity;
+				@include opacity(0);
+				@include transition(opacity);
+
+				&:before {
+					content: '';
+					display: inline-block;
+					height: 100%;
+					vertical-align: middle;
+					margin-right: -0.25em;
+				}
+
+				&.active {
+					display: inline-block;
+					@include opacity(1);
+				}
+
+				&.success {
+					background: lime;
+				}
+
+				&.error {
+					background: red;
+				}
 			}
 		}
 	}
@@ -106,11 +119,13 @@
 		will-change: opacity;
 		@include opacity(0);
 		@include transition(opacity);
+
 		&.active {
 			@include opacity(1);
 			display: block;
 		}
 	}
+
 	.buttons {
 		position: absolute;
 		bottom: 5%;
@@ -124,26 +139,32 @@
 		will-change: opacity;
 		@include opacity(0);
 		@include transition(opacity);
+
 		&.active {
 			display: block;
 			@include opacity(1);
 		}
+		
 		li {
-			margin: 0 5px;
-			display: inline-block;
+		margin: 0 5px;
+		display: inline-block;
+
 			button {
 				display: none;
 				will-change: opacity;
 				@include opacity(0);
 				@include transition(opacity);
+
 				&.active {
 					display: block;
 					@include opacity(1);
-					&.capture {
-						background: lime;
-						border: 3px solid lime;
-					}
 				}
+
+				&.capture {
+					background: lime;
+					border: 3px solid lime;
+				}
+
 				&.disabled {
 					display: block;
 					cursor: auto;
@@ -159,6 +180,7 @@
 						@include opacity(0.25);
 					}
 				}
+
 				&:hover {
 					@include opacity(0.75);
 				}
@@ -166,4 +188,3 @@
 		}
 	}
 }
-
