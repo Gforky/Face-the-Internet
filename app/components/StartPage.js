@@ -1,15 +1,13 @@
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Face = require('../components/Face.js');
+var Link = require('react-router').Link;
 
 var StartPage = React.createClass({
 
     componentWillMount: function() {
 
-        console.log('----------------------------------');
-        console.log('[EVENT] ', 'New user.');
-        console.log('----------------------------------');
+
 
     },
 
@@ -17,7 +15,14 @@ var StartPage = React.createClass({
 
         return (
             <div className="StartPage">
-                <Face></Face>
+                <div className="overlay">
+                    <div className="welcome message">
+                        <div>
+                            <h1>Face the Internet.</h1>
+                            <Link className="start button" to="/photo-booth">Start</Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

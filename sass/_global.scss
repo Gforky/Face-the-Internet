@@ -3,29 +3,91 @@
 */
 
 body {
-	font-size: 12px;
-	font-family: 'Apercu', sans-serif;
+	font-size: 4vw;
+	line-height: 4.5vw;
+	font-family: 'Circular Std Bold', sans-serif;
 	background: black;
 	color: white;
 	letter-spacing: 2px;
 
+	h1 {
+		font-size: 7vw;
+		line-height: 8vw;
+	}
+
 	h2 {
-		font-size: 14px;
-		font-weight: normal;
+
 	}
 
 	button {
 		font-size: 14px;
 		padding: 20px;
+		font-size: 3vw;
+		line-height: 3.5vw;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	p {
+		font-family: 'Apercu Mono', sans-serif;
+		font-size: 1vw;
+		line-height: 1.5vw;
+	}
+
+	button,
+	.button {
+		font-size: 1.5vw;
+		line-height: 3vw;
 		color: white;
+		min-width: 10%;
+		padding: 0 20px;
+		height: auto;
+		display: inline-block;
 		letter-spacing: 2px;
 		background: black;
 		border: 3px solid black;
 		appearance: none;
-		font-family: 'Apercu', sans-serif;
+		font-family: 'Circular Std Medium', sans-serif;
 		cursor: pointer;
 		cursor: hand;
-		@include transition();
+		will-change: opacity;
+		@include transition(opacity);
+	}
+
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 5;
+		text-align: center;
+
+		.message {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			&:before {
+				content: '';
+				display: inline-block;
+				height: 100%;
+				vertical-align: middle;
+				margin-right: -0.25em;
+			}
+			& > * {
+				display: inline-block;
+				vertical-align: middle;
+				width: 100%;
+			}
+		}
 	}
 
 	.icon {

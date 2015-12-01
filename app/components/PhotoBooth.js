@@ -25,7 +25,7 @@ var PhotoBooth = React.createClass({
                 height: window.innerHeight,
                 outputWidth: width,
                 outputHeight: height,
-                outputLanscape: true
+                outputLandscape: true
             });
 
         } else {
@@ -35,7 +35,7 @@ var PhotoBooth = React.createClass({
                 height: window.innerHeight,
                 outputWidth: width,
                 outputHeight: height,
-                outputLanscape: false
+                outputLandscape: false
             });
 
         }
@@ -49,7 +49,7 @@ var PhotoBooth = React.createClass({
         var minY = this.state.height * 0.375;
         var maxX = this.state.width * 0.5;
         var maxY = this.state.height * 0.75;
-        var lineWidth = 3;
+        var lineWidth = 6;
 
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
@@ -241,7 +241,7 @@ var PhotoBooth = React.createClass({
                 height: window.innerHeight,
                 outputWidth: width,
                 outputHeight: height,
-                outputLanscape: true
+                outputLandscape: true
             });
 
         } else {
@@ -252,7 +252,7 @@ var PhotoBooth = React.createClass({
                 height: window.innerHeight,
                 outputWidth: width,
                 outputHeight: height,
-                outputLanscape: false
+                outputLandscape: false
             });
 
         }
@@ -360,6 +360,18 @@ var PhotoBooth = React.createClass({
 
     },
 
+    componentWillUnmount: function() {
+
+        window.cancelAnimationFrame(this._faceDetection);
+
+        this.webcam.pause();
+
+        this.setState({
+            webcam: ''
+        });
+
+    },
+
     render: function() {
 
         var css = {
@@ -375,27 +387,31 @@ var PhotoBooth = React.createClass({
                         <h2>loading...</h2>
                     </div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
-                        <h2>success</h2>
+                        <div>
+                            <h2>Success</h2>
+                            <p>Image successfully posted to server.</p>
+                        </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
-                        <h2>error</h2>
+                        <div>
+                            <h2>Error</h2>
+                            <p>Error saving image to server.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div className={this.state.silhouetteActive ? 'silhouette-wrapper active' : 'silhouette-wrapper disabled'} ref={(ref) => this.silhouette = ref}>
-                    <div className="silhouette"></div>
-                </div> 
+                <div className={this.state.silhouetteActive ? 'silhouette active' : 'silhouette disabled'} ref={(ref) => this.silhouette = ref}></div> 
 
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 
-                <canvas className={this.state.outputLanscape ? 'output lanscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
-                
+                <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
+
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 
                 <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
-                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>capture</button></li>
-                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
-                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
+                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>Capture</button></li>
+                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
+                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>
 
                 <div className="information overlay">
