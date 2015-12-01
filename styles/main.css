@@ -59,6 +59,15 @@ textarea:focus, input:focus, button:focus {
   font-style: normal;
   font-weight: 400; }
 
+@font-face {
+  font-family: 'Circular Std Book';
+  src: url("./fonts/CircularStd-Book.eot");
+  /* IE9 Compat Modes */
+  src: url("./fonts/CircularStd-Book.eot?#iefix") format("embedded-opentype"), url("./fonts/CircularStd-Book.woff") format("woff"), url("./fonts/CircularStd-Book.ttf") format("truetype"), url("./fonts/CircularStd-Book.svg#dd452d63ae05ddb466f19713a7d09fd5") format("svg");
+  /* Legacy iOS */
+  font-style: normal;
+  font-weight: 400; }
+
 /*
 	MIXINS
 */
