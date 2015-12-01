@@ -7,19 +7,21 @@ var StartPage = React.createClass({
 
     componentWillMount: function() {
 
-        console.log('----------------------------------');
-        console.log('[EVENT] ', 'New user');
-        console.log('----------------------------------');
+
 
     },
 
     render: function() {
 
         return (
-            <div className="StartPage overlay">
-                <div className="welcome message">
-                    <h1>Face the Internet</h1>
-                    <Link to="/photo-booth">Start</Link>
+            <div className="StartPage">
+                <div className="overlay">
+                    <div className="welcome message">
+                        <div>
+                            <h1>face the internet</h1>
+                            <Link to="/photo-booth">Start</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

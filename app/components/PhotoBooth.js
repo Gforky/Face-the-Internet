@@ -369,11 +369,16 @@ var PhotoBooth = React.createClass({
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
                     <div className={this.state.loadingActive ? 'loading active' : 'loading disabled'}></div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
-                        <h2>Success</h2>
-                        <p>Image successfully posted to server.</p>
+                        <div>
+                            <h2>Success</h2>
+                            <p>Image successfully posted to server.</p>
+                        </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
-                        <h2>Error</h2>
+                        <div>
+                            <h2>Error</h2>
+                            <p>Error saving image to server.</p>
+                        </div>
                     </div>
                 </div>
 

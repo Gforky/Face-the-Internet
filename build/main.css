@@ -76,7 +76,7 @@ body {
   color: white;
   letter-spacing: 2px; }
   body h1 {
-    font-size: 26px;
+    font-size: 32px;
     font-weight: normal; }
   body h2 {
     font-size: 14px;
@@ -98,6 +98,34 @@ body {
     -ms-transition: all 0.2s ease-in-out 0s;
     -o-transition: all 0.2s ease-in-out 0s;
     transition: all 0.2s ease-in-out 0s; }
+  body .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    text-align: center; }
+    body .overlay .message {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%; }
+      body .overlay .message:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25em; }
+      body .overlay .message > * {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%; }
 
 /*
 	VIEWS
@@ -108,12 +136,8 @@ body {
 /*
 	START PAGE
 */
-.StartPage .overlay .message:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -0.25em; }
+.StartPage .overlay {
+  background: lime; }
 
 /*
 	PHOTOBOOTH
@@ -147,17 +171,8 @@ body {
       -o-transform: translateX(-50%);
       transform: translateX(-50%); }
   .PhotoBooth .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background: yellow;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
     display: none;
-    text-align: center;
     filter: alpha(opacity=0);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     -webkit-opacity: 0;
@@ -213,13 +228,6 @@ body {
         opacity: 1; }
     .PhotoBooth .overlay .message {
       display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
       filter: alpha(opacity=0);
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
       -webkit-opacity: 0;
@@ -254,10 +262,6 @@ body {
         background: green; }
       .PhotoBooth .overlay .message.error {
         background: red; }
-      .PhotoBooth .overlay .message > * {
-        display: inline-block;
-        vertical-align: middle;
-        width: 100%; }
   .PhotoBooth .silhouette-wrapper {
     display: none;
     position: absolute;

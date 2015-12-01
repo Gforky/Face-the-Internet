@@ -10,7 +10,7 @@ body {
 	letter-spacing: 2px;
 
 	h1 {
-		font-size: 26px;
+		font-size: 32px;
 		font-weight: normal;
 	}
 
@@ -31,5 +31,39 @@ body {
 		cursor: pointer;
 		cursor: hand;
 		@include transition();
+	}
+
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 5;
+		text-align: center;
+
+		.message {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			&:before {
+				content: '';
+				display: inline-block;
+				height: 100%;
+				vertical-align: middle;
+				margin-right: -0.25em;
+			}
+			& > * {
+				display: inline-block;
+				vertical-align: middle;
+				width: 100%;
+			}
+		}
 	}
 }
