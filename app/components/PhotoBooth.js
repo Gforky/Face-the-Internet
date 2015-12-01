@@ -57,8 +57,9 @@ var PhotoBooth = React.createClass({
                 silhouetteActive: false
             });
             // face detection box styles
-            this.outputContext.fillStyle = 'rgb(0, 255, 0)';
-            this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
+            this.outputContext.fillStyle = 'lime';
+            this.outputContext.strokeStyle = 'lime';
+            this.outputContext.lineWidth = 6;
         } else {
             this.setState({
                 captureActive: false,
@@ -66,8 +67,9 @@ var PhotoBooth = React.createClass({
                 silhouetteActive: true
             });
             // face detection box styles
-            this.outputContext.fillStyle = 'rgb(255, 0, 0)';
-            this.outputContext.strokeStyle = 'rgb(255, 0, 0)';
+            this.outputContext.fillStyle = 'lime';
+            this.outputContext.strokeStyle = 'lime';
+            this.outputContext.lineWidth = 6;
         }
 
         if (this.state.hasCaptured) {
@@ -347,7 +349,7 @@ var PhotoBooth = React.createClass({
         this.inputContext = this.input.getContext('2d');
 
         // set up parameters for detection box
-        var maxSize = 160;
+        var maxSize = 200;
         var scale = Math.min(maxSize/this.state.outputWidth, maxSize/this.state.outputHeight);
         var w = (this.state.width * scale) | 0;
         var h = (this.state.height * scale) | 0;
@@ -405,9 +407,9 @@ var PhotoBooth = React.createClass({
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 
                 <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
-                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>capture</button></li>
-                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
-                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
+                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>Capture</button></li>
+                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
+                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>
 
             </div>
