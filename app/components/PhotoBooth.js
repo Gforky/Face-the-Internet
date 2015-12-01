@@ -57,8 +57,8 @@ var PhotoBooth = React.createClass({
                 silhouetteActive: false
             });
             // face detection box styles
-            this.outputContext.fillStyle = 'lime';
-            this.outputContext.strokeStyle = 'lime';
+            this.outputContext.fillStyle = 'rgb(0, 255, 0)';
+            this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
             this.outputContext.lineWidth = 6;
         } else {
             this.setState({
@@ -67,8 +67,8 @@ var PhotoBooth = React.createClass({
                 silhouetteActive: true
             });
             // face detection box styles
-            this.outputContext.fillStyle = 'lime';
-            this.outputContext.strokeStyle = 'lime';
+            this.outputContext.fillStyle = 'rgb(255, 0, 0)';
+            this.outputContext.strokeStyle = 'rgb(255, 0, 0)';
             this.outputContext.lineWidth = 6;
         }
 
@@ -349,7 +349,7 @@ var PhotoBooth = React.createClass({
         this.inputContext = this.input.getContext('2d');
 
         // set up parameters for detection box
-        var maxSize = 200;
+        var maxSize = 160;
         var scale = Math.min(maxSize/this.state.outputWidth, maxSize/this.state.outputHeight);
         var w = (this.state.width * scale) | 0;
         var h = (this.state.height * scale) | 0;
@@ -396,9 +396,7 @@ var PhotoBooth = React.createClass({
                     </div>
                 </div>
 
-                <div className={this.state.silhouetteActive ? 'silhouette-wrapper active' : 'silhouette-wrapper disabled'} ref={(ref) => this.silhouette = ref}>
-                    <div className="silhouette"></div>
-                </div> 
+                <div className={this.state.silhouetteActive ? 'silhouette active' : 'silhouette disabled'} ref={(ref) => this.silhouette = ref}></div> 
 
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 
