@@ -68,6 +68,15 @@ textarea:focus, input:focus, button:focus {
   font-style: normal;
   font-weight: 400; }
 
+@font-face {
+  font-family: 'Apercu Mono';
+  src: url("./fonts/Apercu Mono.eot");
+  /* IE9 Compat Modes */
+  src: url("./fonts/Apercu Mono.eot?#iefix") format("embedded-opentype"), url("./fonts/Apercu Mono.woff") format("woff"), url("./fonts/Apercu Mono.ttf") format("truetype"), url("./fonts/Apercu Mono.svg#3371cb1543e8bb5dfc81cdf8c2631ef4") format("svg");
+  /* Legacy iOS */
+  font-style: normal;
+  font-weight: 400; }
+
 /*
 	MIXINS
 */
@@ -107,22 +116,22 @@ body {
     font-size: 1vw;
     line-height: 2.5vw;
     color: white;
-    min-width: 200px;
+    min-width: 10%;
     height: auto;
     display: inline-block;
     letter-spacing: 2px;
     background: black;
     border: 3px solid black;
     appearance: none;
-    font-family: 'Circular Pro Medium', sans-serif;
+    font-family: 'Apercu Mono', sans-serif;
     cursor: pointer;
     cursor: hand;
-    -webkit-transition: all 0.2s ease-in-out 0s;
-    -khtml-transition: all 0.2s ease-in-out 0s;
-    -moz-transition: all 0.2s ease-in-out 0s;
-    -ms-transition: all 0.2s ease-in-out 0s;
-    -o-transition: all 0.2s ease-in-out 0s;
-    transition: all 0.2s ease-in-out 0s; }
+    -webkit-transition: opacity;
+    -khtml-transition: opacity;
+    -moz-transition: opacity;
+    -ms-transition: opacity;
+    -o-transition: opacity;
+    transition: opacity; }
   body .overlay {
     position: absolute;
     top: 0;

@@ -29,17 +29,17 @@ body {
 		font-size: 1vw;
 		line-height: 2.5vw;
 		color: white;
-		min-width: 200px;
+		min-width: 10%;
 		height: auto;
 		display: inline-block;
 		letter-spacing: 2px;
 		background: black;
 		border: 3px solid black;
 		appearance: none;
-		font-family: 'Circular Pro Medium', sans-serif;
+		font-family: 'Apercu Mono', sans-serif;
 		cursor: pointer;
 		cursor: hand;
-		@include transition();
+		@include transition(opacity);
 	}
 
 	.overlay {
