@@ -7,12 +7,13 @@ var Route = require('react-router').Route
 var App = require('./App.js');
 var StartPage = require('./components/StartPage.js');
 var PhotoBooth = require('./components/PhotoBooth.js');
+var Face = require('./components/Face.js');
 
 ReactDOM.render(<App/>, document.getElementById('app'));
 
 ReactDOM.render((
 	<Router>
-		<Route path="/" component={StartPage} />
+		<Route path="/" component={Face} />
 		<Route path="/photo-booth" component={PhotoBooth} />
 	</Router>
 ), document.getElementById('app'));

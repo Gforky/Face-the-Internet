@@ -1,274 +1,566 @@
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
-var THREE = require('three');
+var THREE = require('three.cjs');
 var OrbitControls = require('three-orbit-controls')(THREE);
-var DecalGeometry = require('three-decal-geometry')(THREE);
-
-var renderer, scene, helperScene, camera, fov = 45;
-var mesh, decal;
-var projector, raycaster;
-var line;
-var spotLight, pointLight, ambientLight;
-
-var intersection = {
-    intersects: false,
-    point: new THREE.Vector3(),
-    normal: new THREE.Vector3()
-};
-
-var controls, renderHelpers = false;
-var mouseVector = new THREE.Vector3();
-var mouse = new THREE.Vector2();
-
-var decalMaterial = new THREE.MeshPhongMaterial( { 
-    specular: 0xffffff,
-    shininess: 10,
-    map: THREE.ImageUtils.loadTexture( 'model/splatter.png' ), 
-    normalMap: THREE.ImageUtils.loadTexture( 'model/wrinkle-normal.jpg' ),
-    normalScale: new THREE.Vector2( .15, .15 ),
-    transparent: true, 
-    depthTest: true, 
-    depthWrite: false, 
-    polygonOffset: true,
-    polygonOffsetFactor: -4, 
-    wireframe: false 
-});
-
-var decals = [];
-var decalHelper, mouseHelper;
-var p = new THREE.Vector3( 0, 0, 0 );
-var r = new THREE.Vector3( 0, 0, 0 );
-var s = new THREE.Vector3( 10, 10, 10 );
-var up = new THREE.Vector3( 0, 1, 0 );
-var check = new THREE.Vector3( 1, 1, 1 );
-
-var params = {
-    projection: 'normal',
-    minScale: 10,
-    maxScale: 30,
-    rotate: true,
-    clear: function() {
-        removeDecals();
-    }
-};
 
 var Face = React.createClass({
 
     _onWindowResize: function() {
 
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+        // camera.aspect = window.innerWidth / window.innerHeight;
+        // camera.updateProjectionMatrix();
 
-        renderer.setSize( window.innerWidth, window.innerHeight );
+        // renderer.setSize( window.innerWidth, window.innerHeight );
 
     },
 
-    _loadJSONModel: function() {
+    _onError: function() {
 
-        loader = new THREE.JSONLoader();
+        console.log('error');
 
-        loader.load( "model/LeePerrySmith.js", function(geometry) {
+    },
 
-            geometry.verticesNeedUpdate = true;
-            geometry.elementsNeedUpdate = true;
-            geometry.morphTargetsNeedUpdate = true;
-            geometry.uvsNeedUpdate = true;
-            geometry.normalsNeedUpdate = true;
-            geometry.colorsNeedUpdate = true;
-            geometry.tangentsNeedUpdate = true;
+    _onProgress: function() {
 
-            var material = new THREE.MeshPhongMaterial( {
-                map: THREE.ImageUtils.loadTexture( 'model/Map-COL.jpg' ),
-                specularMap: THREE.ImageUtils.loadTexture( 'model/Map-SPEC.jpg' ),
-                normalMap: THREE.ImageUtils.loadTexture( 'model/Map-NOR.jpg' ),
-                shininess: 10
-            });
-
-            mesh = new THREE.Mesh( geometry, material );
-            scene.add( mesh );
-            mesh.scale.set( 10, 10, 10 );
-
-        });
+        console.log('progress');
 
     },
 
     componentWillMount: function() {
 
+        // attach animation requests to the window
+        var lastTime = 0;
+        var vendors = ['webkit', 'moz'];
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
 
+        if (!window.requestAnimationFrame)
+            window.requestAnimationFrame = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function() {
+                    callback(currTime + timeToCall); 
+                }, timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+
+        if (!window.cancelAnimationFrame)
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
+
+        THREE.OBJLoader = function ( manager ) {
+
+            this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;
+
+        };
+
+        THREE.OBJLoader.prototype = {
+
+            constructor: THREE.OBJLoader,
+
+            load: function ( url, onLoad, onProgress, onError ) {
+
+                var scope = this;
+
+                var loader = new THREE.XHRLoader( scope.manager );
+                loader.setCrossOrigin( this.crossOrigin );
+                loader.load( url, function ( text ) {
+
+                    onLoad( scope.parse( text ) );
+
+                }, onProgress, onError );
+
+            },
+
+            setCrossOrigin: function ( value ) {
+
+                this.crossOrigin = value;
+
+            },
+
+            parse: function ( text ) {
+
+                console.time( 'OBJLoader' );
+
+                var object, objects = [];
+                var geometry, material;
+
+                function parseVertexIndex( value ) {
+
+                    var index = parseInt( value );
+
+                    return ( index >= 0 ? index - 1 : index + vertices.length / 3 ) * 3;
+
+                }
+
+                function parseNormalIndex( value ) {
+
+                    var index = parseInt( value );
+
+                    return ( index >= 0 ? index - 1 : index + normals.length / 3 ) * 3;
+
+                }
+
+                function parseUVIndex( value ) {
+
+                    var index = parseInt( value );
+
+                    return ( index >= 0 ? index - 1 : index + uvs.length / 2 ) * 2;
+
+                }
+
+                function addVertex( a, b, c ) {
+
+                    geometry.vertices.push(
+                        vertices[ a ], vertices[ a + 1 ], vertices[ a + 2 ],
+                        vertices[ b ], vertices[ b + 1 ], vertices[ b + 2 ],
+                        vertices[ c ], vertices[ c + 1 ], vertices[ c + 2 ]
+                    );
+
+                }
+
+                function addNormal( a, b, c ) {
+
+                    geometry.normals.push(
+                        normals[ a ], normals[ a + 1 ], normals[ a + 2 ],
+                        normals[ b ], normals[ b + 1 ], normals[ b + 2 ],
+                        normals[ c ], normals[ c + 1 ], normals[ c + 2 ]
+                    );
+
+                }
+
+                function addUV( a, b, c ) {
+
+                    geometry.uvs.push(
+                        uvs[ a ], uvs[ a + 1 ],
+                        uvs[ b ], uvs[ b + 1 ],
+                        uvs[ c ], uvs[ c + 1 ]
+                    );
+
+                }
+
+                function addFace( a, b, c, d,  ua, ub, uc, ud, na, nb, nc, nd ) {
+
+                    var ia = parseVertexIndex( a );
+                    var ib = parseVertexIndex( b );
+                    var ic = parseVertexIndex( c );
+                    var id;
+
+                    if ( d === undefined ) {
+
+                        addVertex( ia, ib, ic );
+
+                    } else {
+
+                        id = parseVertexIndex( d );
+
+                        addVertex( ia, ib, id );
+                        addVertex( ib, ic, id );
+
+                    }
+
+                    if ( ua !== undefined ) {
+
+                        ia = parseUVIndex( ua );
+                        ib = parseUVIndex( ub );
+                        ic = parseUVIndex( uc );
+
+                        if ( d === undefined ) {
+
+                            addUV( ia, ib, ic );
+
+                        } else {
+
+                            id = parseUVIndex( ud );
+
+                            addUV( ia, ib, id );
+                            addUV( ib, ic, id );
+
+                        }
+
+                    }
+
+                    if ( na !== undefined ) {
+
+                        ia = parseNormalIndex( na );
+                        ib = parseNormalIndex( nb );
+                        ic = parseNormalIndex( nc );
+
+                        if ( d === undefined ) {
+
+                            addNormal( ia, ib, ic );
+
+                        } else {
+
+                            id = parseNormalIndex( nd );
+
+                            addNormal( ia, ib, id );
+                            addNormal( ib, ic, id );
+
+                        }
+
+                    }
+
+                }
+
+                // create mesh if no objects in text
+
+                if ( /^o /gm.test( text ) === false ) {
+
+                    geometry = {
+                        vertices: [],
+                        normals: [],
+                        uvs: []
+                    };
+
+                    material = {
+                        name: ''
+                    };
+
+                    object = {
+                        name: '',
+                        geometry: geometry,
+                        material: material
+                    };
+
+                    objects.push( object );
+
+                }
+
+                var vertices = [];
+                var normals = [];
+                var uvs = [];
+
+                // v float float float
+
+                var vertex_pattern = /v( +[\d|\.|\+|\-|e|E]+)( +[\d|\.|\+|\-|e|E]+)( +[\d|\.|\+|\-|e|E]+)/;
+
+                // vn float float float
+
+                var normal_pattern = /vn( +[\d|\.|\+|\-|e|E]+)( +[\d|\.|\+|\-|e|E]+)( +[\d|\.|\+|\-|e|E]+)/;
+
+                // vt float float
+
+                var uv_pattern = /vt( +[\d|\.|\+|\-|e|E]+)( +[\d|\.|\+|\-|e|E]+)/;
+
+                // f vertex vertex vertex ...
+
+                var face_pattern1 = /f( +-?\d+)( +-?\d+)( +-?\d+)( +-?\d+)?/;
+
+                // f vertex/uv vertex/uv vertex/uv ...
+
+                var face_pattern2 = /f( +(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+))?/;
+
+                // f vertex/uv/normal vertex/uv/normal vertex/uv/normal ...
+
+                var face_pattern3 = /f( +(-?\d+)\/(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+)\/(-?\d+))( +(-?\d+)\/(-?\d+)\/(-?\d+))?/;
+
+                // f vertex//normal vertex//normal vertex//normal ...
+
+                var face_pattern4 = /f( +(-?\d+)\/\/(-?\d+))( +(-?\d+)\/\/(-?\d+))( +(-?\d+)\/\/(-?\d+))( +(-?\d+)\/\/(-?\d+))?/;
+
+                //
+
+                var lines = text.split( '\n' );
+
+                for ( var i = 0; i < lines.length; i ++ ) {
+
+                    var line = lines[ i ];
+                    line = line.trim();
+
+                    var result;
+
+                    if ( line.length === 0 || line.charAt( 0 ) === '#' ) {
+
+                        continue;
+
+                    } else if ( ( result = vertex_pattern.exec( line ) ) !== null ) {
+
+                        // ["v 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
+
+                        vertices.push(
+                            parseFloat( result[ 1 ] ),
+                            parseFloat( result[ 2 ] ),
+                            parseFloat( result[ 3 ] )
+                        );
+
+                    } else if ( ( result = normal_pattern.exec( line ) ) !== null ) {
+
+                        // ["vn 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
+
+                        normals.push(
+                            parseFloat( result[ 1 ] ),
+                            parseFloat( result[ 2 ] ),
+                            parseFloat( result[ 3 ] )
+                        );
+
+                    } else if ( ( result = uv_pattern.exec( line ) ) !== null ) {
+
+                        // ["vt 0.1 0.2", "0.1", "0.2"]
+
+                        uvs.push(
+                            parseFloat( result[ 1 ] ),
+                            parseFloat( result[ 2 ] )
+                        );
+
+                    } else if ( ( result = face_pattern1.exec( line ) ) !== null ) {
+
+                        // ["f 1 2 3", "1", "2", "3", undefined]
+
+                        addFace(
+                            result[ 1 ], result[ 2 ], result[ 3 ], result[ 4 ]
+                        );
+
+                    } else if ( ( result = face_pattern2.exec( line ) ) !== null ) {
+
+                        // ["f 1/1 2/2 3/3", " 1/1", "1", "1", " 2/2", "2", "2", " 3/3", "3", "3", undefined, undefined, undefined]
+
+                        addFace(
+                            result[ 2 ], result[ 5 ], result[ 8 ], result[ 11 ],
+                            result[ 3 ], result[ 6 ], result[ 9 ], result[ 12 ]
+                        );
+
+                    } else if ( ( result = face_pattern3.exec( line ) ) !== null ) {
+
+                        // ["f 1/1/1 2/2/2 3/3/3", " 1/1/1", "1", "1", "1", " 2/2/2", "2", "2", "2", " 3/3/3", "3", "3", "3", undefined, undefined, undefined, undefined]
+
+                        addFace(
+                            result[ 2 ], result[ 6 ], result[ 10 ], result[ 14 ],
+                            result[ 3 ], result[ 7 ], result[ 11 ], result[ 15 ],
+                            result[ 4 ], result[ 8 ], result[ 12 ], result[ 16 ]
+                        );
+
+                    } else if ( ( result = face_pattern4.exec( line ) ) !== null ) {
+
+                        // ["f 1//1 2//2 3//3", " 1//1", "1", "1", " 2//2", "2", "2", " 3//3", "3", "3", undefined, undefined, undefined]
+
+                        addFace(
+                            result[ 2 ], result[ 5 ], result[ 8 ], result[ 11 ],
+                            undefined, undefined, undefined, undefined,
+                            result[ 3 ], result[ 6 ], result[ 9 ], result[ 12 ]
+                        );
+
+                    } else if ( /^o /.test( line ) ) {
+
+                        geometry = {
+                            vertices: [],
+                            normals: [],
+                            uvs: []
+                        };
+
+                        material = {
+                            name: ''
+                        };
+
+                        object = {
+                            name: line.substring( 2 ).trim(),
+                            geometry: geometry,
+                            material: material
+                        };
+
+                        objects.push( object )
+
+                    } else if ( /^g /.test( line ) ) {
+
+                        // group
+
+                    } else if ( /^usemtl /.test( line ) ) {
+
+                        // material
+
+                        material.name = line.substring( 7 ).trim();
+
+                    } else if ( /^mtllib /.test( line ) ) {
+
+                        // mtl file
+
+                    } else if ( /^s /.test( line ) ) {
+
+                        // smooth shading
+
+                    } else {
+
+                        // console.log( "THREE.OBJLoader: Unhandled line " + line );
+
+                    }
+
+                }
+
+                var container = new THREE.Object3D();
+
+                for ( var i = 0, l = objects.length; i < l; i ++ ) {
+
+                    object = objects[ i ];
+                    geometry = object.geometry;
+
+                    var buffergeometry = new THREE.BufferGeometry();
+
+                    buffergeometry.addAttribute( 'position', new THREE.BufferAttribute( new Float32Array( geometry.vertices ), 3 ) );
+
+                    if ( geometry.normals.length > 0 ) {
+
+                        buffergeometry.addAttribute( 'normal', new THREE.BufferAttribute( new Float32Array( geometry.normals ), 3 ) );
+
+                    }
+
+                    if ( geometry.uvs.length > 0 ) {
+
+                        buffergeometry.addAttribute( 'uv', new THREE.BufferAttribute( new Float32Array( geometry.uvs ), 2 ) );
+
+                    }
+
+                    material = new THREE.MeshLambertMaterial();
+                    material.name = object.material.name;
+
+                    var mesh = new THREE.Mesh( buffergeometry, material );
+                    mesh.name = object.name;
+
+                    container.add( mesh );
+
+                }
+
+                console.timeEnd( 'OBJLoader' );
+
+                return container;
+
+            }
+
+        };
 
     },
 
     componentDidMount: function() {
 
-        renderer = new THREE.WebGLRenderer ({ antialias: true });
-        renderer.setSize( window.innerWidth, window.innerHeight );
+        var container = this.container;
 
-        this.container.appendChild(renderer.domElement);
+        var camera, scene, renderer;
 
-        scene = new THREE.Scene();
-        helperScene = new THREE.Scene();
+        var mouseX = 0, mouseY = 0;
 
-        camera = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, 1, 1000 );
-        camera.position.z = 80;
-        camera.target = new THREE.Vector3();
-        controls = new OrbitControls(camera, renderer.domElement);
+        var windowHalfX = window.innerWidth / 2;
+        var windowHalfY = window.innerHeight / 2;
 
-        scene.add(camera);
+        init();
+        animate();
 
-        ambientLight = new THREE.AmbientLight(0x111111);
-        scene.add(ambientLight);
+        function init() {
 
-        pointLight = new THREE.PointLight(0xff0000);
-        pointLight.position.z = 10000;
-        pointLight.distance = 4000;
-        scene.add(pointLight);
+            camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+            camera.position.z = 350;
 
-        pointLight2 = new THREE.PointLight(0xff5500);
-        pointLight2.position.z = 1000;
-        pointLight2.distance = 2000;
-        scene.add(pointLight2);
+            // scene
 
-        pointLight3 = new THREE.PointLight(0x0000ff);
-        pointLight3.position.x = -1000;
-        pointLight3.position.z = 1000;
-        pointLight3.distance = 2000;
-        scene.add(pointLight3);
+            scene = new THREE.Scene();
 
-        spotLight = new THREE.SpotLight(0xaaaaaa);
-        spotLight.position.set(100, 50, 100);
-        scene.add(spotLight);
+            var ambient = new THREE.AmbientLight( 0x101030 );
+            scene.add( ambient );
 
-        line = new THREE.Line( new THREE.Geometry( ), new THREE.LineBasicMaterial( { linewidth: 4 }) );
-        line.geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );
-        line.geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ) );
-        scene.add(line);
+            var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+            directionalLight.position.set( 0, 0, 1 );
+            scene.add( directionalLight );
 
-        this._loadJSONModel();
+            // texture
 
-        projector = new THREE.Projector();
-        raycaster = new THREE.Raycaster();
+            var manager = new THREE.LoadingManager();
+            manager.onProgress = function ( item, loaded, total ) {
 
-        mouseHelper = new THREE.Mesh( new THREE.BoxGeometry( 1, 1, 10 ), new THREE.MeshNormalMaterial() );
-        scene.add(mouseHelper);
-        mouseHelper.visible = false;
+                console.log( item, loaded, total );
 
-        window.addEventListener( 'resize', this._onWindowResize, false );
+            };
 
-        var moved = false;
+            var texture = new THREE.Texture();
 
-        controls.addEventListener( 'change', function() {
-            moved = true;
-        });
+            var onProgress = function ( xhr ) {
+                if ( xhr.lengthComputable ) {
+                    var percentComplete = xhr.loaded / xhr.total * 100;
+                    console.log( Math.round(percentComplete, 2) + '% downloaded' );
+                }
+            };
 
-        controls.addEventListener( 'start', function() {
-            moved = false;
-        });
+            var onError = function ( xhr ) {
+            };
 
-        controls.addEventListener( 'end', function() {
-            checkIntersection();
-            if( !moved ) shoot();
-        });
 
-        window.addEventListener( 'mousemove', onTouchMove );
-        window.addEventListener( 'touchmove', onTouchMove );
+            var loader = new THREE.ImageLoader( manager );
+            loader.load( 'model/pattern.jpg', function ( image ) {
 
-        function onTouchMove( event ) {
+                texture.image = image;
+                texture.needsUpdate = true;
 
-            if( event.changedTouches ) {
-                x = event.changedTouches[ 0 ].pageX;
-                y = event.changedTouches[ 0 ].pageY;
-            } else {
-                x = event.clientX;
-                y = event.clientY;
-            }
-            
-            mouse.x = ( x / window.innerWidth ) * 2 - 1;
-            mouse.y = - ( y / window.innerHeight ) * 2 + 1;
+            } );
 
-            checkIntersection();
+            // model
 
-        }
+            var loader = new THREE.OBJLoader( manager );
+            loader.load( 'model/male02.obj', function ( object ) {
 
-        function shoot() {
+                object.traverse( function ( child ) {
 
-            if( params.projection == 'camera' ) {
+                    if ( child instanceof THREE.Mesh ) {
 
-                var dir = camera.target.clone();
-                dir.sub( camera.position );
+                        child.material.map = texture;
 
-                p = intersection.point;
+                    }
 
-                var m = new THREE.Matrix4();
-                var c = dir.clone();
-                c.negate();
-                c.multiplyScalar( 10 );
-                c.add( p );
-                m.lookAt( p, c, up );
-                m = m.extractRotation( m );
+                } );
 
-                dummy = new THREE.Object3D();
-                dummy.rotation.setFromRotationMatrix( m );
-                r.set( dummy.rotation.x, dummy.rotation.y, dummy.rotation.z );
+                object.position.y = - 80;
+                scene.add( object );
 
-            } else {
+            }, onProgress, onError );
 
-                p = intersection.point;
-                r.copy( mouseHelper.rotation );
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio( window.devicePixelRatio );
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            container.appendChild( renderer.domElement );
 
-            }
+            document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
-            var scale = params.minScale + Math.random() * ( params.maxScale - params.minScale );
-            s.set( scale, scale, scale );
-
-            if (params.rotate) r.z = Math.random() * 2 * Math.PI;
-
-            var m = new THREE.Mesh( new THREE.DecalGeometry( mesh, p, r, s, check ), decalMaterial );
-            decals.push( m );
-            scene.add( m );
+            window.addEventListener( 'resize', onWindowResize, false );
 
         }
 
-        function checkIntersection() {
+        function onWindowResize() {
 
-            mouseVector.set( mouse.x, mouse.y, 1 );
-            projector.unprojectVector( mouseVector, camera );
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
 
-            raycaster.set( camera.position, mouseVector.sub( camera.position ).normalize() );
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
 
-            var intersects = raycaster.intersectObjects( [ mesh ] );
-
-            if ( intersects.length > 0 ) {
-
-                var p = intersects[ 0 ].point;
-                mouseHelper.position.copy( p );
-                intersection.point.copy( p );
-                var n = intersects[ 0 ].face.normal.clone();
-                n.multiplyScalar( 10 );
-                n.add( intersects[ 0 ].point );
-                intersection.normal.copy( intersects[ 0 ].face.normal );
-                mouseHelper.lookAt( n );
-
-                line.geometry.vertices[ 0 ].copy( intersection.point );
-                line.geometry.vertices[ 1 ].copy( n );
-                line.geometry.verticesNeedUpdate = true;
-
-                intersection.intersects = true;
-
-            } else {
-
-                intersection.intersects = false;
-
-            }
+            renderer.setSize( window.innerWidth, window.innerHeight );
 
         }
 
-        (function render() {
-            requestAnimationFrame( render );
-            renderer.autoClear = false;
+        function onDocumentMouseMove( event ) {
+
+            mouseX = ( event.clientX - windowHalfX ) / 2;
+            mouseY = ( event.clientY - windowHalfY ) / 2;
+
+        }
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+            render();
+
+        }
+
+        function render() {
+
+            camera.position.x += ( mouseX - camera.position.x ) * .05;
+            camera.position.y += ( - mouseY - camera.position.y ) * .05;
+
+            camera.lookAt( scene.position );
+
             renderer.render( scene, camera );
-            if ( renderHelpers ) renderer.render( helperScene, camera );
-        })();
+
+        }
 
     },
 
@@ -280,7 +572,7 @@ var Face = React.createClass({
 
         return (
             
-            <div ref={(ref) => this.container = ref}>
+            <div className="Face" ref={(ref) => this.container = ref}>
             </div>
 
         );

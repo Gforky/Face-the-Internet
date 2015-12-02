@@ -102,7 +102,8 @@ body {
   font-family: 'Circular Std Bold', sans-serif;
   background: black;
   color: white;
-  letter-spacing: 2px; }
+  letter-spacing: 2px;
+  overflow: hidden; }
   body h1 {
     font-size: 7vw;
     line-height: 8vw; }
@@ -444,3 +445,7 @@ body {
           -ms-opacity: 0.75;
           -o-opacity: 0.75;
           opacity: 0.75; }
+
+/*
+	FACE PAGE
+*/

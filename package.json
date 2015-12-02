@@ -48,9 +48,8 @@
     "react-dom": "^0.14.2",
     "react-router": "^1.0.0",
     "reactify": "^0.15.2",
-    "three": "^0.67.0",
-    "three-decal-geometry": "^1.0.0",
     "three-orbit-controls": "^69.0.0",
+    "three.cjs": "^0.71.1",
     "vinyl-source-stream": "^0.1.1",
     "watchify": "^2.1.1"
   }
