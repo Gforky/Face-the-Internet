@@ -451,18 +451,18 @@ var Face = React.createClass({
         function init() {
 
             camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-            camera.position.z = 350;
+            camera.position.z = 150;
 
             // scene
 
-            scene = new THREE.Scene();
+            this.scene = scene = new THREE.Scene();
 
-            var ambient = new THREE.AmbientLight( 0x101030 );
+            var ambient = new THREE.AmbientLight( 0xffffff );
             scene.add( ambient );
 
-            var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-            directionalLight.position.set( 0, 0, 1 );
-            scene.add( directionalLight );
+            var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set( 1, 0, 0 );
+            scene.add(directionalLight);
 
             // texture
 
