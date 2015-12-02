@@ -2,7 +2,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var THREE = require('three.cjs');
-var OrbitControls = require('three-orbit-controls')(THREE);
+var DecalGeometry = require('three-decal-geometry')(THREE);
 
 var Face = React.createClass({
 
@@ -24,6 +24,12 @@ var Face = React.createClass({
     _onProgress: function() {
 
         console.log('progress');
+
+    },
+
+    _createDecal: function() {
+
+        console.log('create');
 
     },
 
@@ -426,6 +432,22 @@ var Face = React.createClass({
 
                 console.timeEnd( 'OBJLoader' );
 
+                function createDecal() {
+
+                    console.log(mesh);
+
+                    var decalGeometry = new THREE.DecalGeometry(
+
+                        mesh,
+                        new THREE.Vector3(0, 0, 0),
+                        new THREE.Vector3(0, 0, 0),
+                        new THREE.Vector3(0, 0, 0),
+                        new THREE.Vector3(0, 0, 0)
+
+                    );
+
+                }  
+
                 return container;
 
             }
@@ -438,7 +460,7 @@ var Face = React.createClass({
 
         var container = this.container;
 
-        var camera, scene, renderer;
+        var camera, scene, renderer, mesh;
 
         var mouseX = 0, mouseY = 0;
 
@@ -512,6 +534,10 @@ var Face = React.createClass({
                 object.position.y = - 80;
                 scene.add( object );
 
+                mesh = object.children[0];
+
+                console.log(mesh);
+
             }, onProgress, onError );
 
             renderer = new THREE.WebGLRenderer();
@@ -560,7 +586,7 @@ var Face = React.createClass({
 
             renderer.render( scene, camera );
 
-        }
+        }      
 
     },
 
