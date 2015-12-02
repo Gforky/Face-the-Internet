@@ -497,7 +497,7 @@ var Face = React.createClass({
             // model
 
             var loader = new THREE.OBJLoader( manager );
-            loader.load( 'model/male02.obj', function ( object ) {
+            loader.load( 'model/mesh.obj', function ( object ) {
 
                 object.traverse( function ( child ) {
 
