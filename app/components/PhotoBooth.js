@@ -49,6 +49,7 @@ var PhotoBooth = React.createClass({
         var minY = this.state.height * 0.375;
         var maxX = this.state.width * 0.5;
         var maxY = this.state.height * 0.75;
+        var lineWidth = 6;
 
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
@@ -59,7 +60,7 @@ var PhotoBooth = React.createClass({
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(0, 255, 0)';
             this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
-            this.outputContext.lineWidth = 6;
+            this.outputContext.lineWidth = lineWidth;
         } else {
             this.setState({
                 captureActive: false,
@@ -69,12 +70,13 @@ var PhotoBooth = React.createClass({
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(255, 0, 0)';
             this.outputContext.strokeStyle = 'rgb(255, 0, 0)';
-            this.outputContext.lineWidth = 6;
+            this.outputContext.lineWidth = lineWidth;
         }
 
         if (this.state.hasCaptured) {
             this.outputContext.fillStyle = 'rgba(255, 255, 255, 0)';
             this.outputContext.strokeStyle = 'rgba(255, 255, 255, 0)';
+            this.outputContext.lineWidth = lineWidth;
         }
 
     },
@@ -281,7 +283,7 @@ var PhotoBooth = React.createClass({
             webcamHeight: 225,
             captureActive: true,
             saveActive: false,
-            retakeActive: false,
+            retakeActive: false
         });
 
         // create cross-browser var to check for webcam support, attach to window
@@ -381,7 +383,9 @@ var PhotoBooth = React.createClass({
             <div className="PhotoBooth" width={this.state.width} height={this.state.height} style={css}>
 
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
-                    <div className={this.state.loadingActive ? 'loading active' : 'loading disabled'}></div>
+                    <div className={this.state.loadingActive ? 'loading message active' : 'loading message disabled'}>
+                        <h2>loading...</h2>
+                    </div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
                             <h2>Success</h2>
@@ -401,7 +405,7 @@ var PhotoBooth = React.createClass({
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 
                 <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
-                
+
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 
                 <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
@@ -409,6 +413,11 @@ var PhotoBooth = React.createClass({
                     <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>Save</button></li>
                     <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>
+
+                <div className="information overlay">
+                    <div className="message"></div>
+                    <span className="icon"><span></span></span>
+                </div>
 
             </div>
         );
