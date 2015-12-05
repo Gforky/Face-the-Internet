@@ -43,7 +43,6 @@
     "http": "0.0.0",
     "jquery": "^2.1.4",
     "jsfeat": "0.0.8",
-    "opencv": "^3.2.0",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-router": "^1.0.0",

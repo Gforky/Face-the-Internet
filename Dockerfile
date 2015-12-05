@@ -4,17 +4,19 @@
 # 1. Install docker (http://docker.io)
 # 2. Build container: docker build .
 
-FROM    centos:centos6
+# Pull image for specific node version (https://github.com/nodejs/docker-node)
+FROM node:0.10
 
-# Enable EPEL for Node.js
-RUN     rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-# Install Node.js and npm
-RUN     yum install -y -q npm
-
-# App
+# Expose the ports that your app uses. For example:
+EXPOSE 3000
+# Set environment variables.
+ENV HOME /root
+# map files to '/app' inside the docker container
 ADD . /app
+# Define working directory.
+WORKDIR /app
 # Install app dependencies
-RUN cd /app; npm install
+RUN npm install
 
-EXPOSE  8080
-CMD ["node", "/app/index.js"]
+# Define default command.
+CMD ["bash", "node /app/index.js"]
