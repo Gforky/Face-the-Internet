@@ -8,6 +8,9 @@ var Face = React.createClass({
 
     _onWindowResize: function() {
 
+        // windowHalfX = window.innerWidth / 2;
+        // windowHalfY = window.innerHeight / 2;
+
         // camera.aspect = window.innerWidth / window.innerHeight;
         // camera.updateProjectionMatrix();
 
@@ -33,32 +36,9 @@ var Face = React.createClass({
 
     },
 
-    componentWillMount: function() {
+    _THREEObjLoader: function() {
 
-        // attach animation requests to the window
-        var lastTime = 0;
-        var vendors = ['webkit', 'moz'];
-        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
-        }
-
-        if (!window.requestAnimationFrame)
-            window.requestAnimationFrame = function(callback, element) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function() {
-                    callback(currTime + timeToCall); 
-                }, timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
-
-        if (!window.cancelAnimationFrame)
-            window.cancelAnimationFrame = function(id) {
-                clearTimeout(id);
-            };
-
+        // add object loader
         THREE.OBJLoader = function ( manager ) {
 
             this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;
@@ -423,36 +403,58 @@ var Face = React.createClass({
                     material = new THREE.MeshLambertMaterial();
                     material.name = object.material.name;
 
-                    var mesh = new THREE.Mesh( buffergeometry, material );
+                    var mesh = new THREE.Mesh(buffergeometry, material);
                     mesh.name = object.name;
 
-                    container.add( mesh );
+                    container.add(mesh);
 
                 }
 
-                console.timeEnd( 'OBJLoader' );
-
-                function createDecal() {
-
-                    console.log(mesh);
-
-                    var decalGeometry = new THREE.DecalGeometry(
-
-                        mesh,
-                        new THREE.Vector3(0, 0, 0),
-                        new THREE.Vector3(0, 0, 0),
-                        new THREE.Vector3(0, 0, 0),
-                        new THREE.Vector3(0, 0, 0)
-
-                    );
-
-                }  
+                console.log('----------------------------------');
+                console.timeEnd('OBJLoader');
+                console.log('----------------------------------');
 
                 return container;
-
             }
-
         };
+    },
+
+    _globalAnimationFrame: function() {
+
+        // attach animation requests to the window
+        var lastTime = 0;
+        var vendors = ['webkit', 'moz'];
+
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame) {
+            window.requestAnimationFrame = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function() {
+                    callback(currTime + timeToCall); 
+                }, timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+        }
+
+        if (!window.cancelAnimationFrame) {
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
+        }
+
+    },
+
+    componentWillMount: function() {
+
+        this._globalAnimationFrame();
+
+        this._THREEObjLoader();
 
     },
 
@@ -472,41 +474,39 @@ var Face = React.createClass({
 
         function init() {
 
-            camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+            this.camera = camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
             camera.position.z = 150;
 
             // scene
-
             this.scene = scene = new THREE.Scene();
 
-            var ambient = new THREE.AmbientLight( 0xffffff );
-            scene.add( ambient );
+            var ambient = new THREE.AmbientLight( 0xffffff, 0.5);
+            scene.add(ambient);
 
-            var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-                directionalLight.position.set( 1, 0, 0 );
+            var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set( 1, 1, 1 );
             scene.add(directionalLight);
 
             // texture
-
             var manager = new THREE.LoadingManager();
             manager.onProgress = function ( item, loaded, total ) {
-
-                console.log( item, loaded, total );
-
+                // console.log( item, loaded, total );
             };
-
-            var texture = new THREE.Texture();
 
             var onProgress = function ( xhr ) {
                 if ( xhr.lengthComputable ) {
                     var percentComplete = xhr.loaded / xhr.total * 100;
-                    console.log( Math.round(percentComplete, 2) + '% downloaded' );
+                    console.log('----------------------------------');
+                    console.log('[FACE - EVENT] ', 'Model mesh is ' + Math.round(percentComplete, 2) + '% downloaded');
+                    console.log('----------------------------------');
                 }
             };
 
             var onError = function ( xhr ) {
             };
 
+
+            var texture = new THREE.Texture();
 
             var loader = new THREE.ImageLoader( manager );
             loader.load( 'model/pattern.jpg', function ( image ) {
@@ -516,8 +516,16 @@ var Face = React.createClass({
 
             } );
 
-            // model
+            // var loader = new THREE.ImageLoader( manager );
+            // loader.load( 'captures/average.png', function ( image ) {
+            //     console.log(texture);
+            //     texture.image = image;
+            //     texture.needsUpdate = true;
+            //     texture.flipY = false;
 
+            // } );
+
+            // model
             var loader = new THREE.OBJLoader( manager );
             loader.load( 'model/mesh.obj', function ( object ) {
 
@@ -531,12 +539,10 @@ var Face = React.createClass({
 
                 } );
 
-                object.position.y = - 80;
-                scene.add( object );
+                object.position.y = - 100;
+                scene.add(object);
 
-                mesh = object.children[0];
-
-                console.log(mesh);
+                window.mesh = mesh = object.children[0];
 
             }, onProgress, onError );
 
