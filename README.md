@@ -35,12 +35,6 @@ To take advantage of real-time face recognition and giving instant feedback to t
 [React](https://facebook.github.io/react/) is a relatively new tool to help create interfaces in JavaScript. In addition it cares very little about the rest of the of your stack, making it perfect for a project like this.
 
 
-#### Three
-[THREE](http://threejs.org/)
-
-[THREE Decal Geometry](https://www.npmjs.com/package/three-decal-geometry)
-
-
 #### Flynn
 [Flynn](https://flynn.io/docs) is the cluster PaaS that will take care of all the devops for us, we just have to push out app to it.
 
@@ -50,9 +44,7 @@ Fire up a DigitalOcean droplet with Ubuntu 14.04 x64
 
 
 ##### Digital Ocean
-Bash run [this script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4)
-
-When it finishes, remember the last 10 lines of output contain some important info:
+Bash run [this script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4). When it finishes, remember the last 10 lines of output contain some important info:
 
 1. Copy the `$ flynn cluster add ...` command
 2. Copy the dashboard URL and login token 
