@@ -51,7 +51,7 @@ Bash run [this script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4). Wh
 
 
 ##### Push to Flynn
-From your development machine, go to a folder where you store the `face-the-internet` repo:
+From your local development machine, go to the folder where you store the `face-the-internet` repo:
 
 1. Install the Flynn CLI if you don't have it yet, by using the following command:
 `$ L=/usr/local/bin/flynn && curl -sSL -A "uname -sp" https://dl.flynn.io/cli | zcat >$L && chmod +x $L`
