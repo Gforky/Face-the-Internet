@@ -18,7 +18,7 @@ var StartPage = React.createClass({
                 <div className="overlay">
                     <div className="welcome message">
                         <div>
-                            <h1>Face the Internet.</h1>
+                            <h1>Title</h1>
                             <Link className="start button" to="/photo-booth">Start</Link>
                         </div>
                     </div>
