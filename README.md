@@ -17,6 +17,14 @@ This project sits somewhere between sculpture, technology, art, motion graphic d
 ## Installation
 Before you start you will need the following installed on your machine. [Python](https://www.python.org/) & `:/pkg-config` need installing with Brew.
 
+
+### Quick Install
+1. Close [this](https://github.com/JohnPett/Face-the-Internet) repository in to the desired location on your local machine.
+
+2. From inside the repository, run `$ npm install` to get project dependencies.
+
+3. Once the dependencies have installed, running `$ npm start` will initiate the server and application and run a development version of the application on `htt`
+
 ### Detailed Install
 
 #### OpenCV
