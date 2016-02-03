@@ -51,7 +51,7 @@ var browserifyTask = function (options) {
       .pipe(source('main.js'))
       // .pipe(gulpif(!options.development, streamify(uglify())))
       .pipe(gulp.dest(options.dest))
-      .pipe(gulpif(options.development, livereload()))
+      .pipe(gulpif(options.development, livereload()))  
       .pipe(notify(function () {
           console.log('----------------------------------');
           console.log('[SERVER - BUILD] APP bundle built in ' + (Date.now() - start) + 'ms');
@@ -223,5 +223,5 @@ gulp.task('crop', function () {
 });
 
 gulp.task('slice', function () {
-
+  
 });

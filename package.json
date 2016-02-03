@@ -22,9 +22,10 @@
   },
   "homepage": "https://github.com/JohnPett/Face-the-Internet#readme",
   "dependencies": {
-    "fs": "0.0.2",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
+    "fs": "0.0.2",
+    "gm": "^1.21.1",
     "history": "^1.13.1",
     "jquery": "^2.1.4",
     "jsfeat": "0.0.8",
