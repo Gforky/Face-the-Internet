@@ -16,7 +16,8 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     sass = require('gulp-sass'),
     child = require('child_process'),
-    fs = require('fs');
+    fs = require('fs'),
+    gm = require('gm');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -223,5 +224,4 @@ gulp.task('crop', function () {
 });
 
 gulp.task('slice', function () {
-  
 });
