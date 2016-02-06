@@ -11,13 +11,14 @@ var Face = React.createClass({
 	},
 	componentDidMount: function() {
 		this._createFabric();
+		// TO DO: This only works for window width being bigger than window height... 
 		fabric.Image.fromURL('img.jpg', function(img) {
 			img.set({
-    			// left: (window.innerWidth/2) - (canvas.width/2),
-       			// top: (window.innerHeight/2) - (canvas.height/2),
                 width: window.innerWidth,
-                height: (canvas.height/canvas.width) * window.innerWidth
-			});
+                height: (canvas.height/canvas.width) * window.innerWidth,
+                selectable: false
+			})
+			canvas.add(img);
 		});
 	},
     render: function() {

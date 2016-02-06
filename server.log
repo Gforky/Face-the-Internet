@@ -23,3 +23,6 @@
 ----------------------------------
 [PHOTOBOOTH - DATA]  Success writing image to server!
 ----------------------------------
+----------------------------------
+[SERVER - EVENT]  Express server listening on port 3000
+----------------------------------

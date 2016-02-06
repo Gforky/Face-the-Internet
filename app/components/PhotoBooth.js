@@ -33,10 +33,10 @@ var PhotoBooth = React.createClass({
     },
     _facePosition: function(x, y) {
         // centre 50% of screen
-        var minX = this.state.width * 0.25;
-        var minY = this.state.height * 0.375;
-        var maxX = this.state.width * 0.5;
-        var maxY = this.state.height * 0.75;
+        var minX = this.state.width * 0.2;
+        var minY = this.state.height * 0.2;
+        var maxX = this.state.width * 0.8;
+        var maxY = this.state.height * 0.8;
         var lineWidth = 6;
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
