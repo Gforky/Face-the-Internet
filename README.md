@@ -41,31 +41,3 @@ To take advantage of real-time face recognition and giving instant feedback to t
 
 #### React
 [React](https://facebook.github.io/react/) is a relatively new tool to help create interfaces in JavaScript. In addition it cares very little about the rest of the of your stack, making it perfect for a project like this.
-
-
-#### Flynn
-[Flynn](https://flynn.io/docs) is the cluster PaaS that will take care of all the devops for us, we just have to push out app to it.
-
-
-##### Setup
-Fire up a DigitalOcean droplet with Ubuntu 14.04 x64
-
-
-##### Digital Ocean
-Bash run [this script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4). When it finishes, remember the last 10 lines of output contain some important info:
-
-1. Copy the `$ flynn cluster add ...` command
-2. Copy the dashboard URL and login token 
-
-
-##### Push to Flynn
-From your local development machine, go to the folder where you store the `face-the-internet` repo:
-
-1. Install the Flynn CLI if you don't have it yet, by using the following command:
-`$ L=/usr/local/bin/flynn && curl -sSL -A "uname -sp" https://dl.flynn.io/cli | zcat >$L && chmod +x $L`
-
-2. Next, run the command: `$ flynn cluster add ...` (the exact command is outputted by [the setup script](https://gist.github.com/eduwass/c8c15b73329a0e9699c4) in the setup steps). This will associate your local dev machine with your VPS Flynn cluster.
- 
-3. Make sure you have accessed the Flynn dashboard and accepted the certificate.
-
-4. Now from inside the `face-the-internet` repo you can `$ flynn create APP_NAME`and then `$ git push flynn master` to send it to Flynn.
