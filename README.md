@@ -19,7 +19,7 @@ Before you start you will need the following installed on your machine. [Python]
 
 
 ### Quick Install
-1. Close [this](https://github.com/JohnPett/Face-the-Internet) repository in to the desired location on your local machine.
+1. Clone [this](https://github.com/JohnPett/Face-the-Internet) repository in to the desired location on your local machine.
 
 2. From inside the repository, run `$ npm install` to get project dependencies.
 
