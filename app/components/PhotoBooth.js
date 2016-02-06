@@ -5,21 +5,15 @@ var JSFeat = require('jsfeat');
 var $ = require('jquery');
 
 var PhotoBooth = React.createClass({
-
     _onWindowResize: function(event) {
-
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has resized the browser: ', event);
         console.log('----------------------------------');
-
         var height = window.innerHeight;
         var width = (16/9) * height;
-
         if (window.innerWidth > width) {
-
             width = window.outerWidth;
             height = (9/16) * width;
-
             this.setState({
                 width: width,
                 height: window.innerHeight,
@@ -27,9 +21,7 @@ var PhotoBooth = React.createClass({
                 outputHeight: height,
                 outputLandscape: true
             });
-
         } else {
-
             this.setState({
                 width: width,
                 height: window.innerHeight,
@@ -37,20 +29,15 @@ var PhotoBooth = React.createClass({
                 outputHeight: height,
                 outputLandscape: false
             });
-
         }
-
     },
-
     _facePosition: function(x, y) {
-
         // centre 50% of screen
         var minX = this.state.width * 0.25;
         var minY = this.state.height * 0.375;
         var maxX = this.state.width * 0.5;
         var maxY = this.state.height * 0.75;
         var lineWidth = 6;
-
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
                 captureActive: true,
@@ -72,23 +59,17 @@ var PhotoBooth = React.createClass({
             this.outputContext.strokeStyle = 'rgb(255, 0, 0)';
             this.outputContext.lineWidth = lineWidth;
         }
-
         if (this.state.hasCaptured) {
             this.outputContext.fillStyle = 'rgba(255, 255, 255, 0)';
             this.outputContext.strokeStyle = 'rgba(255, 255, 255, 0)';
             this.outputContext.lineWidth = lineWidth;
         }
-
     },
-
     _drawFaces: function(scale, max) {
-
         var on = this.rects.length;
-
         if (on && max) {
             JSFeat.math.qsort(this.rects, 0, on-1, function(a,b){return (b.confidence<a.confidence)});
         }
-
         var n = max || on;
         n = Math.min(n, on);
         var r;
@@ -97,43 +78,25 @@ var PhotoBooth = React.createClass({
             this.outputContext.strokeRect( (r.x * scale) | 0, (r.y * scale) | 0, (r.width * scale) | 0, (r.height * scale) | 0);
             this._facePosition((r.x * scale), (r.y * scale));
         }
-
     },
-
     _faceDetection: function() {
-
         window.requestAnimationFrame(this._faceDetection);
-        
         if (this.webcam.readyState === this.webcam.HAVE_ENOUGH_DATA)
-
             this.outputContext.drawImage(this.webcam, 0, 0, this.state.outputWidth, this.state.outputHeight);
-
             this.inputContext.drawImage(this.webcam, 0, 0, this.state.webcamWidth, this.state.webcamHeight);
-
             var imageData = this.inputContext.getImageData(0, 0, this.state.webcamWidth, this.state.webcamHeight);
-
             JSFeat.imgproc.grayscale(imageData.data, this.state.webcamWidth, this.state.webcamHeight, this.imageU8);
-
             var pyr = JSFeat.bbf.build_pyramid(this.imageU8, 24*2, 24*2, 4);
-
             this.rects = JSFeat.bbf.detect(pyr, window.cascadeData);
-
             this._drawFaces(this.state.outputWidth/this.imageU8.cols, 1);
-
     },
-
     _captureHandler: function(event) {
-
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to capture image: ', event);
         console.log('----------------------------------');
-
         window.cancelAnimationFrame(this._faceDetection);
-
         this.webcam.pause();
-
         this.outputContext.drawImage(this.webcam, 0, 0, this.state.outputWidth, this.state.outputHeight);
-
         this.setState({
             captureActive: false,
             hasCaptured: true,
@@ -141,15 +104,10 @@ var PhotoBooth = React.createClass({
             retakeActive: true,
             webcam: ''
         });
-
     },
-
     _saveHandler: function(e) {
-
         var imageData = this.input.toDataURL("image/jpeg", 0.85);
-
         this.webcam.pause();
-
         this.setState({
             webcam: '',
             captureActive: false,
@@ -158,9 +116,7 @@ var PhotoBooth = React.createClass({
             overlayActive: true,
             loadingActive: true
         });
-
         var parent = this;
-
         $.ajax({
             url: '/capture',
             type: 'post',
@@ -168,13 +124,10 @@ var PhotoBooth = React.createClass({
             data: JSON.stringify({image: imageData}),
             contentType: 'application/json',
             success: function(data) {
-
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Successfully posted image to server: ', data);
                 console.log('----------------------------------');
-
                 var minWait = 1500;
-
                 setTimeout(function() {
                     parent.setState({
                         loadingActive: false,
@@ -183,7 +136,6 @@ var PhotoBooth = React.createClass({
                 }, minWait);
             },
             error: function(error) {
-
                 console.log('----------------------------------');
                 console.log('[PHOTOBOOTH - DATA] ', 'Error posting image to server: ', error);
                 console.log('----------------------------------');

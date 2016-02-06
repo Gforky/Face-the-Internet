@@ -12,8 +12,13 @@ var Face = React.createClass({
 	componentDidMount: function() {
 		this._createFabric();
 		fabric.Image.fromURL('img.jpg', function(img) {
-		  this.canvas.add(img);
-		}.bind(this));
+			img.set({
+    			// left: (window.innerWidth/2) - (canvas.width/2),
+       			// top: (window.innerHeight/2) - (canvas.height/2),
+                width: window.innerWidth,
+                height: (canvas.height/canvas.width) * window.innerWidth
+			});
+		});
 	},
     render: function() {
         return (
