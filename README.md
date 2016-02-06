@@ -1,7 +1,7 @@
 ##Face the Internet
 
 ### Background
-This project was originally conceived between [Florian Hacker](http://cargocollective.com/florianhacker) and [John Pett](http://johnpett.com) as an entry to the [Google and Barbican DevArt](https://devart.withgoogle.com/) contest. This project has also been contributed to by [Ben Harvey](https://github.com/gomako) and [Edu Wass](https://github.com/eduwass) for their lean programming skills!
+This project was originally conceived between [Florian Hacker](http://cargocollective.com/florianhacker) and [John Pett](http://johnpett.com) as an entry to the [Google and Barbican DevArt](https://devart.withgoogle.com/) contest. This project has also been contributed to by [Ben Harvey](https://github.com/gomako) and [Edu Wass](https://github.com/eduwass).
 
 Here is some imagery from the previous incarnations of this project, outlining the original concept of both online and real-world manifestations.
 
@@ -23,7 +23,7 @@ Before you start you will need the following installed on your machine. [Python]
 
 2. From inside the repository, run `$ npm install` to get project dependencies.
 
-3. Once the dependencies have installed, running `$ npm start` will initiate the server and application and run a development version of the application on `htt`
+3. Once the dependencies have installed, running `$ npm start` will initiate the server and application and run a development version of the application on `http://localhost:3000/`
 
 ### Detailed Install
 
