@@ -32,6 +32,20 @@ var Face = React.createClass({
 	    canvas.setWidth(window.innerWidth);
 	    canvas.renderAll();
 	},
+	_renderText: function() {
+		var t = new fabric.IText("Hello world !", {
+		  top: 100,
+		  left: 100,
+		  backgroundColor: '#FFFFFF',
+		  fill: '#000000',
+		  fontSize: 80,
+		  lockScalingX: true,
+		  lockScalingY: true,
+		  hasRotatingPoint: false,
+		  transparentCorners: false,
+		});
+		this.canvas.add(t).renderAll();
+	},
 	_renderSlice: function(i) {
 		fabric.Image.fromURL(this.data[i], function(img) {
 			img.set({
@@ -49,6 +63,7 @@ var Face = React.createClass({
 		for (var i = 0; i < this.data.length; i++) {
 			this._renderSlice(i);
 		};
+		this._renderText();
 	},
     render: function() {
         return (
