@@ -2,17 +2,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Link = require('react-router').Link;
-
 var StartPage = React.createClass({
-
     componentWillMount: function() {
 
-
-
     },
-
     render: function() {
-
         return (
             <div className="StartPage">
                 <div className="overlay">
@@ -25,8 +19,6 @@ var StartPage = React.createClass({
                 </div>
             </div>
         );
-    }
-    
+    } 
 });
-    
 module.exports = StartPage;

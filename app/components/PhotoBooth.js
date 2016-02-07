@@ -32,16 +32,17 @@ var PhotoBooth = React.createClass({
     },
     _facePosition: function(x, y) {
         // centre 50% of screen
-        var minX = this.state.width * 0.2;
-        var minY = this.state.height * 0.2;
-        var maxX = this.state.width * 0.8;
-        var maxY = this.state.height * 0.8;
+        var minX = this.state.width * 0.3;
+        var minY = this.state.height * 0.3;
+        var maxX = this.state.width * 0.7;
+        var maxY = this.state.height * 0.7;
         var lineWidth = 6;
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
                 captureActive: true,
                 buttonsActive: true,
-                silhouetteActive: false
+                silhouetteActive: false,
+                captureText: 'capture'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(0, 255, 0)';
@@ -51,7 +52,8 @@ var PhotoBooth = React.createClass({
             this.setState({
                 captureActive: false,
                 buttonsActive: true,
-                silhouetteActive: true
+                silhouetteActive: true,
+                captureText: 'align face to centre'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(255, 0, 0)';
@@ -209,7 +211,8 @@ var PhotoBooth = React.createClass({
             webcamHeight: 225,
             captureActive: true,
             saveActive: false,
-            retakeActive: false
+            retakeActive: false,
+            captureText: 'align face to centre'
         });
         // create cross-browser var to check for webcam support, attach to window
         navigator.getUserMedia  = navigator.getUserMedia || 
@@ -307,7 +310,7 @@ var PhotoBooth = React.createClass({
                 <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
-                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>capture</button></li>
+                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>{this.state.captureText}</button></li>
                     <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
                     <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
