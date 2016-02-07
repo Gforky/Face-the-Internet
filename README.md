@@ -3,15 +3,18 @@
 ### Background
 This project was originally conceived between [Florian Hacker](http://cargocollective.com/florianhacker) and [John Pett](http://johnpett.com) as an entry to the [Google and Barbican DevArt](https://devart.withgoogle.com/) contest. This project has also been contributed to by [Ben Harvey](https://github.com/gomako) and [Edu Wass](https://github.com/eduwass).
 Here is some imagery from the previous incarnations of this project, outlining the original concept of both online and real-world manifestations.
+
 ![Face Test](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/face-test.png)
+
 ![Early Output](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/head-shot.jpg)
+
 ![Exhibition Proposal](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/exhibition.png)
 
 ### Introduction
 This project sits somewhere between sculpture, technology, art, motion graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art, computer vision and user interaction.
 
 ## Installation
-Before you start you will need the following installed on your machine. [Python](https://www.python.org/) & `:/pkg-config` need installing with Brew.
+Before you start you will need the following installed on your machine. [Python](https://www.python.org/) & `:/pkg-config` need installing with Brew. If you are using the [compose repository](https://github.com/eduwass/face-the-internet-docker-compose), Docker will install these dependencies for you also.
 
 ### Quick Install (Client)
 1. Clone [this](https://github.com/JohnPett/Face-the-Internet) repository in to the desired location on your local machine.
