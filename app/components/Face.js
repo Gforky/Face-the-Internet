@@ -49,9 +49,9 @@ var Face = React.createClass({
 	_renderSlice: function(i) {
 		fabric.Image.fromURL(this.data[i], function(img) {
 			img.set({
-				top: (window.innerHeight / 20) * i,
+				top: (window.innerHeight / this.data.length) * i,
                 width: window.innerWidth,
-                height: window.innerHeight / 20,
+                height: window.innerHeight / this.data.length,
                 selectable: false,
 			});
 			this.canvas.add(img);

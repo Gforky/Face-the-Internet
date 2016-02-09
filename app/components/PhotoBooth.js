@@ -32,10 +32,10 @@ var PhotoBooth = React.createClass({
     },
     _facePosition: function(x, y) {
         // centre 50% of screen
-        var minX = this.state.width * 0.3;
-        var minY = this.state.height * 0.3;
-        var maxX = this.state.width * 0.7;
-        var maxY = this.state.height * 0.7;
+        var minX = this.state.width * 0.25;
+        var minY = this.state.height * 0.25;
+        var maxX = this.state.width * 0.75;
+        var maxY = this.state.height * 0.75;
         var lineWidth = 6;
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
@@ -45,8 +45,8 @@ var PhotoBooth = React.createClass({
                 captureText: 'capture'
             });
             // face detection box styles
-            this.outputContext.fillStyle = 'rgb(0, 255, 0)';
-            this.outputContext.strokeStyle = 'rgb(0, 255, 0)';
+            this.outputContext.fillStyle = 'rgb(62, 232, 170)';
+            this.outputContext.strokeStyle = 'rgb(62, 232, 170)';
             this.outputContext.lineWidth = lineWidth;
         } else {
             this.setState({
@@ -56,8 +56,8 @@ var PhotoBooth = React.createClass({
                 captureText: 'align face to centre'
             });
             // face detection box styles
-            this.outputContext.fillStyle = 'rgb(255, 0, 0)';
-            this.outputContext.strokeStyle = 'rgb(255, 0, 0)';
+            this.outputContext.fillStyle = 'rgb(255, 72, 94)';
+            this.outputContext.strokeStyle = 'rgb(255, 72, 94)';
             this.outputContext.lineWidth = lineWidth;
         }
         if (this.state.hasCaptured) {
@@ -294,14 +294,12 @@ var PhotoBooth = React.createClass({
                     </div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
-                            <h2>Success</h2>
-                            <p>Image successfully posted to server.</p>
+                            <h2>success</h2>
                         </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
                         <div>
-                            <h2>Error</h2>
-                            <p>Error saving image to server.</p>
+                            <h2>error</h2>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 
 ### Background
 This project was originally conceived between [Florian Hacker](http://cargocollective.com/florianhacker) and [John Pett](http://johnpett.com) as an entry to the [Google and Barbican DevArt](https://devart.withgoogle.com/) contest. This project has also been contributed to by [Ben Harvey](https://github.com/gomako) and [Edu Wass](https://github.com/eduwass).
-Here is some imagery from the previous incarnations of this project, outlining the original concept of both online and real-world manifestations.
+Here is some imagery from the previous incarnations of this project, outlining the original concept of both online and real-world.
 
 ![Face Test](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/face-test.png)
 
