@@ -105,8 +105,10 @@ body {
   letter-spacing: 2px;
   overflow: hidden; }
   body h1 {
-    font-size: 7vw;
-    line-height: 8vw; }
+    font-size: 5vw;
+    line-height: 6vw;
+    letter-spacing: 0.25vw;
+    padding: 1.25% 0; }
   body a {
     text-decoration: none; }
   body p {
@@ -115,7 +117,7 @@ body {
     line-height: 1.5vw; }
   body button,
   body .button {
-    text-shadow: 1px, 1px, 0, rgba(0, 0, 0, 0.4);
+    position: relative;
     font-size: 1vw;
     line-height: 3vw;
     color: white;
@@ -130,13 +132,26 @@ body {
     font-family: 'Circular Std Book', sans-serif;
     cursor: pointer;
     cursor: hand;
+    letter-spacing: 0.25vw;
     will-change: opacity;
-    -webkit-transition: opacity;
-    -khtml-transition: opacity;
-    -moz-transition: opacity;
-    -ms-transition: opacity;
-    -o-transition: opacity;
-    transition: opacity; }
+    -webkit-transition: all;
+    -khtml-transition: all;
+    -moz-transition: all;
+    -ms-transition: all;
+    -o-transition: all;
+    transition: all; }
+    body button:hover,
+    body .button:hover {
+      background: #222 !important;
+      border: 3px solid #222 !important;
+      filter: alpha(opacity=80);
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+      -webkit-opacity: 0.8;
+      -khtml-opacity: 0.8;
+      -moz-opacity: 0.8;
+      -ms-opacity: 0.8;
+      -o-opacity: 0.8;
+      opacity: 0.8; }
   body .overlay {
     position: absolute;
     top: 0;
@@ -201,8 +216,12 @@ body {
 /*
 	START PAGE
 */
-.StartPage .overlay {
-  background: #3ee8aa; }
+.StartPage .overlay p {
+  padding: 10px 20%; }
+
+.StartPage .overlay .button {
+  background: #3ee8aa;
+  border-color: #3ee8aa; }
 
 /*
 PHOTOBOOTH

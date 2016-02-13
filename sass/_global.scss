@@ -12,8 +12,10 @@ body {
 	overflow: hidden;
 
 	h1 {
-		font-size: 7vw;
-		line-height: 8vw;
+		font-size: 5vw;
+		line-height: 6vw;
+		letter-spacing: 0.25vw;
+		padding: 1.25% 0;
 	}
 
 	h2 {
@@ -32,7 +34,7 @@ body {
 
 	button,
 	.button {
-		text-shadow: 1px, 1px, 0, rgba(0, 0, 0, 0.4);
+		position: relative;
 		font-size: 1vw;
 		line-height: 3vw;
 		color: white;
@@ -47,8 +49,14 @@ body {
 		font-family: 'Circular Std Book', sans-serif;
 		cursor: pointer;
 		cursor: hand;
+		letter-spacing: 0.25vw;
 		will-change: opacity;
-		@include transition(opacity);
+		@include transition(all);
+		&:hover {
+			background: #222 !important;
+			border: 3px solid #222 !important;
+			@include opacity(0.8);
+		}
 	}
 
 	.overlay {

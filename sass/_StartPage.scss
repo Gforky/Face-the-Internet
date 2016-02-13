@@ -4,7 +4,13 @@
 
 .StartPage {
 	.overlay {
-		background: rgb(62, 232, 170);
+		p {
+			padding: 10px 20%;
+		}
+		.button {
+			background: rgb(62, 232, 170);
+			border-color: rgb(62, 232, 170);
+		}
 	}
 }
 
