@@ -97,8 +97,8 @@ textarea:focus, input:focus, button:focus {
 	GLOBAL
 */
 body {
-  font-size: 4vw;
-  line-height: 4.5vw;
+  font-size: 5vw;
+  line-height: 5.5vw;
   font-family: 'Circular Std Bold', sans-serif;
   background: black;
   color: white;
@@ -108,9 +108,8 @@ body {
     font-size: 7vw;
     line-height: 8vw; }
   body button {
-    font-size: 14px;
+    font-size: 18px;
     padding: 20px;
-    font-size: 3vw;
     line-height: 3.5vw;
     text-shadow: 1px, 1px, 0, rgba(0, 0, 0, 0.4); }
   body a {
@@ -207,7 +206,7 @@ body {
 	START PAGE
 */
 .StartPage .overlay {
-  background: lime; }
+  background: #3ee8aa; }
 
 /*
 PHOTOBOOTH
@@ -387,37 +386,20 @@ PHOTOBOOTH
     overflow: visible;
     text-align: center;
     z-index: 4;
-    display: none;
     will-change: opacity;
-    filter: alpha(opacity=0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    -webkit-opacity: 0;
-    -khtml-opacity: 0;
-    -moz-opacity: 0;
-    -ms-opacity: 0;
-    -o-opacity: 0;
-    opacity: 0;
     -webkit-transition: opacity;
     -khtml-transition: opacity;
     -moz-transition: opacity;
     -ms-transition: opacity;
     -o-transition: opacity;
     transition: opacity; }
-    .PhotoBooth .buttons.active {
-      display: block;
-      filter: alpha(opacity=100);
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-      -webkit-opacity: 1;
-      -khtml-opacity: 1;
-      -moz-opacity: 1;
-      -ms-opacity: 1;
-      -o-opacity: 1;
-      opacity: 1; }
+    .PhotoBooth .buttons.capturing .save,
+    .PhotoBooth .buttons.capturing .retake {
+      display: none; }
     .PhotoBooth .buttons li {
       margin: 0 5px;
       display: inline-block; }
       .PhotoBooth .buttons li button {
-        display: none;
         will-change: opacity;
         pointer-events: default;
         -webkit-transition: opacity;
@@ -426,26 +408,14 @@ PHOTOBOOTH
         -ms-transition: opacity;
         -o-transition: opacity;
         transition: opacity; }
-        .PhotoBooth .buttons li button.active {
-          display: block; }
         .PhotoBooth .buttons li button.capture {
           background: #3ee8aa;
           border: 3px solid #3ee8aa; }
-          .PhotoBooth .buttons li button.capture.disabled {
-            display: block;
-            cursor: auto;
-            pointer-events: none;
-            background: #ff485e;
-            border: 3px solid #ff485e; }
-        .PhotoBooth .buttons li button:hover {
-          filter: alpha(opacity=75);
-          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
-          -webkit-opacity: 0.75;
-          -khtml-opacity: 0.75;
-          -moz-opacity: 0.75;
-          -ms-opacity: 0.75;
-          -o-opacity: 0.75;
-          opacity: 0.75; }
+        .PhotoBooth .buttons li button.align {
+          cursor: auto;
+          pointer-events: none;
+          background: #ff485e;
+          border: 3px solid #ff485e; }
 
 /*
 	FACE PAGE

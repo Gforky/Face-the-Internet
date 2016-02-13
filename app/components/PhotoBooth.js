@@ -307,10 +307,10 @@ var PhotoBooth = React.createClass({
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
-                <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
-                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>{this.state.captureText}</button></li>
-                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
-                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
+                <ul className={this.state.buttonsActive ? 'buttons capturing' : 'buttons saving'}>
+                    <li><button className={this.state.captureActive ? 'capture' : 'align'} onClick={this._captureHandler}>{this.state.captureText}</button></li>
+                    <li><button className={this.state.saveActive ? 'save' : ''} onClick={this._saveHandler}>save</button></li>
+                    <li><button className={this.state.retakeActive ? 'retake' : ''} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
                 <div className="information overlay">
                     <div className="message"></div>

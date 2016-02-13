@@ -123,44 +123,64 @@ PHOTOBOOTH
 		overflow: visible;
 		text-align: center;
 		z-index: 4;
-		display: none;
+		// display: none;
 		will-change: opacity;
-		@include opacity(0);
+		// @include opacity(0);
 		@include transition(opacity);
 
-		&.active {
-			display: block;
-			@include opacity(1);
+		// &.active {
+		// 	display: block;
+		// 	@include opacity(1);
+		// }
+		&.capturing {
+			.save,
+			.retake {
+				display: none;
+			}
 		}
-		
+		&.saving {
+
+		}	
 		li {
 		margin: 0 5px;
 		display: inline-block;
 
 			button {
-				display: none;
+				// display: none;
 				will-change: opacity;
 				pointer-events: default;
 				@include transition(opacity);
 
-				&.active {
-					display: block;
-				}
-
 				&.capture {
 					background: rgb(62, 232, 170);
 					border: 3px solid rgb(62, 232, 170);
-					&.disabled {
-						display: block;
-						cursor: auto;
-						pointer-events: none;
-						background: rgb(255, 72, 94);
-						border: 3px solid rgb(255, 72, 94);
-					}
 				}
-				&:hover {
-					@include opacity(0.75);
+
+				&.align {
+					cursor: auto;
+					pointer-events: none;
+					background: rgb(255, 72, 94);
+					border: 3px solid rgb(255, 72, 94);
 				}
+
+				// &.active {
+				// 	display: block;
+				// }
+
+				// &.capture {
+				// 	background: rgb(62, 232, 170);
+				// 	border: 3px solid rgb(62, 232, 170);
+				// 	&.disabled {
+				// 		display: block;
+				// 		cursor: auto;
+				// 		pointer-events: none;
+				// 		background: rgb(255, 72, 94);
+				// 		border: 3px solid rgb(255, 72, 94);
+				// 	}
+				// }
+				// &:hover {
+				// 	@include opacity(0.75);
+				// }
 			} 
 		}
 	}
