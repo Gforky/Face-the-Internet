@@ -13,6 +13,6 @@ ReactDOM.render(<App/>, document.getElementById('App'));
 
 ReactDOM.render((
 	<Router>
-		<Route path="/" component={PhotoBooth} />
+		<Route path="/" component={Face} />
 	</Router>
 ), document.getElementById('App'));
