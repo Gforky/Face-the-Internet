@@ -107,11 +107,6 @@ body {
   body h1 {
     font-size: 7vw;
     line-height: 8vw; }
-  body button {
-    font-size: 18px;
-    padding: 20px;
-    line-height: 3.5vw;
-    text-shadow: 1px, 1px, 0, rgba(0, 0, 0, 0.4); }
   body a {
     text-decoration: none; }
   body p {
@@ -120,6 +115,7 @@ body {
     line-height: 1.5vw; }
   body button,
   body .button {
+    text-shadow: 1px, 1px, 0, rgba(0, 0, 0, 0.4);
     font-size: 1vw;
     line-height: 3vw;
     color: white;
@@ -385,37 +381,30 @@ PHOTOBOOTH
     width: 100%;
     overflow: visible;
     text-align: center;
-    z-index: 4;
-    will-change: opacity;
-    -webkit-transition: opacity;
-    -khtml-transition: opacity;
-    -moz-transition: opacity;
-    -ms-transition: opacity;
-    -o-transition: opacity;
-    transition: opacity; }
-    .PhotoBooth .buttons.capturing .save,
-    .PhotoBooth .buttons.capturing .retake {
+    z-index: 4; }
+    .PhotoBooth .buttons.saving .capture {
+      display: none; }
+    .PhotoBooth .buttons.saving .align {
       display: none; }
     .PhotoBooth .buttons li {
       margin: 0 5px;
       display: inline-block; }
-      .PhotoBooth .buttons li button {
-        will-change: opacity;
-        pointer-events: default;
-        -webkit-transition: opacity;
-        -khtml-transition: opacity;
-        -moz-transition: opacity;
-        -ms-transition: opacity;
-        -o-transition: opacity;
-        transition: opacity; }
-        .PhotoBooth .buttons li button.capture {
-          background: #3ee8aa;
-          border: 3px solid #3ee8aa; }
-        .PhotoBooth .buttons li button.align {
-          cursor: auto;
-          pointer-events: none;
-          background: #ff485e;
-          border: 3px solid #ff485e; }
+      .PhotoBooth .buttons li button.capture {
+        background: #3ee8aa;
+        border: 3px solid #3ee8aa; }
+      .PhotoBooth .buttons li button.align {
+        cursor: auto;
+        pointer-events: none;
+        background: #ff485e;
+        border: 3px solid #ff485e; }
+      .PhotoBooth .buttons li button.save {
+        display: none; }
+        .PhotoBooth .buttons li button.save.active {
+          display: inline-block; }
+      .PhotoBooth .buttons li button.retake {
+        display: none; }
+        .PhotoBooth .buttons li button.retake.active {
+          display: inline-block; }
 
 /*
 	FACE PAGE

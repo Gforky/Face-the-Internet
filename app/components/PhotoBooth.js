@@ -40,8 +40,6 @@ var PhotoBooth = React.createClass({
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
                 captureActive: true,
-                buttonsActive: true,
-                silhouetteActive: false,
                 captureText: 'capture'
             });
             // face detection box styles
@@ -51,8 +49,6 @@ var PhotoBooth = React.createClass({
         } else {
             this.setState({
                 captureActive: false,
-                buttonsActive: true,
-                silhouetteActive: true,
                 captureText: 'align face to centre'
             });
             // face detection box styles
@@ -103,7 +99,6 @@ var PhotoBooth = React.createClass({
             captureActive: false,
             hasCaptured: true,
             saveActive: true,
-            retakeActive: true,
             webcam: ''
         });
     },
@@ -114,7 +109,6 @@ var PhotoBooth = React.createClass({
             webcam: '',
             captureActive: false,
             saveActive: false,
-            retakeActive: false,
             overlayActive: true,
             loadingActive: true
         });
@@ -158,8 +152,7 @@ var PhotoBooth = React.createClass({
             webcam: window.URL.createObjectURL(this.stream),
             captureActive: true,
             hasCaptured: false,
-            saveActive: false,
-            retakeActive: false
+            saveActive: false
         });
         this.webcam.play();
         this._faceDetection();
@@ -211,8 +204,7 @@ var PhotoBooth = React.createClass({
             webcamHeight: 225,
             captureActive: true,
             saveActive: false,
-            retakeActive: false,
-            captureText: 'align face to centre'
+            captureText: 'capture'
         });
         // create cross-browser var to check for webcam support, attach to window
         navigator.getUserMedia  = navigator.getUserMedia || 
@@ -303,14 +295,14 @@ var PhotoBooth = React.createClass({
                         </div>
                     </div>
                 </div>
-                <div className={this.state.silhouetteActive ? 'silhouette active' : 'silhouette disabled'} ref={(ref) => this.silhouette = ref}></div> 
+                <div className={this.state.saveActive ? 'silhouette disabled' : 'silhouette active'}></div> 
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
-                <ul className={this.state.buttonsActive ? 'buttons capturing' : 'buttons saving'}>
+                <ul className={this.state.saveActive ? 'buttons saving' : 'buttons'}>
                     <li><button className={this.state.captureActive ? 'capture' : 'align'} onClick={this._captureHandler}>{this.state.captureText}</button></li>
-                    <li><button className={this.state.saveActive ? 'save' : ''} onClick={this._saveHandler}>save</button></li>
-                    <li><button className={this.state.retakeActive ? 'retake' : ''} onClick={this._retakeHandler}>retake</button></li>
+                    <li><button className={this.state.saveActive ? 'save active' : 'save'} onClick={this._saveHandler}>save</button></li>
+                    <li><button className={this.state.saveActive ? 'retake active' : 'retake'} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
                 <div className="information overlay">
                     <div className="message"></div>

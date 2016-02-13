@@ -93,7 +93,6 @@ PHOTOBOOTH
 			}
 		}
 	}
-
 	.silhouette {
 		display: none;
 		position: absolute;
@@ -107,13 +106,11 @@ PHOTOBOOTH
 		will-change: opacity;
 		@include opacity(0);
 		@include transition(opacity);
-
 		&.active {
 			@include opacity(1);
 			display: block;
 		}
 	}
-
 	.buttons {
 		position: absolute;
 		bottom: 5%;
@@ -123,64 +120,40 @@ PHOTOBOOTH
 		overflow: visible;
 		text-align: center;
 		z-index: 4;
-		// display: none;
-		will-change: opacity;
-		// @include opacity(0);
-		@include transition(opacity);
-
-		// &.active {
-		// 	display: block;
-		// 	@include opacity(1);
-		// }
-		&.capturing {
-			.save,
-			.retake {
+		&.saving {
+			.capture {
+				display: none;
+			}
+			.align {
 				display: none;
 			}
 		}
-		&.saving {
-
-		}	
 		li {
 		margin: 0 5px;
 		display: inline-block;
-
 			button {
-				// display: none;
-				will-change: opacity;
-				pointer-events: default;
-				@include transition(opacity);
-
 				&.capture {
 					background: rgb(62, 232, 170);
 					border: 3px solid rgb(62, 232, 170);
 				}
-
 				&.align {
 					cursor: auto;
 					pointer-events: none;
 					background: rgb(255, 72, 94);
 					border: 3px solid rgb(255, 72, 94);
 				}
-
-				// &.active {
-				// 	display: block;
-				// }
-
-				// &.capture {
-				// 	background: rgb(62, 232, 170);
-				// 	border: 3px solid rgb(62, 232, 170);
-				// 	&.disabled {
-				// 		display: block;
-				// 		cursor: auto;
-				// 		pointer-events: none;
-				// 		background: rgb(255, 72, 94);
-				// 		border: 3px solid rgb(255, 72, 94);
-				// 	}
-				// }
-				// &:hover {
-				// 	@include opacity(0.75);
-				// }
+				&.save {
+					display: none;
+					&.active {
+						display: inline-block;
+					}
+				}
+				&.retake {
+					display: none;
+					&.active {
+						display: inline-block;
+					}
+				}
 			} 
 		}
 	}

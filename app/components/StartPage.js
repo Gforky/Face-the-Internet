@@ -10,6 +10,7 @@ var StartPage = React.createClass({
         return (
             <div className="StartPage">
                 <div className="overlay">
+                    
                     <div className="welcome message">
                         <div>
                             <h1>face the internet</h1>
