@@ -295,7 +295,7 @@ var PhotoBooth = React.createClass({
                         </div>
                     </div>
                 </div>
-                <div className={this.state.captureActive ? 'silhouette disabled' : 'silhouette active'}></div> 
+                <div className={this.state.captureActive || this.state.saveActive ? 'silhouette' : 'silhouette active'}></div> 
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
