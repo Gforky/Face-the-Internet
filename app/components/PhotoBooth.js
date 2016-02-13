@@ -40,7 +40,7 @@ var PhotoBooth = React.createClass({
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
                 captureActive: true,
-                captureText: 'capture'
+                captureText: 'Capture'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(62, 232, 170)';
@@ -49,7 +49,7 @@ var PhotoBooth = React.createClass({
         } else {
             this.setState({
                 captureActive: false,
-                captureText: 'align face to centre'
+                captureText: 'Align face to centre'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(255, 72, 94)';
@@ -204,7 +204,7 @@ var PhotoBooth = React.createClass({
             webcamHeight: 225,
             captureActive: true,
             saveActive: false,
-            captureText: 'capture'
+            captureText: 'Capture'
         });
         // create cross-browser var to check for webcam support, attach to window
         navigator.getUserMedia  = navigator.getUserMedia || 
@@ -282,16 +282,16 @@ var PhotoBooth = React.createClass({
             <div className="PhotoBooth" style={css}>
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
                     <div className={this.state.loadingActive ? 'loading message active' : 'loading message disabled'}>
-                        <h2>Loading...</h2>
+                        <p>Sending image to server...</p>
                     </div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
-                            <h2>Success</h2>
+                            <p>Success, please enter your email to let us confirm your addition.</p>
                         </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
                         <div>
-                            <h2>Error</h2>
+                            <p>Error processing image.</p>
                         </div>
                     </div>
                 </div>
@@ -301,8 +301,8 @@ var PhotoBooth = React.createClass({
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
                 <ul className={this.state.saveActive ? 'buttons saving' : 'buttons'}>
                     <li><button className={this.state.captureActive ? 'capture' : 'align'} onClick={this._captureHandler}>{this.state.captureText}</button></li>
-                    <li><button className={this.state.saveActive ? 'save active' : 'save'} onClick={this._saveHandler}>save</button></li>
-                    <li><button className={this.state.saveActive ? 'retake active' : 'retake'} onClick={this._retakeHandler}>retake</button></li>
+                    <li><button className={this.state.saveActive ? 'save active' : 'save'} onClick={this._saveHandler}>Save</button></li>
+                    <li><button className={this.state.saveActive ? 'retake active' : 'retake'} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>
             </div>
         );

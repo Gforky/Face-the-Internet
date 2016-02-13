@@ -20,9 +20,10 @@ var StartPage = React.createClass({
                             <p>This project was originally conceived between Florian Hacker and <a href="https://github.com/JohnPett">John Pett</a> as an entry to the 
                             Google and Barbican DevArt contest. This project has also been contributed to by Ben Harvey and 
                             Edu Wass. </p>
-                            <p>Click 'start' to contribute a webcam image. We will not keep your image once it has been added to the final piece. 
+                            <p>Click 'Start' to contribute a webcam image. We will not keep your image once it has been added to the final piece. 
                             You are free to leave a Twitter handle or email address, so we can confirm your addition.</p>
-                            <Link className="start button" to="/photo-booth">start</Link>
+                            <a className="button">Information</a>
+                            <Link className="start button" to="/photo-booth">Contribute an image</Link>
                         </div>
                     </div>
                 </div>

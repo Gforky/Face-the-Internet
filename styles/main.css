@@ -108,7 +108,9 @@ body {
     font-size: 5vw;
     line-height: 6vw;
     letter-spacing: 0.25vw;
-    padding: 1.25% 0; }
+    padding: 1.25% 0;
+    font-weight: normal;
+    font-family: 'Circular Std Medium', sans-serif; }
   body a {
     text-decoration: none;
     color: white; }
@@ -222,9 +224,12 @@ body {
 .StartPage .overlay p {
   padding: 10px 20%; }
 
+.StartPage .overlay .start {
+  background: #3d61e9;
+  border-color: #3d61e9; }
+
 .StartPage .overlay .button {
-  background: #3ee8aa;
-  border-color: #3ee8aa; }
+  margin: 0 5px; }
 
 /*
 PHOTOBOOTH
