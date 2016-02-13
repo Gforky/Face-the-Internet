@@ -282,20 +282,20 @@ var PhotoBooth = React.createClass({
             <div className="PhotoBooth" style={css}>
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
                     <div className={this.state.loadingActive ? 'loading message active' : 'loading message disabled'}>
-                        <h2>loading...</h2>
+                        <h2>Loading...</h2>
                     </div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
-                            <h2>success</h2>
+                            <h2>Success</h2>
                         </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
                         <div>
-                            <h2>error</h2>
+                            <h2>Error</h2>
                         </div>
                     </div>
                 </div>
-                <div className={this.state.saveActive ? 'silhouette disabled' : 'silhouette active'}></div> 
+                <div className={this.state.captureActive ? 'silhouette disabled' : 'silhouette active'}></div> 
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
@@ -304,10 +304,6 @@ var PhotoBooth = React.createClass({
                     <li><button className={this.state.saveActive ? 'save active' : 'save'} onClick={this._saveHandler}>save</button></li>
                     <li><button className={this.state.saveActive ? 'retake active' : 'retake'} onClick={this._retakeHandler}>retake</button></li>
                 </ul>
-                <div className="information overlay">
-                    <div className="message"></div>
-                    <span className="icon"><span></span></span>
-                </div>
             </div>
         );
     }

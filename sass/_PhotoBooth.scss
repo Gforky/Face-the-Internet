@@ -38,20 +38,6 @@ PHOTOBOOTH
 			display: block;
 			@include opacity(1);
 		}
-		&.information {
-			position: absolute;
-			top: 0;
-			right: 0;
-			.icon {
-				& > * {
-					&:before {
-						content: "i";
-						top: 9px;
-						left: -2px;
-					}
-				}
-			}
-		}
 		.loading {
 			width: 100%;
 			height: 100%;

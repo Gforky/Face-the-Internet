@@ -24,12 +24,18 @@ body {
 
 	a {
 		text-decoration: none;
+		color: white;
 	}
 
 	p {
 		font-family: 'Apercu Mono', sans-serif;
 		font-size: 1vw;
 		line-height: 1.5vw;
+	}
+	p {
+		a {
+			border-bottom: 1px solid white;
+		}
 	}
 
 	button,
