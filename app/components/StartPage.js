@@ -31,9 +31,7 @@ var StartPage = React.createClass({
                             development with thoughts on contemporary art, computer vision and user interaction.</p>
                             <p>Originally conceived between <a href="http://cargocollective.com/florianhacker">Florian Hacker</a>,
                             and <a href="https://github.com/JohnPett">John Pett</a>, as an entry to the Google and Barbican DevArt contest. 
-                            This project has also been contributed to by Ben Harvey and Edu Wass. </p>
-                            <p>Click 'Start' to contribute a webcam image. We will not keep your image once it has been added to the final piece. 
-                            You are free to leave a Twitter handle or email address, so we can confirm your addition.</p>
+                            This project has also been contributed to by <a href="https://github.com/gomako">Ben Harvey</a> and <a href="https://github.com/eduwass">Edu Wass</a>.</p>
                             <a className="button" onClick={this._closeHandler}>Close</a>
                         </div>
                     </div>
@@ -42,6 +40,8 @@ var StartPage = React.createClass({
                     <div className="welcome message">
                         <div>
                             <h1>Face the Internet</h1>
+                            <p>Click 'Start' to contribute a webcam image. We will not keep your image once it has been added to the final piece. 
+                            Please leave you email address, so we can confirm your addition.</p>
                             <a className="button" onClick={this._infoHandler}>Information</a>
                             <Link className="start button" to="/photo-booth">Contribute an image</Link>
                         </div>

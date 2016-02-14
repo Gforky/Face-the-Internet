@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
-var React = require('react');
-var ReactDOM = require('react-dom');
-var JSFeat = require('jsfeat');
-var $ = require('jquery');
-var PhotoBooth = React.createClass({
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    JSFeat = require('jsfeat'),
+    $ = require('jquery'),
+    Link = require('react-router').Link,
+    PhotoBooth = React.createClass({
     _onWindowResize: function(event) {
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has resized the browser: ', event);
@@ -287,11 +288,13 @@ var PhotoBooth = React.createClass({
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
                             <p>Success, please enter your email to let us confirm your addition.</p>
+                            <Link className="button" to="/">Restart</Link>
                         </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
                         <div>
                             <p>Error processing image.</p>
+                            <Link className="button" to="/">Restart</Link>
                         </div>
                     </div>
                 </div>
