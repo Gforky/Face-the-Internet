@@ -221,6 +221,9 @@ body {
 /*
 	START PAGE
 */
+.StartPage .overlay.disabled {
+  display: none; }
+
 .StartPage .overlay p {
   padding: 10px 20%; }
 
@@ -230,6 +233,12 @@ body {
 
 .StartPage .overlay .button {
   margin: 0 5px; }
+
+.StartPage .overlay.info {
+  background: blue;
+  display: none; }
+  .StartPage .overlay.info.active {
+    display: block; }
 
 /*
 PHOTOBOOTH

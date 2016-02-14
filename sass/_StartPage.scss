@@ -4,6 +4,9 @@
 
 .StartPage {
 	.overlay {
+		&.disabled {
+			display: none;
+		}
 		p {
 			padding: 10px 20%;
 		}
@@ -13,6 +16,13 @@
 		}
 		.button {
 			margin: 0 5px;
+		}
+		&.info {
+			background: blue;
+			display: none;
+			&.active {
+				display: block;
+			}
 		}
 	}
 }
