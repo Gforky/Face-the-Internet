@@ -21,6 +21,11 @@
     "url": "https://github.com/JohnPett/Face-the-Internet/issues"
   },
   "homepage": "https://github.com/JohnPett/Face-the-Internet#readme",
+  "browserify": {
+      "transform": [
+          ["reactify", {"es6": true}]
+      ]
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",

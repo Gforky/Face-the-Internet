@@ -26,12 +26,12 @@ var StartPage = React.createClass({
                     <div className="message">
                         <div>
                             <h1>Face the Internet</h1>
-                            <p>This project sits somewhere between sculpture, technology, art, graphic design and interactivity. 
-                            An experiment, as much as a learning exercise, to combine the latest technologies for application 
-                            development with thoughts on contemporary art, computer vision and user interaction.</p>
-                            <p>Originally conceived between <a href="http://cargocollective.com/florianhacker">Florian Hacker</a>,
-                            and <a href="https://github.com/JohnPett">John Pett</a>, as an entry to the Google and Barbican DevArt contest. 
-                            This project has also been contributed to by <a href="https://github.com/gomako">Ben Harvey</a> and <a href="https://github.com/eduwass">Edu Wass</a>.</p>
+                            <p>This is an online experiment, where each webcam image contributed will be become part of an 
+                            ever-evolving construction of a single face: Pixels from each contributed image will exist in the 
+                            generated image forver. There is a full write up of the technical parts of the project on <a href="https://github.com/JohnPett/Face-the-Internet" target="_blank">Github</a>.</p>
+                            <p>Originally conceived between <a href="http://cargocollective.com/florianhacker" target="_blank">Florian Hacker</a>,
+                            and <a href="https://github.com/JohnPett" target="_blank">John Pett</a>, as an entry to the <a href="#" target="_blank">Google and Barbican DevArt</a> contest. 
+                            This project has also been contributed to by <a href="https://github.com/gomako" target="_blank">Ben Harvey</a> and <a href="https://github.com/eduwass" target="_blank">Edu Wass</a>.</p>
                             <a className="button" onClick={this._closeHandler}>Close</a>
                         </div>
                     </div>
