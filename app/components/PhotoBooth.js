@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
-var React = require('react');
-var ReactDOM = require('react-dom');
-var JSFeat = require('jsfeat');
-var $ = require('jquery');
-var PhotoBooth = React.createClass({
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    JSFeat = require('jsfeat'),
+    $ = require('jquery'),
+    Link = require('react-router').Link,
+    PhotoBooth = React.createClass({
     _onWindowResize: function(event) {
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has resized the browser: ', event);
@@ -40,9 +41,7 @@ var PhotoBooth = React.createClass({
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
                 captureActive: true,
-                buttonsActive: true,
-                silhouetteActive: false,
-                captureText: 'capture'
+                captureText: 'Capture'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(62, 232, 170)';
@@ -51,9 +50,7 @@ var PhotoBooth = React.createClass({
         } else {
             this.setState({
                 captureActive: false,
-                buttonsActive: true,
-                silhouetteActive: true,
-                captureText: 'align face to centre'
+                captureText: 'Align face to centre'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(255, 72, 94)';
@@ -103,7 +100,6 @@ var PhotoBooth = React.createClass({
             captureActive: false,
             hasCaptured: true,
             saveActive: true,
-            retakeActive: true,
             webcam: ''
         });
     },
@@ -114,7 +110,6 @@ var PhotoBooth = React.createClass({
             webcam: '',
             captureActive: false,
             saveActive: false,
-            retakeActive: false,
             overlayActive: true,
             loadingActive: true
         });
@@ -158,8 +153,7 @@ var PhotoBooth = React.createClass({
             webcam: window.URL.createObjectURL(this.stream),
             captureActive: true,
             hasCaptured: false,
-            saveActive: false,
-            retakeActive: false
+            saveActive: false
         });
         this.webcam.play();
         this._faceDetection();
@@ -211,8 +205,7 @@ var PhotoBooth = React.createClass({
             webcamHeight: 225,
             captureActive: true,
             saveActive: false,
-            retakeActive: false,
-            captureText: 'align face to centre'
+            captureText: 'Capture'
         });
         // create cross-browser var to check for webcam support, attach to window
         navigator.getUserMedia  = navigator.getUserMedia || 
@@ -290,32 +283,30 @@ var PhotoBooth = React.createClass({
             <div className="PhotoBooth" style={css}>
                 <div className={this.state.overlayActive ? 'overlay active' : 'overlay disabled'}>
                     <div className={this.state.loadingActive ? 'loading message active' : 'loading message disabled'}>
-                        <h2>loading...</h2>
+                        <p>Sending image to server...</p>
                     </div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
-                            <h2>success</h2>
+                            <p>Success, please enter your email to let us confirm your addition.</p>
+                            <Link className="button" to="/">Restart</Link>
                         </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
                         <div>
-                            <h2>error</h2>
+                            <p>Error processing image.</p>
+                            <Link className="button" to="/">Restart</Link>
                         </div>
                     </div>
                 </div>
-                <div className={this.state.silhouetteActive ? 'silhouette active' : 'silhouette disabled'} ref={(ref) => this.silhouette = ref}></div> 
+                <div className={this.state.captureActive || this.state.saveActive ? 'silhouette' : 'silhouette active'}></div> 
                 <video className="webcam" ref={(ref) => this.webcam = ref} width={this.state.webcamWidth} height={this.state.webcamHeight} src={this.state.webcamSrc} autoPlay></video>
                 <canvas className={this.state.outputLandscape ? 'output landscape' : 'output portrait'} ref={(ref) => this.output = ref} width={this.state.outputWidth} height={this.state.outputHeight}></canvas>
                 <canvas className="input" ref={(ref) => this.input = ref} width={this.state.webcamWidth} height={this.state.webcamHeight}></canvas>
-                <ul className={this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}>
-                    <li><button className={this.state.captureActive ? 'capture active' : 'capture disabled'} onClick={this._captureHandler}>{this.state.captureText}</button></li>
-                    <li><button className={this.state.saveActive ? 'active' : ''} onClick={this._saveHandler}>save</button></li>
-                    <li><button className={this.state.retakeActive ? 'active' : ''} onClick={this._retakeHandler}>retake</button></li>
+                <ul className={this.state.saveActive ? 'buttons saving' : 'buttons'}>
+                    <li><button className={this.state.captureActive ? 'capture' : 'align'} onClick={this._captureHandler}>{this.state.captureText}</button></li>
+                    <li><button className={this.state.saveActive ? 'save active' : 'save'} onClick={this._saveHandler}>Save</button></li>
+                    <li><button className={this.state.saveActive ? 'retake active' : 'retake'} onClick={this._retakeHandler}>Retake</button></li>
                 </ul>
-                <div className="information overlay">
-                    <div className="message"></div>
-                    <span className="icon"><span></span></span>
-                </div>
             </div>
         );
     }

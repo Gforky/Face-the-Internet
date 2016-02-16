@@ -63,7 +63,7 @@ var Face = React.createClass({
 		for (var i = 0; i < this.data.length; i++) {
 			this._renderSlice(i);
 		};
-		this._renderText();
+		// this._renderText();
 	},
     render: function() {
         return (

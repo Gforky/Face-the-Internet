@@ -4,7 +4,26 @@
 
 .StartPage {
 	.overlay {
-		background: lime;
+		&.disabled {
+			display: none;
+		}
+		p {
+			padding: 10px 20%;
+		}
+		.start {
+			background: rgb(61, 97, 233);
+			border-color: rgb(61, 97, 233);
+		}
+		.button {
+			margin: 0 5px;
+		}
+		&.info {
+			background: blue;
+			display: none;
+			&.active {
+				display: block;
+			}
+		}
 	}
 }
 

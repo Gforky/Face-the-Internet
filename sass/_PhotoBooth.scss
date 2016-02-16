@@ -38,32 +38,18 @@ PHOTOBOOTH
 			display: block;
 			@include opacity(1);
 		}
-		&.information {
-			position: absolute;
-			top: 0;
-			right: 0;
-			.icon {
-				& > * {
-					&:before {
-						content: "i";
-						top: 9px;
-						left: -2px;
-					}
-				}
-			}
-		}
 		.loading {
 			width: 100%;
 			height: 100%;
 			display: none;
-			background: url('img/loading.gif') no-repeat center rgb(61, 97, 233);
+			background: rgb(61, 97, 233);
 			will-change: opacity;
 			@include opacity(0);
 			@include transition(opacity);
-			&.active {
-				display: block;
-				@include opacity(1);
-			}
+			// &.active {
+			// 	display: block;
+			// 	@include opacity(1);
+			// }
 		}
 		.message {
 			display: none;
@@ -93,7 +79,6 @@ PHOTOBOOTH
 			}
 		}
 	}
-
 	.silhouette {
 		display: none;
 		position: absolute;
@@ -107,13 +92,11 @@ PHOTOBOOTH
 		will-change: opacity;
 		@include opacity(0);
 		@include transition(opacity);
-
 		&.active {
 			@include opacity(1);
 			display: block;
 		}
 	}
-
 	.buttons {
 		position: absolute;
 		bottom: 5%;
@@ -123,43 +106,39 @@ PHOTOBOOTH
 		overflow: visible;
 		text-align: center;
 		z-index: 4;
-		display: none;
-		will-change: opacity;
-		@include opacity(0);
-		@include transition(opacity);
-
-		&.active {
-			display: block;
-			@include opacity(1);
+		&.saving {
+			.capture {
+				display: none;
+			}
+			.align {
+				display: none;
+			}
 		}
-		
 		li {
 		margin: 0 5px;
 		display: inline-block;
-
 			button {
-				display: none;
-				will-change: opacity;
-				pointer-events: default;
-				@include transition(opacity);
-
-				&.active {
-					display: block;
-				}
-
 				&.capture {
 					background: rgb(62, 232, 170);
 					border: 3px solid rgb(62, 232, 170);
-					&.disabled {
-						display: block;
-						cursor: auto;
-						pointer-events: none;
-						background: rgb(255, 72, 94);
-						border: 3px solid rgb(255, 72, 94);
+				}
+				&.align {
+					cursor: auto;
+					pointer-events: none;
+					background: rgb(255, 72, 94);
+					border: 3px solid rgb(255, 72, 94);
+				}
+				&.save {
+					display: none;
+					&.active {
+						display: inline-block;
 					}
 				}
-				&:hover {
-					@include opacity(0.75);
+				&.retake {
+					display: none;
+					&.active {
+						display: inline-block;
+					}
 				}
 			} 
 		}
