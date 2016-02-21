@@ -5,6 +5,9 @@ var React = require('react'),
     $ = require('jquery'),
     Link = require('react-router').Link,
     PhotoBooth = React.createClass({
+    _submitHandler: function() {
+        console.log(this.contact.value);
+    },
     _onWindowResize: function(event) {
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has resized the browser: ', event);
@@ -99,15 +102,17 @@ var React = require('react'),
         this.setState({
             captureActive: false,
             hasCaptured: true,
-            saveActive: true,
-            webcam: ''
+            saveActive: true
         });
     },
+    _stopWebcam: function() {
+        var track = this.stream.getTracks()[0];
+        track.stop();
+    },
     _saveHandler: function(e) {
+        this._stopWebcam();
         var imageData = this.input.toDataURL("image/jpeg", 0.85);
-        this.webcam.pause();
         this.setState({
-            webcam: '',
             captureActive: false,
             saveActive: false,
             overlayActive: true,
@@ -269,10 +274,6 @@ var React = require('react'),
     },
     componentWillUnmount: function() {
         window.cancelAnimationFrame(this._faceDetection);
-        this.webcam.pause();
-        this.setState({
-            webcam: ''
-        });
     },
     render: function() {
         var css = {
@@ -288,10 +289,9 @@ var React = require('react'),
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
                             <p>Success, please enter your email, or Twitter, handle to let us confirm your addition.</p>
-                            <input type="text" placeholder="john@doe.com" />
-                            <Link className="button" to="/">Restart</Link>
-                            <Link className="button" to="/">Skip</Link>
-                            <Link className="button" to="/">Submit</Link>
+                            <input type="text" ref={(ref) => this.contact = ref} placeholder="john@doe.com" />
+                            <Link className="button" to="/output">Skip</Link>
+                            <Link className="button" onClick={this._submitHandler} to="/output">Submit</Link>
                         </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>

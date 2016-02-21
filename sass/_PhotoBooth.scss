@@ -64,7 +64,7 @@ PHOTOBOOTH
 				@include opacity(1);
 			}
 			&.success {
-				background: lime;
+				background: limegreen;
 				.button {
 					&:hover {
 						background: rgb(62, 232, 170) !important;
@@ -116,7 +116,6 @@ PHOTOBOOTH
 			}
 		}
 		li {
-		margin: 0 5px;
 		display: inline-block;
 			button {
 				&.capture {
