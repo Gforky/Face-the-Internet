@@ -65,19 +65,6 @@ PHOTOBOOTH
 			}
 			&.success {
 				background: lime;
-				input {
-					    width: 60%;
-					    margin: 0 20%;
-					    display: inline-block;
-					    background: transparent;
-					    border: 3px solid white;
-					    font-size: 1vw;
-						line-height: 3vw;
-						color: white;
-						padding: 0 20px;
-					    font-family: 'Circular Std Book', sans-serif;
-						letter-spacing: 0.25vw;
-				}
 				.button {
 					&:hover {
 						background: rgb(62, 232, 170) !important;
@@ -90,8 +77,8 @@ PHOTOBOOTH
 			}
 			p {
 				display: inline-block;
-				max-width: 60%;
-				margin: 0 20%;
+				max-width: 40%;
+				margin: 0 30%;
 			}
 		}
 	}

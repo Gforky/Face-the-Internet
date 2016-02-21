@@ -211,6 +211,36 @@ body {
       display: block; }
       body .icon > *:before {
         position: absolute; }
+  body input {
+    width: 40%;
+    margin: 0 30%;
+    display: inline-block;
+    background: transparent;
+    border: 3px solid white;
+    font-size: 1vw;
+    line-height: 3vw;
+    color: white;
+    padding: 0 20px;
+    font-family: 'Circular Std Book', sans-serif;
+    letter-spacing: 0.25vw;
+    box-sizing: border-box; }
+  body ::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: white; }
+  body :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: white;
+    opacity: 1; }
+  body ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: white;
+    opacity: 1; }
+  body :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: white; }
+  body :placeholder-shown {
+    /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+    color: white; }
 
 /*
 	VIEWS
@@ -357,18 +387,6 @@ PHOTOBOOTH
         opacity: 1; }
       .PhotoBooth .overlay .message.success {
         background: lime; }
-        .PhotoBooth .overlay .message.success input {
-          width: 60%;
-          margin: 0 20%;
-          display: inline-block;
-          background: transparent;
-          border: 3px solid white;
-          font-size: 1vw;
-          line-height: 3vw;
-          color: white;
-          padding: 0 20px;
-          font-family: 'Circular Std Book', sans-serif;
-          letter-spacing: 0.25vw; }
         .PhotoBooth .overlay .message.success .button:hover {
           background: #3ee8aa !important;
           border: 3px solid #3ee8aa !important; }
@@ -376,8 +394,8 @@ PHOTOBOOTH
         background: red; }
       .PhotoBooth .overlay .message p {
         display: inline-block;
-        max-width: 60%;
-        margin: 0 20%; }
+        max-width: 40%;
+        margin: 0 30%; }
   .PhotoBooth .silhouette {
     position: absolute;
     top: 25%;
