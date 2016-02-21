@@ -381,8 +381,11 @@ var React = require('react'),
                     ), 
                     React.createElement("div", {className: this.state.successActive ? 'success message active' : 'success message disabled'}, 
                         React.createElement("div", null, 
-                            React.createElement("p", null, "Success, please enter your email to let us confirm your addition."), 
-                            React.createElement(Link, {className: "button", to: "/"}, "Restart")
+                            React.createElement("p", null, "Success, please enter your email, or Twitter, handle to let us confirm your addition after processing."), 
+                            React.createElement("input", {type: "text", placeholder: "john@doe.com"}), 
+                            React.createElement(Link, {className: "button", to: "/"}, "Restart"), 
+                            React.createElement(Link, {className: "button", to: "/"}, "Skip"), 
+                            React.createElement(Link, {className: "button", to: "/"}, "Submit")
                         )
                     ), 
                     React.createElement("div", {className: this.state.errorActive ? 'error message active' : 'error message disabled'}, 
