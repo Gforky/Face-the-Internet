@@ -26,6 +26,22 @@ app.post('/capture', function(request, response, next) {
             console.log('----------------------------------');
             console.log('[PHOTOBOOTH - DATA] ', 'Success writing image to server!');
             console.log('----------------------------------');
+            response.jsonp(request.body);
+        }
+    });
+});
+app.post('/users', function(request, response, next) {
+    console.log(request.body);
+    // var capturedImageData = request.body.image.replace(/^data:image\/jpeg;base64,/, '');
+    fs.writeFile('captures/' + Date.now() + '.png', capturedImageData, 'base64', function(error) {
+        if (error) {
+            console.log('----------------------------------');
+            console.log('[PHOTOBOOTH - DATA] ', 'Error writing image to server: ', error);
+            console.log('----------------------------------');
+        } else {
+            console.log('----------------------------------');
+            console.log('[PHOTOBOOTH - DATA] ', 'Success writing image to server!');
+            console.log('----------------------------------');
 
             response.jsonp(request.body);
         }

@@ -106,6 +106,9 @@ var React = require('react'),
         });
     },
     _stopWebcam: function() {
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to stop webcam.');
+        console.log('----------------------------------');
         var track = this.stream.getTracks()[0];
         track.stop();
     },
