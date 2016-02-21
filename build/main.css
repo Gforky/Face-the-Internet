@@ -117,7 +117,7 @@ body {
   body p {
     font-family: 'Apercu Mono', sans-serif;
     font-size: 1vw;
-    line-height: 1.5vw; }
+    line-height: 1.75vw; }
   body p a {
     border-bottom: 1px solid white; }
   body button,
@@ -130,7 +130,6 @@ body {
     padding: 0 20px;
     height: auto;
     display: inline-block;
-    letter-spacing: 2px;
     background: black;
     border: 3px solid black;
     appearance: none;
@@ -139,6 +138,7 @@ body {
     cursor: hand;
     letter-spacing: 0.25vw;
     will-change: opacity;
+    margin: 0 5px;
     -webkit-transition: all;
     -khtml-transition: all;
     -moz-transition: all;
@@ -228,17 +228,20 @@ body {
   padding: 10px 20%; }
 
 .StartPage .overlay .start {
-  background: #3d61e9;
-  border-color: #3d61e9; }
-
-.StartPage .overlay .button {
-  margin: 0 5px; }
+  background: blue;
+  border-color: blue; }
+  .StartPage .overlay .start:hover {
+    background: #3d61e9 !important;
+    border-color: #3d61e9 !important; }
 
 .StartPage .overlay.info {
   background: blue;
   display: none; }
   .StartPage .overlay.info.active {
     display: block; }
+  .StartPage .overlay.info .button:hover {
+    background: #3d61e9 !important;
+    border-color: #3d61e9 !important; }
 
 /*
 PHOTOBOOTH
@@ -303,7 +306,7 @@ PHOTOBOOTH
       width: 100%;
       height: 100%;
       display: none;
-      background: #3d61e9;
+      background: blue;
       will-change: opacity;
       filter: alpha(opacity=0);
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -354,10 +357,28 @@ PHOTOBOOTH
         opacity: 1; }
       .PhotoBooth .overlay .message.success {
         background: lime; }
+        .PhotoBooth .overlay .message.success input {
+          width: 60%;
+          margin: 0 20%;
+          display: inline-block;
+          background: transparent;
+          border: 3px solid white;
+          font-size: 1vw;
+          line-height: 3vw;
+          color: white;
+          padding: 0 20px;
+          font-family: 'Circular Std Book', sans-serif;
+          letter-spacing: 0.25vw; }
+        .PhotoBooth .overlay .message.success .button:hover {
+          background: #3ee8aa !important;
+          border: 3px solid #3ee8aa !important; }
       .PhotoBooth .overlay .message.error {
         background: red; }
+      .PhotoBooth .overlay .message p {
+        display: inline-block;
+        max-width: 60%;
+        margin: 0 20%; }
   .PhotoBooth .silhouette {
-    display: none;
     position: absolute;
     top: 25%;
     left: 37.5%;
@@ -375,12 +396,12 @@ PHOTOBOOTH
     -ms-opacity: 0;
     -o-opacity: 0;
     opacity: 0;
-    -webkit-transition: opacity;
-    -khtml-transition: opacity;
-    -moz-transition: opacity;
-    -ms-transition: opacity;
-    -o-transition: opacity;
-    transition: opacity; }
+    -webkit-transition: all 0.05 linear;
+    -khtml-transition: all 0.05 linear;
+    -moz-transition: all 0.05 linear;
+    -ms-transition: all 0.05 linear;
+    -o-transition: all 0.05 linear;
+    transition: all 0.05 linear; }
     .PhotoBooth .silhouette.active {
       filter: alpha(opacity=100);
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -389,8 +410,7 @@ PHOTOBOOTH
       -moz-opacity: 1;
       -ms-opacity: 1;
       -o-opacity: 1;
-      opacity: 1;
-      display: block; }
+      opacity: 1; }
   .PhotoBooth .buttons {
     position: absolute;
     bottom: 5%;

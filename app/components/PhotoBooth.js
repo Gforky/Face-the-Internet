@@ -287,8 +287,11 @@ var React = require('react'),
                     </div>
                     <div className={this.state.successActive ? 'success message active' : 'success message disabled'}>
                         <div>
-                            <p>Success, please enter your email to let us confirm your addition.</p>
+                            <p>Success, please enter your email, or Twitter, handle to let us confirm your addition after processing.</p>
+                            <input type="text" placeholder="john@doe.com" />
                             <Link className="button" to="/">Restart</Link>
+                            <Link className="button" to="/">Skip</Link>
+                            <Link className="button" to="/">Submit</Link>
                         </div>
                     </div>
                     <div className={this.state.errorActive ? 'error message active' : 'error message disabled'}>
