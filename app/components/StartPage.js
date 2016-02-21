@@ -26,12 +26,16 @@ var StartPage = React.createClass({
                     <div className="message">
                         <div>
                             <h1>Face the Internet</h1>
-                            <p>This is an online experiment, where each webcam image contributed will be become part of an 
+                            <p>This is an online experiment, where each webcam image contributed will become part of an 
                             ever-evolving construction of a single face: Pixels from each contributed image will exist in the 
-                            generated image forver. There is a full write up of the technical parts of the project on <a href="https://github.com/JohnPett/Face-the-Internet" target="_blank">Github</a>.</p>
+                            generated image forver. There is a full write up of the technical parts of the project on 
+                            <a href="https://github.com/JohnPett/Face-the-Internet" target="_blank">Github</a>.</p>
+                            <p>The project aims to let there never be a final image, as the output develops it is the images 
+                            submitted that control the direction of what will come - the procedural and generative aspects of 
+                            this idea are as important and the image evolving over time.</p>
                             <p>Originally conceived between <a href="http://cargocollective.com/florianhacker" target="_blank">Florian Hacker</a>,
                             and <a href="https://github.com/JohnPett" target="_blank">John Pett</a>, as an entry to the <a href="#" target="_blank">Google and Barbican DevArt</a> contest. 
-                            This project has also been contributed to by <a href="https://github.com/gomako" target="_blank">Ben Harvey</a> and <a href="https://github.com/eduwass" target="_blank">Edu Wass</a>.</p>
+                            This project has also been contributed to by <a href="https://github.com/gomako" target="_blank">Ben Harvey</a>, with <a href="https://github.com/eduwass" target="_blank">Edu Wass</a> building many of the backend concepts of the project.</p>
                             <a className="button" onClick={this._closeHandler}>Close</a>
                         </div>
                     </div>
