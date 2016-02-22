@@ -81,11 +81,11 @@ var Face = React.createClass({displayName: "Face",
 		for (var i = 0; i < this.data.length; i++) {
 			this._renderSlice(i);
 		};
-		this._renderText();
+		// this._renderText();
 	},
     render: function() {
         return (
-            React.createElement("canvas", {className: "Face", ref: (ref) => this.canvas = ref})
+            React.createElement("canvas", {className: "Face", ref: function(ref)  {return this.canvas = ref;}.bind(this)})
         );
     }
 });
@@ -93,11 +93,12 @@ module.exports = Face;
 
 },{"jquery":32,"react":216,"react-dom":34}],3:[function(require,module,exports){
 /** @jsx React.DOM */
-var React = require('react');
-var ReactDOM = require('react-dom');
-var JSFeat = require('jsfeat');
-var $ = require('jquery');
-var PhotoBooth = React.createClass({displayName: "PhotoBooth",
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    JSFeat = require('jsfeat'),
+    $ = require('jquery'),
+    Link = require('react-router').Link,
+    PhotoBooth = React.createClass({displayName: "PhotoBooth",
     _onWindowResize: function(event) {
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has resized the browser: ', event);
@@ -134,9 +135,7 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
         if (x > minX && x < maxX && y > minY && y < maxY && !this.state.hasCaptured) {
             this.setState({
                 captureActive: true,
-                buttonsActive: true,
-                silhouetteActive: false,
-                captureText: 'capture'
+                captureText: 'Capture'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(62, 232, 170)';
@@ -145,9 +144,7 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
         } else {
             this.setState({
                 captureActive: false,
-                buttonsActive: true,
-                silhouetteActive: true,
-                captureText: 'align face to centre'
+                captureText: 'Align face to centre'
             });
             // face detection box styles
             this.outputContext.fillStyle = 'rgb(255, 72, 94)';
@@ -197,7 +194,6 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
             captureActive: false,
             hasCaptured: true,
             saveActive: true,
-            retakeActive: true,
             webcam: ''
         });
     },
@@ -208,7 +204,6 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
             webcam: '',
             captureActive: false,
             saveActive: false,
-            retakeActive: false,
             overlayActive: true,
             loadingActive: true
         });
@@ -252,8 +247,7 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
             webcam: window.URL.createObjectURL(this.stream),
             captureActive: true,
             hasCaptured: false,
-            saveActive: false,
-            retakeActive: false
+            saveActive: false
         });
         this.webcam.play();
         this._faceDetection();
@@ -305,8 +299,7 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
             webcamHeight: 225,
             captureActive: true,
             saveActive: false,
-            retakeActive: false,
-            captureText: 'align face to centre'
+            captureText: 'Capture'
         });
         // create cross-browser var to check for webcam support, attach to window
         navigator.getUserMedia  = navigator.getUserMedia || 
@@ -384,31 +377,29 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
             React.createElement("div", {className: "PhotoBooth", style: css}, 
                 React.createElement("div", {className: this.state.overlayActive ? 'overlay active' : 'overlay disabled'}, 
                     React.createElement("div", {className: this.state.loadingActive ? 'loading message active' : 'loading message disabled'}, 
-                        React.createElement("h2", null, "loading...")
+                        React.createElement("p", null, "Sending image to server...")
                     ), 
                     React.createElement("div", {className: this.state.successActive ? 'success message active' : 'success message disabled'}, 
                         React.createElement("div", null, 
-                            React.createElement("h2", null, "success")
+                            React.createElement("p", null, "Success, please enter your email to let us confirm your addition."), 
+                            React.createElement(Link, {className: "button", to: "/"}, "Restart")
                         )
                     ), 
                     React.createElement("div", {className: this.state.errorActive ? 'error message active' : 'error message disabled'}, 
                         React.createElement("div", null, 
-                            React.createElement("h2", null, "error")
+                            React.createElement("p", null, "Error processing image."), 
+                            React.createElement(Link, {className: "button", to: "/"}, "Restart")
                         )
                     )
                 ), 
-                React.createElement("div", {className: this.state.silhouetteActive ? 'silhouette active' : 'silhouette disabled', ref: (ref) => this.silhouette = ref}), 
-                React.createElement("video", {className: "webcam", ref: (ref) => this.webcam = ref, width: this.state.webcamWidth, height: this.state.webcamHeight, src: this.state.webcamSrc, autoPlay: true}), 
-                React.createElement("canvas", {className: this.state.outputLandscape ? 'output landscape' : 'output portrait', ref: (ref) => this.output = ref, width: this.state.outputWidth, height: this.state.outputHeight}), 
-                React.createElement("canvas", {className: "input", ref: (ref) => this.input = ref, width: this.state.webcamWidth, height: this.state.webcamHeight}), 
-                React.createElement("ul", {className: this.state.buttonsActive ? 'buttons active' : 'buttons disabled'}, 
-                    React.createElement("li", null, React.createElement("button", {className: this.state.captureActive ? 'capture active' : 'capture disabled', onClick: this._captureHandler}, this.state.captureText)), 
-                    React.createElement("li", null, React.createElement("button", {className: this.state.saveActive ? 'active' : '', onClick: this._saveHandler}, "save")), 
-                    React.createElement("li", null, React.createElement("button", {className: this.state.retakeActive ? 'active' : '', onClick: this._retakeHandler}, "retake"))
-                ), 
-                React.createElement("div", {className: "information overlay"}, 
-                    React.createElement("div", {className: "message"}), 
-                    React.createElement("span", {className: "icon"}, React.createElement("span", null))
+                React.createElement("div", {className: this.state.captureActive || this.state.saveActive ? 'silhouette' : 'silhouette active'}), 
+                React.createElement("video", {className: "webcam", ref: function(ref)  {return this.webcam = ref;}.bind(this), width: this.state.webcamWidth, height: this.state.webcamHeight, src: this.state.webcamSrc, autoPlay: true}), 
+                React.createElement("canvas", {className: this.state.outputLandscape ? 'output landscape' : 'output portrait', ref: function(ref)  {return this.output = ref;}.bind(this), width: this.state.outputWidth, height: this.state.outputHeight}), 
+                React.createElement("canvas", {className: "input", ref: function(ref)  {return this.input = ref;}.bind(this), width: this.state.webcamWidth, height: this.state.webcamHeight}), 
+                React.createElement("ul", {className: this.state.saveActive ? 'buttons saving' : 'buttons'}, 
+                    React.createElement("li", null, React.createElement("button", {className: this.state.captureActive ? 'capture' : 'align', onClick: this._captureHandler}, this.state.captureText)), 
+                    React.createElement("li", null, React.createElement("button", {className: this.state.saveActive ? 'save active' : 'save', onClick: this._saveHandler}, "Save")), 
+                    React.createElement("li", null, React.createElement("button", {className: this.state.saveActive ? 'retake active' : 'retake', onClick: this._retakeHandler}, "Retake"))
                 )
             )
         );
@@ -417,33 +408,64 @@ var PhotoBooth = React.createClass({displayName: "PhotoBooth",
     
 module.exports = PhotoBooth;
 
-},{"jquery":32,"jsfeat":33,"react":216,"react-dom":34}],4:[function(require,module,exports){
+},{"jquery":32,"jsfeat":33,"react":216,"react-dom":34,"react-router":54}],4:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Link = require('react-router').Link;
+var Face = require('../components/Face.js');
 var StartPage = React.createClass({displayName: "StartPage",
+    _closeHandler: function() {
+        this.setState({
+            infoActive: false
+        });
+    },
+    _infoHandler: function() {
+        this.setState({
+            infoActive: true
+        });
+    },
     componentWillMount: function() {
-
+        this.setState({
+            infoActive: false
+        });
     },
     render: function() {
         return (
             React.createElement("div", {className: "StartPage"}, 
-                React.createElement("div", {className: "overlay"}, 
-                    React.createElement("div", {className: "welcome message"}, 
+                React.createElement("div", {className: this.state.infoActive ? 'info overlay active' : 'info overlay'}, 
+                    React.createElement("div", {className: "message"}, 
                         React.createElement("div", null, 
-                            React.createElement("h1", null, "Title"), 
-                            React.createElement(Link, {className: "start button", to: "/photo-booth"}, "Start")
+                            React.createElement("h1", null, "Face the Internet"), 
+                            React.createElement("p", null, "This is an online experiment, where each webcam image contributed will be become part of an" + ' ' + 
+                            "ever-evolving construction of a single face: Pixels from each contributed image will exist in the" + ' ' + 
+                            "generated image forver. There is a full write up of the technical parts of the project on ", React.createElement("a", {href: "https://github.com/JohnPett/Face-the-Internet", target: "_blank"}, "Github"), "."), 
+                            React.createElement("p", null, "Originally conceived between ", React.createElement("a", {href: "http://cargocollective.com/florianhacker", target: "_blank"}, "Florian Hacker"), "," + ' ' +
+                            "and ", React.createElement("a", {href: "https://github.com/JohnPett", target: "_blank"}, "John Pett"), ", as an entry to the ", React.createElement("a", {href: "#", target: "_blank"}, "Google and Barbican DevArt"), " contest." + ' ' + 
+                            "This project has also been contributed to by ", React.createElement("a", {href: "https://github.com/gomako", target: "_blank"}, "Ben Harvey"), " and ", React.createElement("a", {href: "https://github.com/eduwass", target: "_blank"}, "Edu Wass"), "."), 
+                            React.createElement("a", {className: "button", onClick: this._closeHandler}, "Close")
                         )
                     )
-                )
+                ), 
+                React.createElement("div", {className: this.state.infoActive ? 'overlay disabled' : 'overlay'}, 
+                    React.createElement("div", {className: "welcome message"}, 
+                        React.createElement("div", null, 
+                            React.createElement("h1", null, "Face the Internet"), 
+                            React.createElement("p", null, "Click 'Start' to contribute a webcam image. We will not keep your image once it has been added to the final piece." + ' ' + 
+                            "Please leave you email address, so we can confirm your addition."), 
+                            React.createElement("a", {className: "button", onClick: this._infoHandler}, "Information"), 
+                            React.createElement(Link, {className: "start button", to: "/photo-booth"}, "Contribute an image")
+                        )
+                    )
+                ), 
+                React.createElement(Face, null)
             )
         );
     } 
 });
 module.exports = StartPage;
 
-},{"react":216,"react-dom":34,"react-router":54}],5:[function(require,module,exports){
+},{"../components/Face.js":2,"react":216,"react-dom":34,"react-router":54}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react'),
 	ReactDOM = require('react-dom'),
@@ -459,7 +481,9 @@ ReactDOM.render(React.createElement(App, null), document.getElementById('App'));
 
 ReactDOM.render((
 	React.createElement(Router, null, 
-		React.createElement(Route, {path: "/", component: Face})
+		React.createElement(Route, {path: "/", component: StartPage}), 
+		React.createElement(Route, {path: "/photo-booth", component: PhotoBooth}), 
+		React.createElement(Route, {path: "/output", component: Face})
 	)
 ), document.getElementById('App'));
 },{"./App.js":1,"./components/Face.js":2,"./components/PhotoBooth.js":3,"./components/StartPage.js":4,"react":216,"react-dom":34,"react-router":54}],6:[function(require,module,exports){
