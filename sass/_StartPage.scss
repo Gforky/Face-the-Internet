@@ -1,7 +1,6 @@
 /*
 	START PAGE
 */
-
 .StartPage {
 	.overlay {
 		&.disabled {
@@ -11,17 +10,24 @@
 			padding: 10px 20%;
 		}
 		.start {
-			background: rgb(61, 97, 233);
-			border-color: rgb(61, 97, 233);
-		}
-		.button {
-			margin: 0 5px;
+			background: blue;
+			border-color: blue;
+			&:hover {
+				background: rgb(61, 97, 233) !important;
+				border-color: rgb(61, 97, 233) !important;
+			}
 		}
 		&.info {
 			background: blue;
 			display: none;
 			&.active {
 				display: block;
+			}
+			.button {
+				&:hover {
+					background: rgb(61, 97, 233) !important;
+					border-color: rgb(61, 97, 233) !important;
+				}
 			}
 		}
 	}

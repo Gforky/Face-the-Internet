@@ -117,7 +117,7 @@ body {
   body p {
     font-family: 'Apercu Mono', sans-serif;
     font-size: 1vw;
-    line-height: 1.5vw; }
+    line-height: 1.75vw; }
   body p a {
     border-bottom: 1px solid white; }
   body button,
@@ -130,7 +130,6 @@ body {
     padding: 0 20px;
     height: auto;
     display: inline-block;
-    letter-spacing: 2px;
     background: black;
     border: 3px solid black;
     appearance: none;
@@ -139,12 +138,15 @@ body {
     cursor: hand;
     letter-spacing: 0.25vw;
     will-change: opacity;
-    -webkit-transition: all;
-    -khtml-transition: all;
-    -moz-transition: all;
-    -ms-transition: all;
-    -o-transition: all;
-    transition: all; }
+    margin: 0 5px;
+    filter: alpha(opacity=100);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    -webkit-opacity: 1;
+    -khtml-opacity: 1;
+    -moz-opacity: 1;
+    -ms-opacity: 1;
+    -o-opacity: 1;
+    opacity: 1; }
     body button:hover,
     body .button:hover {
       background: #222 !important;
@@ -211,6 +213,36 @@ body {
       display: block; }
       body .icon > *:before {
         position: absolute; }
+  body input {
+    width: 40%;
+    margin: 0 30%;
+    display: inline-block;
+    background: transparent;
+    border: 2px solid white;
+    font-size: 1vw;
+    line-height: 3vw;
+    color: white;
+    padding: 0 20px;
+    font-family: 'Circular Std Book', sans-serif;
+    letter-spacing: 0.25vw;
+    box-sizing: border-box; }
+  body ::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: white; }
+  body :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: white;
+    opacity: 1; }
+  body ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: white;
+    opacity: 1; }
+  body :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: white; }
+  body :placeholder-shown {
+    /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+    color: white; }
 
 /*
 	VIEWS
@@ -228,17 +260,20 @@ body {
   padding: 10px 20%; }
 
 .StartPage .overlay .start {
-  background: #3d61e9;
-  border-color: #3d61e9; }
-
-.StartPage .overlay .button {
-  margin: 0 5px; }
+  background: blue;
+  border-color: blue; }
+  .StartPage .overlay .start:hover {
+    background: #3d61e9 !important;
+    border-color: #3d61e9 !important; }
 
 .StartPage .overlay.info {
   background: blue;
   display: none; }
   .StartPage .overlay.info.active {
     display: block; }
+  .StartPage .overlay.info .button:hover {
+    background: #3d61e9 !important;
+    border-color: #3d61e9 !important; }
 
 /*
 PHOTOBOOTH
@@ -303,7 +338,7 @@ PHOTOBOOTH
       width: 100%;
       height: 100%;
       display: none;
-      background: #3d61e9;
+      background: blue;
       will-change: opacity;
       filter: alpha(opacity=0);
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -353,11 +388,17 @@ PHOTOBOOTH
         -o-opacity: 1;
         opacity: 1; }
       .PhotoBooth .overlay .message.success {
-        background: lime; }
+        background: limegreen; }
+        .PhotoBooth .overlay .message.success .button:hover {
+          background: #3ee8aa !important;
+          border: 3px solid #3ee8aa !important; }
       .PhotoBooth .overlay .message.error {
         background: red; }
+      .PhotoBooth .overlay .message p {
+        display: inline-block;
+        max-width: 40%;
+        margin: 0 30%; }
   .PhotoBooth .silhouette {
-    display: none;
     position: absolute;
     top: 25%;
     left: 37.5%;
@@ -375,12 +416,12 @@ PHOTOBOOTH
     -ms-opacity: 0;
     -o-opacity: 0;
     opacity: 0;
-    -webkit-transition: opacity;
-    -khtml-transition: opacity;
-    -moz-transition: opacity;
-    -ms-transition: opacity;
-    -o-transition: opacity;
-    transition: opacity; }
+    -webkit-transition: all 0.05 linear;
+    -khtml-transition: all 0.05 linear;
+    -moz-transition: all 0.05 linear;
+    -ms-transition: all 0.05 linear;
+    -o-transition: all 0.05 linear;
+    transition: all 0.05 linear; }
     .PhotoBooth .silhouette.active {
       filter: alpha(opacity=100);
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -389,8 +430,7 @@ PHOTOBOOTH
       -moz-opacity: 1;
       -ms-opacity: 1;
       -o-opacity: 1;
-      opacity: 1;
-      display: block; }
+      opacity: 1; }
   .PhotoBooth .buttons {
     position: absolute;
     bottom: 5%;
@@ -405,7 +445,6 @@ PHOTOBOOTH
     .PhotoBooth .buttons.saving .align {
       display: none; }
     .PhotoBooth .buttons li {
-      margin: 0 5px;
       display: inline-block; }
       .PhotoBooth .buttons li button.capture {
         background: #3ee8aa;

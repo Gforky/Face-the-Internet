@@ -42,21 +42,16 @@ PHOTOBOOTH
 			width: 100%;
 			height: 100%;
 			display: none;
-			background: rgb(61, 97, 233);
+			background: blue;
 			will-change: opacity;
 			@include opacity(0);
 			@include transition(opacity);
-			// &.active {
-			// 	display: block;
-			// 	@include opacity(1);
-			// }
 		}
 		.message {
 			display: none;
 			will-change: opacity;
 			@include opacity(0);
 			@include transition(opacity);
-
 			&:before {
 				content: '';
 				display: inline-block;
@@ -64,23 +59,30 @@ PHOTOBOOTH
 				vertical-align: middle;
 				margin-right: -0.25em;
 			}
-
 			&.active {
 				display: inline-block;
 				@include opacity(1);
 			}
-
 			&.success {
-				background: lime;
+				background: limegreen;
+				.button {
+					&:hover {
+						background: rgb(62, 232, 170) !important;
+						border: 3px solid rgb(62, 232, 170) !important;
+					}
+				}
 			}
-
 			&.error {
 				background: red;
+			}
+			p {
+				display: inline-block;
+				max-width: 40%;
+				margin: 0 30%;
 			}
 		}
 	}
 	.silhouette {
-		display: none;
 		position: absolute;
 		top: 25%;
 		left: 37.5%;
@@ -91,10 +93,9 @@ PHOTOBOOTH
 		box-sizing: border-box;
 		will-change: opacity;
 		@include opacity(0);
-		@include transition(opacity);
+		@include transition(all 0.05 linear);
 		&.active {
 			@include opacity(1);
-			display: block;
 		}
 	}
 	.buttons {
@@ -115,7 +116,6 @@ PHOTOBOOTH
 			}
 		}
 		li {
-		margin: 0 5px;
 		display: inline-block;
 			button {
 				&.capture {
