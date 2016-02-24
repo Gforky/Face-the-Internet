@@ -596,3 +596,246 @@
 ----------------------------------
 [SERVER - EVENT]  Express server listening on port 3000
 ----------------------------------
+----------------------------------
+[SERVER - EVENT]  Express server listening on port 3000
+----------------------------------
+----------------------------------
+[SERVER - EVENT]  Express server listening on port 3000
+----------------------------------
+----------------------------------
+[SERVER - EVENT]  Express server listening on port 3000
+----------------------------------
+undefined
+----------------------------------
+[SERVER - EVENT]  Express server listening on port 3000
+----------------------------------
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: listen EACCES
+    at exports._errnoException (util.js:746:11)
+    at Server._listen2 (net.js:1129:19)
+    at listen (net.js:1172:10)
+    at Server.listen (net.js:1257:5)
+    at Object.<anonymous> (/Users/John/Documents/Face-the-Internet/index.js:50:24)
+    at Module._compile (module.js:460:26)
+    at Object.Module._extensions..js (module.js:478:10)
+    at Module.load (module.js:355:32)
+    at Function.Module._load (module.js:310:12)
+    at Function.Module.runMain (module.js:501:10)
+{ [Function]
+  domain: undefined,
+  _events: { mount: [Function: onmount] },
+  _maxListeners: undefined,
+  setMaxListeners: [Function: setMaxListeners],
+  emit: [Function: emit],
+  addListener: [Function: addListener],
+  on: [Function: addListener],
+  once: [Function: once],
+  removeListener: [Function: removeListener],
+  removeAllListeners: [Function: removeAllListeners],
+  listeners: [Function: listeners],
+  init: [Function: init],
+  defaultConfiguration: [Function: defaultConfiguration],
+  lazyrouter: [Function: lazyrouter],
+  handle: [Function: handle],
+  use: [Function: use],
+  route: [Function: route],
+  engine: [Function: engine],
+  param: [Function: param],
+  set: [Function: set],
+  path: [Function: path],
+  enabled: [Function: enabled],
+  disabled: [Function: disabled],
+  enable: [Function: enable],
+  disable: [Function: disable],
+  checkout: [Function],
+  connect: [Function],
+  copy: [Function],
+  delete: [Function],
+  get: [Function],
+  head: [Function],
+  lock: [Function],
+  'm-search': [Function],
+  merge: [Function],
+  mkactivity: [Function],
+  mkcol: [Function],
+  move: [Function],
+  notify: [Function],
+  options: [Function],
+  patch: [Function],
+  post: [Function],
+  propfind: [Function],
+  proppatch: [Function],
+  purge: [Function],
+  put: [Function],
+  report: [Function],
+  search: [Function],
+  subscribe: [Function],
+  trace: [Function],
+  unlock: [Function],
+  unsubscribe: [Function],
+  all: [Function: all],
+  del: [Function],
+  render: [Function: render],
+  listen: [Function: listen],
+  request: { app: [Circular] },
+  response: { app: [Circular] },
+  cache: {},
+  engines: {},
+  settings: 
+   { 'x-powered-by': true,
+     etag: 'weak',
+     'etag fn': [Function: wetag],
+     env: 'development',
+     'query parser': 'extended',
+     'query parser fn': [Function: parseExtendedQueryString],
+     'subdomain offset': 2,
+     'trust proxy': false,
+     'trust proxy fn': [Function: trustNone],
+     view: [Function: View],
+     views: '/Users/John/Documents/Face-the-Internet/views',
+     'jsonp callback name': 'callback',
+     port: 3000 },
+  locals: 
+   { settings: 
+      { 'x-powered-by': true,
+        etag: 'weak',
+        'etag fn': [Function: wetag],
+        env: 'development',
+        'query parser': 'extended',
+        'query parser fn': [Function: parseExtendedQueryString],
+        'subdomain offset': 2,
+        'trust proxy': false,
+        'trust proxy fn': [Function: trustNone],
+        view: [Function: View],
+        views: '/Users/John/Documents/Face-the-Internet/views',
+        'jsonp callback name': 'callback',
+        port: 3000 } },
+  mountpath: '/',
+  _router: 
+   { [Function: router]
+     params: {},
+     _params: [],
+     caseSensitive: false,
+     mergeParams: undefined,
+     strict: false,
+     stack: 
+      [ [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object] ] } }
+----------------------------------
+[SERVER - EVENT]  Express server listening on port 3000
+----------------------------------
+{ [Function]
+  domain: undefined,
+  _events: { mount: [Function: onmount] },
+  _maxListeners: undefined,
+  setMaxListeners: [Function: setMaxListeners],
+  emit: [Function: emit],
+  addListener: [Function: addListener],
+  on: [Function: addListener],
+  once: [Function: once],
+  removeListener: [Function: removeListener],
+  removeAllListeners: [Function: removeAllListeners],
+  listeners: [Function: listeners],
+  init: [Function: init],
+  defaultConfiguration: [Function: defaultConfiguration],
+  lazyrouter: [Function: lazyrouter],
+  handle: [Function: handle],
+  use: [Function: use],
+  route: [Function: route],
+  engine: [Function: engine],
+  param: [Function: param],
+  set: [Function: set],
+  path: [Function: path],
+  enabled: [Function: enabled],
+  disabled: [Function: disabled],
+  enable: [Function: enable],
+  disable: [Function: disable],
+  checkout: [Function],
+  connect: [Function],
+  copy: [Function],
+  delete: [Function],
+  get: [Function],
+  head: [Function],
+  lock: [Function],
+  'm-search': [Function],
+  merge: [Function],
+  mkactivity: [Function],
+  mkcol: [Function],
+  move: [Function],
+  notify: [Function],
+  options: [Function],
+  patch: [Function],
+  post: [Function],
+  propfind: [Function],
+  proppatch: [Function],
+  purge: [Function],
+  put: [Function],
+  report: [Function],
+  search: [Function],
+  subscribe: [Function],
+  trace: [Function],
+  unlock: [Function],
+  unsubscribe: [Function],
+  all: [Function: all],
+  del: [Function],
+  render: [Function: render],
+  listen: [Function: listen],
+  request: { app: [Circular] },
+  response: { app: [Circular] },
+  cache: {},
+  engines: {},
+  settings: 
+   { 'x-powered-by': true,
+     etag: 'weak',
+     'etag fn': [Function: wetag],
+     env: 'development',
+     'query parser': 'extended',
+     'query parser fn': [Function: parseExtendedQueryString],
+     'subdomain offset': 2,
+     'trust proxy': false,
+     'trust proxy fn': [Function: trustNone],
+     view: [Function: View],
+     views: '/Users/John/Documents/Face-the-Internet/views',
+     'jsonp callback name': 'callback',
+     port: 3000 },
+  locals: 
+   { settings: 
+      { 'x-powered-by': true,
+        etag: 'weak',
+        'etag fn': [Function: wetag],
+        env: 'development',
+        'query parser': 'extended',
+        'query parser fn': [Function: parseExtendedQueryString],
+        'subdomain offset': 2,
+        'trust proxy': false,
+        'trust proxy fn': [Function: trustNone],
+        view: [Function: View],
+        views: '/Users/John/Documents/Face-the-Internet/views',
+        'jsonp callback name': 'callback',
+        port: 3000 } },
+  mountpath: '/',
+  _router: 
+   { [Function: router]
+     params: {},
+     _params: [],
+     caseSensitive: false,
+     mergeParams: undefined,
+     strict: false,
+     stack: 
+      [ [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object] ] } }
+----------------------------------
+[SERVER - EVENT]  Express server listening on port 3000
+----------------------------------
