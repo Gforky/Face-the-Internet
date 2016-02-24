@@ -99,6 +99,9 @@ var React = require('react'),
     $ = require('jquery'),
     Link = require('react-router').Link,
     PhotoBooth = React.createClass({displayName: "PhotoBooth",
+    _submitHandler: function() {
+        console.log(this.contact.value);
+    },
     _onWindowResize: function(event) {
         console.log('----------------------------------');
         console.log('[PHOTOBOOTH - EVENT] ', 'User has resized the browser: ', event);
@@ -193,15 +196,20 @@ var React = require('react'),
         this.setState({
             captureActive: false,
             hasCaptured: true,
-            saveActive: true,
-            webcam: ''
+            saveActive: true
         });
     },
+    _stopWebcam: function() {
+        console.log('----------------------------------');
+        console.log('[PHOTOBOOTH - EVENT] ', 'User has clicked to stop webcam.');
+        console.log('----------------------------------');
+        var track = this.stream.getTracks()[0];
+        track.stop();
+    },
     _saveHandler: function(e) {
+        this._stopWebcam();
         var imageData = this.input.toDataURL("image/jpeg", 0.85);
-        this.webcam.pause();
         this.setState({
-            webcam: '',
             captureActive: false,
             saveActive: false,
             overlayActive: true,
@@ -238,6 +246,7 @@ var React = require('react'),
                 }, minWait);
             }
         });
+        //window.cancelAnimationFrame(this._faceDetection);
     },
     _retakeHandler: function(e) {
         console.log('----------------------------------');
@@ -361,13 +370,9 @@ var React = require('react'),
         var h = (this.state.height * scale) | 0;
         this.imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
     },
-    componentWillUnmount: function() {
-        window.cancelAnimationFrame(this._faceDetection);
-        this.webcam.pause();
-        this.setState({
-            webcam: ''
-        });
-    },
+    //componentWillUnmount: function() {
+    //    window.cancelAnimationFrame(this._faceDetection);
+    //},
     render: function() {
         var css = {
             width: this.state.width + 'px',
@@ -381,16 +386,10 @@ var React = require('react'),
                     ), 
                     React.createElement("div", {className: this.state.successActive ? 'success message active' : 'success message disabled'}, 
                         React.createElement("div", null, 
-<<<<<<< HEAD
-                            React.createElement("p", null, "Success, please enter your email to let us confirm your addition."), 
-                            React.createElement(Link, {className: "button", to: "/"}, "Restart")
-=======
-                            React.createElement("p", null, "Success, please enter your email, or Twitter, handle to let us confirm your addition after processing."), 
-                            React.createElement("input", {type: "text", placeholder: "john@doe.com"}), 
-                            React.createElement(Link, {className: "button", to: "/"}, "Restart"), 
-                            React.createElement(Link, {className: "button", to: "/"}, "Skip"), 
-                            React.createElement(Link, {className: "button", to: "/"}, "Submit")
->>>>>>> origin/master
+                            React.createElement("p", null, "Success, please enter your email, or Twitter, handle to let us confirm your addition."), 
+                            React.createElement("input", {type: "text", ref: function(ref)  {return this.contact = ref;}.bind(this), placeholder: "john@doe.com"}), 
+                            React.createElement(Link, {className: "button", to: "/output"}, "Skip"), 
+                            React.createElement(Link, {className: "button", onClick: this._submitHandler, to: "/output"}, "Submit")
                         )
                     ), 
                     React.createElement("div", {className: this.state.errorActive ? 'error message active' : 'error message disabled'}, 
@@ -416,11 +415,7 @@ var React = require('react'),
     
 module.exports = PhotoBooth;
 
-<<<<<<< HEAD
-},{"jquery":32,"jsfeat":33,"react":216,"react-dom":34,"react-router":54}],4:[function(require,module,exports){
-=======
 },{"jquery":30,"jsfeat":31,"react":214,"react-dom":32,"react-router":52}],4:[function(require,module,exports){
->>>>>>> origin/master
 /** @jsx React.DOM */
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -449,12 +444,16 @@ var StartPage = React.createClass({displayName: "StartPage",
                     React.createElement("div", {className: "message"}, 
                         React.createElement("div", null, 
                             React.createElement("h1", null, "Face the Internet"), 
-                            React.createElement("p", null, "This is an online experiment, where each webcam image contributed will be become part of an" + ' ' + 
+                            React.createElement("p", null, "This is an online experiment, where each webcam image contributed will become part of an" + ' ' + 
                             "ever-evolving construction of a single face: Pixels from each contributed image will exist in the" + ' ' + 
-                            "generated image forver. There is a full write up of the technical parts of the project on ", React.createElement("a", {href: "https://github.com/JohnPett/Face-the-Internet", target: "_blank"}, "Github"), "."), 
+                            "generated image forver. There is a full write up of the technical parts of the project on",  
+                            React.createElement("a", {href: "https://github.com/JohnPett/Face-the-Internet", target: "_blank"}, "Github"), "."), 
+                            React.createElement("p", null, "The project aims to let there never be a final image, as the output develops it is the images" + ' ' + 
+                            "submitted that control the direction of what will come - the procedural and generative aspects of" + ' ' + 
+                            "this idea are as important and the image evolving over time."), 
                             React.createElement("p", null, "Originally conceived between ", React.createElement("a", {href: "http://cargocollective.com/florianhacker", target: "_blank"}, "Florian Hacker"), "," + ' ' +
                             "and ", React.createElement("a", {href: "https://github.com/JohnPett", target: "_blank"}, "John Pett"), ", as an entry to the ", React.createElement("a", {href: "#", target: "_blank"}, "Google and Barbican DevArt"), " contest." + ' ' + 
-                            "This project has also been contributed to by ", React.createElement("a", {href: "https://github.com/gomako", target: "_blank"}, "Ben Harvey"), " and ", React.createElement("a", {href: "https://github.com/eduwass", target: "_blank"}, "Edu Wass"), "."), 
+                            "This project has also been contributed to by ", React.createElement("a", {href: "https://github.com/gomako", target: "_blank"}, "Ben Harvey"), ", with ", React.createElement("a", {href: "https://github.com/eduwass", target: "_blank"}, "Edu Wass"), " building many of the backend concepts of the project."), 
                             React.createElement("a", {className: "button", onClick: this._closeHandler}, "Close")
                         )
                     )
@@ -477,11 +476,7 @@ var StartPage = React.createClass({displayName: "StartPage",
 });
 module.exports = StartPage;
 
-<<<<<<< HEAD
-},{"../components/Face.js":2,"react":216,"react-dom":34,"react-router":54}],5:[function(require,module,exports){
-=======
 },{"../components/Face.js":2,"react":214,"react-dom":32,"react-router":52}],5:[function(require,module,exports){
->>>>>>> origin/master
 /** @jsx React.DOM */
 var React = require('react'),
 	ReactDOM = require('react-dom'),

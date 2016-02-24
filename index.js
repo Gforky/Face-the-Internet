@@ -8,7 +8,7 @@ var express = require('express'),
 var app = express();
 app.use(bodyParser.json({limit: '50mb'}));
 app.set('port', process.env.PORT || 3000);
-app.use(express.static('build'));
+app.use(express.static('public'));
 app.get('/',function(request, response){
     console.log('----------------------------------');
     console.log('[SERVER - EVENT] ', 'Express server connected to client...');
