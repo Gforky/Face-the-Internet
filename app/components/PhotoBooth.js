@@ -152,6 +152,7 @@ var React = require('react'),
                 }, minWait);
             }
         });
+        //window.cancelAnimationFrame(this._faceDetection);
     },
     _retakeHandler: function(e) {
         console.log('----------------------------------');
@@ -275,9 +276,9 @@ var React = require('react'),
         var h = (this.state.height * scale) | 0;
         this.imageU8 = new JSFeat.matrix_t(w, h, JSFeat.U8_t | JSFeat.C1_t);
     },
-    componentWillUnmount: function() {
-        window.cancelAnimationFrame(this._faceDetection);
-    },
+    //componentWillUnmount: function() {
+    //    window.cancelAnimationFrame(this._faceDetection);
+    //},
     render: function() {
         var css = {
             width: this.state.width + 'px',
