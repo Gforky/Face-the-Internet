@@ -8,7 +8,9 @@
     "npm": "2.7.4"
   },
   "scripts": {
-    "start": "gulp",
+    "start": "gulp deploy",
+    "develop": "gulp",
+    "deploy": "gulp deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
