@@ -10,8 +10,6 @@ Here is some imagery from the previous incarnations of this project, outlining t
 
 ![Exhibition Proposal](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/exhibition.png)
 
-[![Output Animation](http://img.youtube.com/vi/x0Pu59nN7-s/0.jpg)](https://www.youtube.com/watch?v=x0Pu59nN7-s "Output Animation")
-
 ### Introduction
 This project sits somewhere between sculpture, technology, art, motion graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art, computer vision and user interaction.
 
