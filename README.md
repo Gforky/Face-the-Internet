@@ -10,6 +10,8 @@ Here is some imagery from the previous incarnations of this project, outlining t
 
 ![Exhibition Proposal](https://github.com/JohnPett/Face-the-Internet/blob/master/docs/exhibition.png)
 
+[![Output Animation](http://img.youtube.com/vi/x0Pu59nN7-s/0.jpg)](https://www.youtube.com/watch?v=x0Pu59nN7-s "Output Animation")
+
 ### Introduction
 This project sits somewhere between sculpture, technology, art, motion graphic design and interactivity. An experiment, as much as a learning exercise, to combine the latest technologies for application development with thoughts on contemporary art, computer vision and user interaction.
 
@@ -20,7 +22,6 @@ Before you start you will need the following installed on your machine. [Python]
 1. Clone [this](https://github.com/JohnPett/Face-the-Internet) repository in to the desired location on your local machine.
 2. From inside the repository, run `$ npm install` to get project dependencies.
 3. Once the dependencies have installed, running `$ npm start` will initiate the server and application and run a development version of the application on `http://localhost:3000/`.
-
 
 ### Quick Install (API)
 1. This project has a separate Docker container for the API calls for image slices. There are install notes for this [here](https://github.com/eduwass/face-the-internet-worker).
