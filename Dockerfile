@@ -5,7 +5,7 @@
 # 2. Build container: docker build .
 
 # Pull image for specific node version (https://github.com/nodejs/docker-node)
-FROM node:0.10
+FROM node:4.4
 
 # Expose the ports that your app uses. For example:
 EXPOSE 80
